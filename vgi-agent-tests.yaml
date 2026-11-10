@@ -1,0 +1,171 @@
+# Private graders for the agent-suitability suite (`vgi-lint simulate`).
+#
+# The public half (each task's name and prompt) is the `vgi.agent_test_tasks`
+# catalog tag in vgi_nfl/worker.py. The solutions live here, outside the
+# catalog, so an analyst under test cannot read them from the metadata it is
+# graded on. tests/test_catalog.py keeps the two lists in step.
+#
+# Tasks over live data (this week's games, current standings, injuries, depth
+# charts) grade through check_sql: an exact reference compare cannot be stable
+# while the data moves. Tasks pinned to the finished 2025 season grade against
+# a reference solution.
+
+tasks:
+  - name: bye_week_teams
+    check_sql: >-
+      SELECT (SELECT count(*) FROM nfl.main.current_week) = 1
+         AND (SELECT count(*) FROM nfl.main.teams) = 32
+         AND (SELECT count(*) FROM nfl.main.current_scoreboard) <= 16
+    success_criteria: >-
+      Reads current_week for the season and week, and returns the teams in the
+      teams table that appear as neither home nor away team in current_scoreboard.
+
+  - name: division_leaders_vs_2025
+    check_sql: >-
+      SELECT count(*) = 8
+      FROM nfl.main.current_standings c
+      JOIN nfl.main.standings(season := 2025) s USING (team_id)
+      WHERE c.division_rank = 1
+    success_criteria: >-
+      Uses current_standings filtered to division_rank = 1 and joins standings(season := 2025)
+      on team_id to show each current leader's 2025 record.
+
+  - name: chiefs_starters_injuries
+    check_sql: >-
+      SELECT count(*) > 0
+      FROM nfl.main.depth_chart('KC') d
+      LEFT JOIN nfl.main.roster('KC') r USING (athlete_id)
+      LEFT JOIN nfl.main.current_injuries i USING (athlete_id)
+      WHERE d.depth = 1
+    success_criteria: >-
+      Uses depth_chart('KC') with depth = 1 for the starters, roster('KC') for jersey and age,
+      and current_injuries joined on athlete_id for any injury status.
+
+  - name: opener_team_breakdown
+    reference_sql: >-
+      SELECT b.team_abbreviation,
+             CASE WHEN b.home_away = 'home' THEN g.home_score ELSE g.away_score END AS points,
+             b.total_yards, b.turnovers,
+             (SELECT p.athlete_name FROM nfl.main.box_score_player('401772510') p
+              WHERE p.team_id = b.team_id ORDER BY p.rush_yards DESC NULLS LAST LIMIT 1) AS leading_rusher
+      FROM nfl.main.box_score_team('401772510') b
+      CROSS JOIN nfl.main.game_summary('401772510') g
+      ORDER BY b.team_abbreviation
+    unordered: true
+    ignore_column_names: true
+    success_criteria: >-
+      Uses game_summary for points, box_score_team for total yards and turnovers, and
+      box_score_player for each team's leading rusher in game 401772510.
+
+  - name: opener_scoring_drives
+    reference_sql: >-
+      SELECT d.team_abbreviation, count(*) AS scoring_drives, sum(d.yards) AS scoring_drive_yards,
+             (SELECT count(*) FROM nfl.main.scoring_plays('401772510') s
+              WHERE s.team_id = d.team_id) AS scoring_plays,
+             (SELECT count(*) FROM nfl.main.play_by_play_game('401772510') p
+              WHERE p.offense_team_id = d.team_id) AS plays_run
+      FROM nfl.main.drives('401772510') d
+      WHERE d.is_score
+      GROUP BY d.team_abbreviation, d.team_id
+      ORDER BY d.team_abbreviation
+    unordered: true
+    ignore_column_names: true
+    success_criteria: >-
+      Uses drives (is_score), scoring_plays, and play_by_play_game for game 401772510 and
+      reports per-team scoring drives, their yards, scores, and total plays run.
+
+  - name: week1_2025_against_the_spread
+    reference_sql: >-
+      SELECT sb.short_name, sb.away_score, sb.home_score, sc.spread_line,
+             (sb.home_score - sb.away_score) > sc.spread_line AS home_covered
+      FROM nfl.main.scoreboard(2025, 1) sb
+      JOIN nfl.main.schedule(season := 2025, week := 1) sc ON sc.espn_game_id = sb.game_id
+      ORDER BY sb.game_time
+    unordered: true
+    ignore_column_names: true
+    success_criteria: >-
+      Joins scoreboard(2025, 1) to schedule(season := 2025, week := 1) on espn_game_id and
+      compares the home margin with spread_line (positive means the home team was favored).
+
+  - name: passing_leaders_2025_efficiency
+    reference_sql: >-
+      WITH top AS (
+        SELECT player_id, player_display_name, recent_team, passing_yards
+        FROM nfl.main.player_stats_season(season := 2025)
+        ORDER BY passing_yards DESC LIMIT 5),
+      epa AS (
+        SELECT passer_player_id AS player_id, avg(epa) AS epa_per_dropback
+        FROM nfl.main.play_by_play(season := 2025)
+        WHERE qb_dropback AND season_type = 'REG' GROUP BY 1),
+      ngs AS (
+        SELECT player_gsis_id AS player_id, completion_percentage_above_expectation AS cpoe
+        FROM nfl.main.ngs_passing(season := 2025, week := 0) WHERE season_type = 'REG'),
+      targets AS (
+        SELECT team, player_display_name AS top_target,
+               row_number() OVER (PARTITION BY team ORDER BY targets DESC) AS rn
+        FROM nfl.main.ngs_receiving(season := 2025, week := 0) WHERE season_type = 'REG')
+      SELECT top.player_display_name, top.passing_yards,
+             round(epa.epa_per_dropback, 2) AS epa_per_dropback, round(ngs.cpoe, 1) AS cpoe,
+             targets.top_target
+      FROM top LEFT JOIN epa USING (player_id) LEFT JOIN ngs USING (player_id)
+      LEFT JOIN targets ON targets.team = top.recent_team AND targets.rn = 1
+      ORDER BY top.passing_yards DESC
+    ignore_column_names: true
+    success_criteria: >-
+      Ranks player_stats_season(season := 2025) by passing_yards, adds EPA per dropback from
+      play_by_play (qb_dropback, regular season), CPOE from ngs_passing week 0, and the
+      team's most-targeted receiver from ngs_receiving week 0.
+
+  - name: top_rushing_teams_2025
+    reference_sql: >-
+      WITH t AS (
+        SELECT team, rushing_yards FROM nfl.main.team_stats(season := 2025)
+        ORDER BY rushing_yards DESC LIMIT 3),
+      leaders AS (
+        SELECT recent_team AS team, player_id, player_display_name, rushing_yards,
+               row_number() OVER (PARTITION BY recent_team ORDER BY rushing_yards DESC) AS rn
+        FROM nfl.main.player_stats_season(season := 2025)),
+      week1 AS (
+        SELECT player_id, rushing_yards AS week1_yards
+        FROM nfl.main.player_stats_week(season := 2025, week := 1)),
+      ryoe AS (
+        SELECT player_gsis_id AS player_id, rush_yards_over_expected
+        FROM nfl.main.ngs_rushing(season := 2025, week := 0) WHERE season_type = 'REG')
+      SELECT t.team, t.rushing_yards AS team_rushing_yards, l.player_display_name,
+             l.rushing_yards AS player_rushing_yards, w.week1_yards,
+             round(r.rush_yards_over_expected, 1) AS rush_yards_over_expected
+      FROM t JOIN leaders l ON l.team = t.team AND l.rn = 1
+      LEFT JOIN week1 w USING (player_id) LEFT JOIN ryoe r USING (player_id)
+      ORDER BY t.rushing_yards DESC
+    ignore_column_names: true
+    success_criteria: >-
+      Uses team_stats for team rushing yards, player_stats_season for each team's leading
+      rusher, player_stats_week week 1, and ngs_rushing week 0 for rush yards over expected.
+
+  - name: first_round_2025_combine_snaps
+    reference_sql: >-
+      SELECT d.pick, d.team, d.player_name, d.position, c.forty,
+             s.offense_snaps + s.defense_snaps AS week1_snaps
+      FROM nfl.main.draft(season := 2025) d
+      LEFT JOIN nfl.main.combine(season := 2025) c ON c.pfr_id = d.pfr_player_id
+      LEFT JOIN nfl.main.snap_counts(season := 2025, week := 1) s ON s.pfr_player_id = d.pfr_player_id
+      WHERE d.draft_round = 1
+      ORDER BY d.pick
+    ignore_column_names: true
+    success_criteria: >-
+      Lists draft(season := 2025) round 1 by pick, joining combine and snap_counts on the
+      Pro Football Reference id for the 40-yard dash and week 1 snaps.
+
+  - name: mahomes_2025_passing_by_week
+    reference_sql: >-
+      SELECT s.week, s.short_name, s.winner_abbreviation, g.value AS passing_yards
+      FROM nfl.main.players p
+      JOIN nfl.main.player_game_log(3139477, season := 2025) g
+        ON p.espn_id = CAST(g.athlete_id AS VARCHAR)
+      JOIN nfl.main.team_schedule('KC', season := 2025) s ON s.game_id = g.game_id
+      WHERE g.stat = 'passingYards' AND p.display_name = 'Patrick Mahomes'
+      ORDER BY s.week
+    ignore_column_names: true
+    success_criteria: >-
+      Confirms Patrick Mahomes's espn_id (3139477) in players, reads player_game_log for 2025
+      filtered to passingYards, and joins team_schedule('KC', season := 2025) for each result.

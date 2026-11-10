@@ -1,0 +1,34 @@
+location = "uv run --project . vgi-nfl"
+select = ["ALL"]
+fail_on = "warning"
+
+ignore = [
+  { code = "VGI311", kind = "tooling-bug", reason = """\
+Each parameterless all_* scan is exposed as its corresponding table (all_current_scoreboard as \
+current_scoreboard, all_teams as teams, all_players as players, and so on). The rule only \
+recognizes matching names, but a function and a table cannot share a name inside one schema; \
+the deliberate all_* names avoid those collisions.\
+""" },
+]
+
+# Agent tasks exercise the public tables, which invoke these all_* backing scans.
+# Teaching agents to call implementation functions directly would undermine the
+# table abstraction; the hermetic Haybarn E2E test and tests/test_functions.py
+# separately execute every backing scan.
+[per_object."nfl.main.all_current_scoreboard"]
+ignore = [{ code = "VGI520", kind = "domain-exemption", reason = "Backing scan of current_scoreboard, which agent tasks exercise." }]
+
+[per_object."nfl.main.all_current_standings"]
+ignore = [{ code = "VGI520", kind = "domain-exemption", reason = "Backing scan of current_standings, which agent tasks exercise." }]
+
+[per_object."nfl.main.all_current_injuries"]
+ignore = [{ code = "VGI520", kind = "domain-exemption", reason = "Backing scan of current_injuries, which agent tasks exercise." }]
+
+[per_object."nfl.main.all_current_week"]
+ignore = [{ code = "VGI520", kind = "domain-exemption", reason = "Backing scan of current_week, which agent tasks exercise." }]
+
+[per_object."nfl.main.all_teams"]
+ignore = [{ code = "VGI520", kind = "domain-exemption", reason = "Backing scan of teams, which agent tasks exercise." }]
+
+[per_object."nfl.main.all_players"]
+ignore = [{ code = "VGI520", kind = "domain-exemption", reason = "Backing scan of players, which agent tasks exercise." }]
