@@ -161,7 +161,7 @@ tasks:
       SELECT s.week, s.short_name, s.winner_abbreviation, g.value AS passing_yards
       FROM nfl.main.players p
       JOIN nfl.main.player_game_log(3139477, season := 2025) g
-        ON p.espn_id = CAST(g.athlete_id AS VARCHAR)
+        ON p.espn_id = g.athlete_id
       JOIN nfl.main.team_schedule('KC', season := 2025) s ON s.game_id = g.game_id
       WHERE g.stat = 'passingYards' AND p.display_name = 'Patrick Mahomes'
       ORDER BY s.week

@@ -39,6 +39,19 @@ def test_projection_and_missing_columns_are_null() -> None:
     assert table.column("not_upstream").null_count == table.num_rows
 
 
+def test_players_espn_id_is_an_integer_join_key() -> None:
+    body = (FIXTURES / "players/players.parquet").read_bytes()
+    table = nflverse.read_columns(body, nflverse.PLAYERS.columns, ["display_name", "espn_id"])
+    assert table.schema.field("espn_id").type == pa.int32()
+    mahomes = next(row for row in table.to_pylist() if row["display_name"] == "Patrick Mahomes")
+    assert mahomes["espn_id"] == 3139477
+
+
+def test_non_numeric_text_ids_become_null() -> None:
+    values = pa.chunked_array([["3139477", "", None, "x12"]])
+    assert nflverse._convert(values, pa.int32()).to_pylist() == [3139477, None, None, None]
+
+
 def test_current_season_rolls_over_in_september() -> None:
     assert nflverse.current_season(datetime(2026, 8, 31, tzinfo=UTC)) == 2025
     assert nflverse.current_season(datetime(2026, 9, 1, tzinfo=UTC)) == 2026

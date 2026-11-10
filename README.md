@@ -100,7 +100,7 @@ are labelled by the year they start, so the season that ends with the February
 
 ```sql
 -- What week is it, and what are the scores?
-SELECT season, phase, week FROM nfl.main.current_week;
+SELECT season, phase, week, display_week FROM nfl.main.current_week;
 
 SELECT short_name, status_detail, away_score, home_score
 FROM nfl.main.current_scoreboard
@@ -118,6 +118,11 @@ WHERE team_abbreviation NOT IN (
 
 Scores are `NULL` before kickoff. `status_state` is `pre`, `in`, or `post`.
 
+Sleeper's `week` advances early in the week, while ESPN's
+`current_scoreboard` keeps showing the last week played until the new week's
+slate is posted. Between Monday night and midweek, `current_scoreboard.week`
+matches `current_week.display_week` rather than `current_week.week`.
+
 ### Standings
 
 ```sql
@@ -134,8 +139,10 @@ ORDER BY playoff_seed;
 
 `playoff_seed` follows ESPN's tiebreak order; seeds 1-7 make the playoffs.
 `division_rank` is derived from that seed order within each division.
-`clincher` uses ESPN's markers: `z` bye, `y` division, `x` playoff berth,
-`e` eliminated.
+`clincher` uses ESPN's markers: `*` clinched the top seed and the only
+first-round bye, `z` clinched the division, `y` clinched a wild card, `x`
+clinched a playoff berth, and `e` eliminated. It is `NULL` until a team clinches
+or is eliminated.
 
 ### Past weeks and team schedules
 

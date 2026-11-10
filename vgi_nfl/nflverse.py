@@ -66,6 +66,9 @@ def _convert(values: pa.ChunkedArray, kind: pa.DataType) -> pa.ChunkedArray:
         return pc.cast(values, kind, safe=False)
     if pa.types.is_string(kind) and pa.types.is_integer(values.type):
         return pc.cast(values, kind)
+    if pa.types.is_integer(kind) and pa.types.is_string(values.type):
+        digits = pc.match_substring_regex(values, r"^[0-9]+$")
+        return pc.cast(pc.if_else(digits, values, pa.scalar(None, pa.string())), kind)
     return pc.cast(values, kind)
 
 
@@ -631,7 +634,7 @@ PLAYERS = Dataset(
         Column("draft_round", I32, "Ordinal round (1-7) the player was selected in."),
         Column("draft_pick", I32, "Ordinal overall selection number in the draft."),
         Column("draft_team", STR, "Drafting team."),
-        Column("espn_id", STR, "ESPN athlete id; pass to player_game_log()."),
+        Column("espn_id", I32, "ESPN athlete id (integer code); joins athlete_id, feeds player_game_log()."),
         Column("pfr_id", STR, "Pro Football Reference id."),
         Column("pff_id", STR, "Pro Football Focus player identifier."),
         Column("nfl_id", STR, "NFL.com id."),

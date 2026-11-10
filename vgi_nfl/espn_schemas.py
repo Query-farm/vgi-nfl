@@ -71,7 +71,11 @@ STANDINGS_SCHEMA = pa.schema(
         field("road_record", pa.string(), "Road record as W-L or W-L-T."),
         field("division_record", pa.string(), "Record against division opponents."),
         field("conference_record", pa.string(), "Record against conference opponents."),
-        field("clincher", pa.string(), "ESPN clinch marker: z bye, y division, x playoff, e eliminated."),
+        field(
+            "clincher",
+            pa.string(),
+            "ESPN clinch marker: * top seed and bye, z division, y wild card, x playoff berth, e eliminated.",
+        ),
     ]
 )
 
