@@ -39,18 +39,18 @@ before you deploy it.
 
 ## Quick start
 
-Install the released worker with `uv`:
+The worker is not published to PyPI. `uvx` runs the tagged release straight from
+GitHub and caches it after the first use:
 
 ```bash
-uv tool install vgi-nfl
-vgi-nfl
+uvx --from git+https://github.com/Query-farm/vgi-nfl@v0.1.0 vgi-nfl --help
 ```
 
 Launch Haybarn with the catalog attached:
 
 ```bash
 uvx haybarn-cli \
-  -cmd "INSTALL vgi FROM community; LOAD vgi; ATTACH 'nfl' (TYPE vgi, LOCATION 'vgi-nfl');" \
+  -cmd "INSTALL vgi FROM community; LOAD vgi; ATTACH 'nfl' (TYPE vgi, LOCATION 'uvx --from git+https://github.com/Query-farm/vgi-nfl@v0.1.0 vgi-nfl');" \
   :memory:
 ```
 
@@ -61,7 +61,7 @@ INSTALL vgi FROM community;
 LOAD vgi;
 ATTACH 'nfl' (
   TYPE vgi,
-  LOCATION 'vgi-nfl'
+  LOCATION 'uvx --from git+https://github.com/Query-farm/vgi-nfl@v0.1.0 vgi-nfl'
 );
 ```
 
@@ -342,7 +342,7 @@ authentication or an explicit anonymous-access decision:
 export VGI_SIGNING_KEY='a-long-random-secret-shared-by-every-replica'
 export VGI_BEARER_TOKENS='replace-with-a-random-token=haybarn'
 
-vgi-nfl-http \
+uvx --from git+https://github.com/Query-farm/vgi-nfl@v0.1.0 vgi-nfl-http \
   --host 0.0.0.0 \
   --port 8000 \
   --cors-origins 'https://sql.example.com' \
@@ -437,10 +437,12 @@ catalog example. Agent-simulation graders live in `vgi-agent-tests.yaml`. Tasks
 over moving data grade through `check_sql`, and tasks pinned to 2025 grade
 against a reference solution.
 
-Releases are driven by GitHub releases. Create a release named `vX.Y.Z` that
-matches the version in `pyproject.toml`. CI then builds, attests, validates,
-and publishes the distributions through PyPI trusted publishing, and publishes
-a multi-platform container image to GHCR.
+Publishing is driven by releases. Create a GitHub release named `vX.Y.Z` that
+matches the version in `pyproject.toml`. CI then builds, validates and attests
+the wheel and sdist, attaches them to the release, and publishes a
+multi-platform container image to `ghcr.io/query-farm/vgi-nfl`. The package is
+not published to PyPI; install it from the release tag as shown in the quick
+start.
 
 ---
 
