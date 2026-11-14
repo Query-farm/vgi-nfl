@@ -201,6 +201,21 @@ ORDER BY sequence;
 defensive, interception, return, kicking, and punting tables into one row per
 player. Columns for categories a player did not record are `NULL`.
 
+The game functions share `team_id`, so they join directly. Each player's yards
+from scrimmage as a share of his team's total offense:
+
+```sql
+SELECT p.team_abbreviation, p.athlete_name,
+       coalesce(p.rush_yards, 0) + coalesce(p.receiving_yards, 0) AS scrimmage_yards,
+       t.total_yards AS team_total_yards,
+       round(100.0 * (coalesce(p.rush_yards, 0) + coalesce(p.receiving_yards, 0)) / t.total_yards, 1)
+         AS pct_of_team_offense
+FROM nfl.main.box_score_player('401772510') p
+JOIN nfl.main.box_score_team('401772510') t USING (team_id)
+WHERE p.rush_attempts > 0 OR p.receptions > 0
+ORDER BY pct_of_team_offense DESC, p.athlete_name;
+```
+
 ### Rosters, depth charts, and injuries
 
 ```sql

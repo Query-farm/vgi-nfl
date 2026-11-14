@@ -18,6 +18,11 @@ from vgi_rpc.rpc import OutputCollector
 
 from vgi_nfl import nflverse
 from vgi_nfl.emit import emit_table
+from vgi_nfl.examples import (
+    FIRST_ROUND_WR_SPEED_CAREERS,
+    POINTS_PER_GAME_VS_EPA,
+    ROOKIE_SCRIMMAGE_LEADERS,
+)
 from vgi_nfl.meta import meta_class
 
 SOURCE = "nflverse-data (CC-BY 4.0)"
@@ -310,6 +315,7 @@ class PlayerStatsSeasonFunction(TableFunctionGenerator[SeasonTypeArgs]):
                 "FROM nfl.main.player_stats_season(season := 2025) "
                 "ORDER BY def_sacks DESC NULLS LAST LIMIT 10",
             ),
+            ROOKIE_SCRIMMAGE_LEADERS,
         ],
     )
 
@@ -355,7 +361,8 @@ class TeamStatsFunction(TableFunctionGenerator[SeasonTypeArgs]):
                 "2025 teams by rushing yards.",
                 "SELECT team, carries, rushing_yards, rushing_tds "
                 "FROM nfl.main.team_stats(season := 2025) ORDER BY rushing_yards DESC",
-            )
+            ),
+            POINTS_PER_GAME_VS_EPA,
         ],
     )
 
@@ -402,7 +409,8 @@ class DraftFunction(TableFunctionGenerator[DraftArgs]):
                 "First round of the 2025 draft.",
                 "SELECT pick, team, player_name, position, college "
                 "FROM nfl.main.draft(season := 2025) WHERE draft_round = 1 ORDER BY pick",
-            )
+            ),
+            FIRST_ROUND_WR_SPEED_CAREERS,
         ],
     )
 

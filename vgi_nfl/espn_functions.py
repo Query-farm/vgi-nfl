@@ -35,6 +35,7 @@ from vgi_nfl.espn_schemas import (
     STANDINGS_SCHEMA,
     TEAMS_SCHEMA,
 )
+from vgi_nfl.examples import OPENER_SCRIMMAGE_SHARE
 from vgi_nfl.meta import meta_class
 
 ESPN = "ESPN site/core/common API (undocumented; ESPN terms apply)"
@@ -559,7 +560,14 @@ class DepthChartFunction(TableFunctionGenerator[TeamArgs]):
 
 
 def _game_meta(
-    *, name: str, description: str, category: str, schema: pa.Schema, doc_llm: str, example: tuple[str, str]
+    *,
+    name: str,
+    description: str,
+    category: str,
+    schema: pa.Schema,
+    doc_llm: str,
+    example: tuple[str, str],
+    composed: tuple[tuple[str, str], ...] = (),
 ) -> type:
     return meta_class(
         name=name,
@@ -573,7 +581,7 @@ def _game_meta(
             "completed games."
         ),
         doc_md=f"{description}. Backed by one cached ESPN game-summary request.",
-        examples=[example],
+        examples=[example, *composed],
     )
 
 
@@ -663,6 +671,7 @@ class BoxScorePlayerFunction(TableFunctionGenerator[GameArgs]):
             "FROM nfl.main.box_score_player('401772510') WHERE rush_attempts > 0 "
             "ORDER BY rush_yards DESC",
         ),
+        composed=(OPENER_SCRIMMAGE_SHARE,),
     )
 
     @classmethod

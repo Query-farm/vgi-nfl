@@ -156,6 +156,24 @@ tasks:
       Lists draft(season := 2025) round 1 by pick, joining combine and snap_counts on the
       Pro Football Reference id for the 40-yard dash and week 1 snaps.
 
+  - name: chiefs_week1_2025_skill_snaps
+    reference_sql: >-
+      SELECT sc.player, sc.offense_snaps,
+             coalesce(w.carries, 0) + coalesce(w.receptions, 0) AS touches,
+             coalesce(w.rushing_yards, 0) + coalesce(w.receiving_yards, 0) AS scrimmage_yards
+      FROM nfl.main.snap_counts(season := 2025, week := 1, team := 'KC') sc
+      LEFT JOIN nfl.main.players p ON p.pfr_id = sc.pfr_player_id
+      LEFT JOIN nfl.main.player_stats_week(season := 2025, week := 1, team := 'KC') w
+        ON w.player_id = p.gsis_id
+      WHERE sc.offense_pct >= 0.5 AND sc.position IN ('RB', 'WR', 'TE')
+      ORDER BY sc.offense_snaps DESC
+    unordered: true
+    ignore_column_names: true
+    success_criteria: >-
+      Filters snap_counts(season := 2025, week := 1, team := 'KC') to RB/WR/TE with
+      offense_pct >= 0.5, bridges its Pro Football Reference id to the GSIS id through players
+      (pfr_id), and joins player_stats_week for carries, receptions, and rushing plus receiving yards.
+
   - name: mahomes_2025_passing_by_week
     reference_sql: >-
       SELECT s.week, s.short_name, s.winner_abbreviation, g.value AS passing_yards

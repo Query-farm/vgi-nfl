@@ -26,6 +26,7 @@ from vgi_nfl.espn_schemas import (
     STANDINGS_SCHEMA,
     TEAMS_SCHEMA,
 )
+from vgi_nfl.examples import COMPOSED_EXAMPLES, OPENER_SCRIMMAGE_SHARE
 from vgi_nfl.meta import column_comments
 from vgi_nfl.nflverse_functions import NFLVERSE_FUNCTIONS, PlayersFunction
 
@@ -179,6 +180,15 @@ _PLAYERS_TAGS = _table_tags(
     ],
 )
 
+# The schema-level list keeps the standings examples and adds every composed
+# example (each is also listed on the function that drives it).
+_SCHEMA_EXAMPLES = json.dumps(
+    [
+        *json.loads(_STANDINGS_TAGS["vgi.example_queries"]),
+        *({"description": description, "sql": sql} for description, sql in COMPOSED_EXAMPLES),
+    ]
+)
+
 _EXECUTABLE_EXAMPLES = json.dumps(
     [
         {
@@ -213,6 +223,20 @@ _EXECUTABLE_EXAMPLES = json.dumps(
                 "WHERE home_team = 'PHI'"
             ),
             "expected_result": [{"espn_game_id": "401772510"}],
+        },
+        {
+            "name": "opener_top_scrimmage_share",
+            "description": (
+                "CeeDee Lamb's 110 scrimmage yards were the largest share (35.8%) of either team's "
+                "offense in the 2025 opener."
+            ),
+            "sql": (
+                "SELECT athlete_name, scrimmage_yards, pct_of_team_offense "
+                f"FROM ({OPENER_SCRIMMAGE_SHARE[1]}) ORDER BY pct_of_team_offense DESC LIMIT 1"
+            ),
+            "expected_result": [
+                {"athlete_name": "CeeDee Lamb", "scrimmage_yards": 110, "pct_of_team_offense": 35.8}
+            ],
         },
         {
             "name": "current_week_is_one_row",
@@ -281,6 +305,15 @@ _AGENT_TEST_TASKS = json.dumps(
             "prompt": (
                 "List the first round of the 2025 NFL draft with each player's combine 40-yard "
                 "dash and how many snaps he played in week 1."
+            ),
+        },
+        {
+            "name": "chiefs_week1_2025_skill_snaps",
+            "prompt": (
+                "In week 1 of the 2025 season, which Kansas City Chiefs running backs, wide receivers, "
+                "and tight ends played at least half of the offensive snaps? For each, give the player "
+                "name, offensive snaps, touches (carries plus receptions), and yards from scrimmage "
+                "(rushing plus receiving yards)."
             ),
         },
         {
@@ -445,7 +478,7 @@ NFL_CATALOG = Catalog(
                     "a game id. nflverse functions take a season with optional week and team "
                     "filters and download one cached release file per call."
                 ),
-                "vgi.example_queries": _STANDINGS_TAGS["vgi.example_queries"],
+                "vgi.example_queries": _SCHEMA_EXAMPLES,
             },
             functions=[*ESPN_FUNCTIONS, *NFLVERSE_FUNCTIONS],
             tables=[

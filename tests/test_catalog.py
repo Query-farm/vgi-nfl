@@ -96,7 +96,7 @@ def test_catalog_discovery_contract_is_machine_readable() -> None:
     examples = json.loads(tags["vgi.executable_examples"])
     tasks = json.loads(tags["vgi.agent_test_tasks"])
     assert all({"name", "description", "sql", "expected_result"} <= example.keys() for example in examples)
-    assert 6 <= len(tasks) <= 10
+    assert 6 <= len(tasks) <= 12
     assert all(set(task) == {"name", "prompt"} for task in tasks)
     assert len({task["name"] for task in tasks}) == len(tasks)
     categories = {category["name"] for category in json.loads(SCHEMA.tags["vgi.categories"])}
