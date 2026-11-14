@@ -462,3 +462,7 @@ start.
 ---
 
 Copyright 2026 Query Farm LLC - https://query.farm. Released under the [MIT License](LICENSE).
+
+## Executed notebook
+
+[Snap shares and unit-specific participation thresholds](notebooks/README.md) uses a recorded public season asset through the real worker, with a portable launch and a separate parameter experiment.

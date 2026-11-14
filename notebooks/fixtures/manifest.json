@@ -1,0 +1,20 @@
+{
+  "source": "nflverse-data snap counts, originating with Pro Football Reference",
+  "kind": "complete unmodified published season Parquet asset",
+  "season": 2025,
+  "capture_started_utc": "2026-11-14T08:43:00.639179+00:00",
+  "capture_finished_utc": "2026-11-14T08:43:00.949448+00:00",
+  "attribution_url": "https://github.com/nflverse/nflverse-data/releases/tag/snap_counts",
+  "license_url": "https://github.com/nflverse/nflverse-data/blob/main/LICENSE.md",
+  "entries": [
+    {
+      "filename": "snap-counts-2025.parquet",
+      "request_path": "/snap_counts/snap_counts_2025.parquet",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/snap_counts/snap_counts_2025.parquet",
+      "status": 200,
+      "retrieved_at_utc": "2026-11-14T08:43:00.949448+00:00",
+      "sha256": "47220218fecda7af7ee5b0272a8ecce7c1bfb1f4e1f0a2c8c90047571728ce20",
+      "bytes": 242046
+    }
+  ]
+}
