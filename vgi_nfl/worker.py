@@ -442,7 +442,14 @@ NFL_CATALOG = Catalog(
             "and Next Gen Stats.\n"
             "* **Calendar (Sleeper):** the current season and week.\n\n"
             "Data is fetched on demand, cached briefly in memory, and never rehosted. This worker is "
-            "not affiliated with the NFL, ESPN, Disney, nflverse, or Sleeper."
+            "not affiliated with the NFL, ESPN, Disney, nflverse, or Sleeper.\n\n"
+            "## Sources and references\n\n"
+            "* [ESPN NFL](https://www.espn.com/nfl/): live scoreboards, standings, injuries, rosters and "
+            "game detail.\n"
+            "* [nflverse](https://nflverse.nflverse.com/): analytics releases from "
+            "[nflverse-data](https://github.com/nflverse/nflverse-data), licensed [CC BY "
+            "4.0](https://creativecommons.org/licenses/by/4.0/).\n"
+            "* [Sleeper API](https://docs.sleeper.com/): the current NFL season and week."
         ),
     },
     schemas=[
