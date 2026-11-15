@@ -470,12 +470,16 @@ NFL_CATALOG = Catalog(
                     ]
                 ),
                 "vgi.doc_llm": (
-                    "Start with current_scoreboard, current_standings, current_injuries, current_week, "
-                    "teams, or players. For a past week call scoreboard(season, week); for game detail "
-                    "pass a game_id to game_summary(), box_score_team(), box_score_player(), drives(), "
-                    "scoring_plays(), or play_by_play_game(). For analytics use nflverse functions: "
-                    "schedule(), play_by_play(), player_stats_week(), player_stats_season(), "
-                    "team_stats(), snap_counts(), draft(), combine(), and ngs_*()."
+                    "One schema for live and historical NFL questions. Argument-free current tables and "
+                    "the team and player directories answer what is happening now. ESPN functions "
+                    "reach other weeks and seasons and, given an ESPN game id, the detail of one game: "
+                    "summary, team and player box scores, drives, scoring plays and play-by-play. "
+                    "nflverse functions carry the analytics (schedules with lines and weather, EPA and "
+                    "win-probability play-by-play, weekly and season statistics, snap counts, draft, "
+                    "combine and Next Gen Stats); each takes a season with optional week and team "
+                    "filters and downloads one cached release file. ESPN rows use ESPN ids, nflverse "
+                    "rows use GSIS player ids and nflverse team abbreviations; the nflverse schedule "
+                    "and player directory carry the ESPN ids that join the two."
                 ),
                 "vgi.doc_md": (
                     "## NFL data\n\n"
