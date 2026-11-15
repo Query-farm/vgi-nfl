@@ -1,0 +1,1216 @@
+{
+  "query": "SELECT * FROM duckdb_functions() WHERE database_name='nfl' ORDER BY schema_name,function_name",
+  "columns": [
+    "database_name",
+    "database_oid",
+    "schema_name",
+    "function_name",
+    "alias_of",
+    "function_type",
+    "description",
+    "comment",
+    "tags",
+    "return_type",
+    "parameters",
+    "parameter_types",
+    "varargs",
+    "macro_definition",
+    "has_side_effects",
+    "internal",
+    "extension_name",
+    "function_oid",
+    "examples",
+    "stability",
+    "categories"
+  ],
+  "rows": [
+    [
+      "nfl",
+      "22592",
+      "main",
+      "all_current_injuries",
+      null,
+      "table",
+      "League-wide NFL injury report (scan behind current_injuries)",
+      null,
+      {
+        "provider": "nfl",
+        "source": "ESPN site/core/common API (undocumented; ESPN terms apply)",
+        "vgi.category": "injuries",
+        "vgi.doc_llm": "The scan behind current_injuries. Prefer the table.",
+        "vgi.doc_md": "Returns ESPN's league-wide injury report; selecting `current_injuries` is clearer.",
+        "vgi.example_queries": "[{\"description\": \"Players ruled out through the backing scan.\", \"sql\": \"SELECT team_abbreviation, athlete_name, injury_type FROM nfl.main.all_current_injuries() WHERE status = 'Out' ORDER BY team_abbreviation\"}]",
+        "vgi.result_columns_schema": "[{\"name\":\"injury_id\",\"type\":\"VARCHAR\",\"description\":\"ESPN injury report entry identifier\"},{\"name\":\"team_id\",\"type\":\"INTEGER\",\"description\":\"ESPN team identifier (integer code) of the player's club\"},{\"name\":\"team_abbreviation\",\"type\":\"VARCHAR\",\"description\":\"ESPN code of the player's club\"},{\"name\":\"team_name\",\"type\":\"VARCHAR\",\"description\":\"Display name of the player's club\"},{\"name\":\"athlete_id\",\"type\":\"INTEGER\",\"description\":\"ESPN athlete identifier (integer code); joins roster and players.espn_id\"},{\"name\":\"athlete_name\",\"type\":\"VARCHAR\",\"description\":\"Player name\"},{\"name\":\"position\",\"type\":\"VARCHAR\",\"description\":\"Position abbreviation\"},{\"name\":\"status\",\"type\":\"VARCHAR\",\"description\":\"Report status, for example Questionable, Out or Injured Reserve\"},{\"name\":\"status_abbreviation\",\"type\":\"VARCHAR\",\"description\":\"Short status code such as Q, D, O or IR\"},{\"name\":\"injury_type\",\"type\":\"VARCHAR\",\"description\":\"Injured body part or reason, for example Knee\"},{\"name\":\"injury_location\",\"type\":\"VARCHAR\",\"description\":\"Broader body location, for example Leg\"},{\"name\":\"injury_detail\",\"type\":\"VARCHAR\",\"description\":\"Injury detail such as Sprain, when reported\"},{\"name\":\"injury_side\",\"type\":\"VARCHAR\",\"description\":\"Side of the body, when reported\"},{\"name\":\"return_date\",\"type\":\"DATE\",\"description\":\"ESPN's estimated return date, when reported\"},{\"name\":\"short_comment\",\"type\":\"VARCHAR\",\"description\":\"Short news blurb\"},{\"name\":\"long_comment\",\"type\":\"VARCHAR\",\"description\":\"Longer news blurb\"},{\"name\":\"reported_at\",\"type\":\"TIMESTAMP WITH TIME ZONE\",\"description\":\"Time the entry was last updated, in UTC\"}]"
+      },
+      null,
+      [],
+      [],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22596,
+      [
+        "SELECT team_abbreviation, athlete_name, injury_type FROM nfl.main.all_current_injuries() WHERE status = 'Out' ORDER BY team_abbreviation"
+      ],
+      null,
+      [
+        "football",
+        "injuries"
+      ]
+    ],
+    [
+      "nfl",
+      "22592",
+      "main",
+      "all_current_scoreboard",
+      null,
+      "table",
+      "This week's NFL games and live scores (scan behind current_scoreboard)",
+      null,
+      {
+        "provider": "nfl",
+        "source": "ESPN site/core/common API (undocumented; ESPN terms apply)",
+        "vgi.category": "scores",
+        "vgi.doc_llm": "The scan behind current_scoreboard. Prefer the table; use scoreboard() for other weeks.",
+        "vgi.doc_md": "Returns ESPN's current-week scoreboard; selecting `current_scoreboard` is clearer.",
+        "vgi.example_queries": "[{\"description\": \"Read this week's games through the backing scan.\", \"sql\": \"SELECT short_name, status_detail, away_score, home_score FROM nfl.main.all_current_scoreboard() ORDER BY game_time\"}]",
+        "vgi.result_columns_schema": "[{\"name\":\"game_id\",\"type\":\"VARCHAR\",\"description\":\"ESPN event identifier; pass it to game_summary() and box scores\"},{\"name\":\"season\",\"type\":\"INTEGER\",\"description\":\"NFL season year (the year the season starts)\"},{\"name\":\"season_type\",\"type\":\"INTEGER\",\"description\":\"ESPN season-type code (not a count): 1 preseason, 2 regular season, 3 postseason\"},{\"name\":\"week\",\"type\":\"INTEGER\",\"description\":\"Ordinal week number (1-18 regular season) within the season type\"},{\"name\":\"game_time\",\"type\":\"TIMESTAMP WITH TIME ZONE\",\"description\":\"Scheduled kickoff time in UTC\"},{\"name\":\"name\",\"type\":\"VARCHAR\",\"description\":\"Matchup name, for example Dallas Cowboys at Philadelphia Eagles\"},{\"name\":\"short_name\",\"type\":\"VARCHAR\",\"description\":\"Short matchup name, for example DAL @ PHI\"},{\"name\":\"status\",\"type\":\"VARCHAR\",\"description\":\"ESPN status code, for example STATUS_SCHEDULED or STATUS_FINAL\"},{\"name\":\"status_state\",\"type\":\"VARCHAR\",\"description\":\"Game state: pre, in, or post\"},{\"name\":\"status_detail\",\"type\":\"VARCHAR\",\"description\":\"Human-readable status, for example Final/OT or 2nd 4:12\"},{\"name\":\"completed\",\"type\":\"BOOLEAN\",\"description\":\"Whether the game is complete\"},{\"name\":\"period\",\"type\":\"INTEGER\",\"description\":\"Quarter number, current or final; 5 or more means overtime\"},{\"name\":\"clock\",\"type\":\"VARCHAR\",\"description\":\"Game clock display for live games\"},{\"name\":\"home_team_id\",\"type\":\"INTEGER\",\"description\":\"ESPN team identifier (integer code) of the home club\"},{\"name\":\"home_team_abbreviation\",\"type\":\"VARCHAR\",\"description\":\"ESPN code of the home club, for example PHI\"},{\"name\":\"home_team_name\",\"type\":\"VARCHAR\",\"description\":\"Display name of the home club\"},{\"name\":\"home_score\",\"type\":\"INTEGER\",\"description\":\"Home club's score, in points; NULL before kickoff\"},{\"name\":\"home_record\",\"type\":\"VARCHAR\",\"description\":\"Home team's overall record after this game, as ESPN reports it\"},{\"name\":\"away_team_id\",\"type\":\"INTEGER\",\"description\":\"ESPN team identifier (integer code) of the away club\"},{\"name\":\"away_team_abbreviation\",\"type\":\"VARCHAR\",\"description\":\"ESPN code of the visiting club, for example DAL\"},{\"name\":\"away_team_name\",\"type\":\"VARCHAR\",\"description\":\"Display name of the visiting club\"},{\"name\":\"away_score\",\"type\":\"INTEGER\",\"description\":\"Visiting club's score, in points; NULL before kickoff\"},{\"name\":\"away_record\",\"type\":\"VARCHAR\",\"description\":\"Away team's overall record after this game, as ESPN reports it\"},{\"name\":\"winner_abbreviation\",\"type\":\"VARCHAR\",\"description\":\"Winning team abbreviation; NULL until decided or for a tie\"},{\"name\":\"venue\",\"type\":\"VARCHAR\",\"description\":\"Stadium name\"},{\"name\":\"venue_city\",\"type\":\"VARCHAR\",\"description\":\"Stadium city\"},{\"name\":\"venue_state\",\"type\":\"VARCHAR\",\"description\":\"Stadium state or province, when applicable\"},{\"name\":\"neutral_site\",\"type\":\"BOOLEAN\",\"description\":\"Whether the game is played at a neutral site\"},{\"name\":\"attendance\",\"type\":\"INTEGER\",\"description\":\"Reported crowd, in people; NULL or 0 before the game\"},{\"name\":\"broadcast\",\"type\":\"VARCHAR\",\"description\":\"National broadcast network(s), when listed\"}]"
+      },
+      null,
+      [],
+      [],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22597,
+      [
+        "SELECT short_name, status_detail, away_score, home_score FROM nfl.main.all_current_scoreboard() ORDER BY game_time"
+      ],
+      null,
+      [
+        "football",
+        "scores"
+      ]
+    ],
+    [
+      "nfl",
+      "22592",
+      "main",
+      "all_current_standings",
+      null,
+      "table",
+      "Current NFL division standings (scan behind current_standings)",
+      null,
+      {
+        "provider": "nfl",
+        "source": "ESPN site/core/common API (undocumented; ESPN terms apply)",
+        "vgi.category": "standings",
+        "vgi.doc_llm": "The scan behind current_standings. Prefer the table; use standings() for past seasons.",
+        "vgi.doc_md": "Returns ESPN's current division standings; selecting `current_standings` is clearer.",
+        "vgi.example_queries": "[{\"description\": \"Division leaders through the backing scan.\", \"sql\": \"SELECT division, team_name, wins, losses FROM nfl.main.all_current_standings() WHERE division_rank = 1 ORDER BY division\"}]",
+        "vgi.result_columns_schema": "[{\"name\":\"season\",\"type\":\"INTEGER\",\"description\":\"NFL season year (the year the season starts)\"},{\"name\":\"season_type\",\"type\":\"INTEGER\",\"description\":\"ESPN season-type code (not a count): 1 preseason, 2 regular season, 3 postseason\"},{\"name\":\"conference\",\"type\":\"VARCHAR\",\"description\":\"Conference abbreviation, AFC or NFC\"},{\"name\":\"conference_name\",\"type\":\"VARCHAR\",\"description\":\"Full conference name\"},{\"name\":\"division\",\"type\":\"VARCHAR\",\"description\":\"Division name, for example AFC East\"},{\"name\":\"division_rank\",\"type\":\"INTEGER\",\"description\":\"Position number 1-4 within the division (1 = leader), from ESPN's tiebreak seed order\"},{\"name\":\"playoff_seed\",\"type\":\"INTEGER\",\"description\":\"Conference seed 1-16 in ESPN's tiebreak order; 1-7 qualify\"},{\"name\":\"team_id\",\"type\":\"INTEGER\",\"description\":\"Stable ESPN team identifier (integer code, not a count); joins teams.team_id\"},{\"name\":\"team_abbreviation\",\"type\":\"VARCHAR\",\"description\":\"ESPN code for the club, for example KC or WSH\"},{\"name\":\"team_name\",\"type\":\"VARCHAR\",\"description\":\"Club display name, for example Kansas City Chiefs\"},{\"name\":\"wins\",\"type\":\"INTEGER\",\"description\":\"Count of games won this season\"},{\"name\":\"losses\",\"type\":\"INTEGER\",\"description\":\"Count of games lost this season\"},{\"name\":\"ties\",\"type\":\"INTEGER\",\"description\":\"Count of games tied after overtime this season\"},{\"name\":\"win_percentage\",\"type\":\"DECIMAL(4,3)\",\"description\":\"Fraction of games won (0-1), ties counted as half a win\"},{\"name\":\"games_back\",\"type\":\"DECIMAL(4,1)\",\"description\":\"Games behind the division leader, in games; the leader is 0.0\"},{\"name\":\"points_for\",\"type\":\"INTEGER\",\"description\":\"Count of points scored this season\"},{\"name\":\"points_against\",\"type\":\"INTEGER\",\"description\":\"Count of points allowed this season\"},{\"name\":\"point_differential\",\"type\":\"INTEGER\",\"description\":\"Points scored minus points allowed, in points\"},{\"name\":\"streak\",\"type\":\"VARCHAR\",\"description\":\"Current streak label, for example W3 or L1\"},{\"name\":\"streak_length\",\"type\":\"INTEGER\",\"description\":\"Signed streak length in games: positive for wins, negative for losses\"},{\"name\":\"home_record\",\"type\":\"VARCHAR\",\"description\":\"Home record as W-L or W-L-T\"},{\"name\":\"road_record\",\"type\":\"VARCHAR\",\"description\":\"Road record as W-L or W-L-T\"},{\"name\":\"division_record\",\"type\":\"VARCHAR\",\"description\":\"Record against division opponents\"},{\"name\":\"conference_record\",\"type\":\"VARCHAR\",\"description\":\"Record against conference opponents\"},{\"name\":\"clincher\",\"type\":\"VARCHAR\",\"description\":\"ESPN clinch marker: * top seed and bye, z division, y wild card, x playoff berth, e eliminated\"}]"
+      },
+      null,
+      [],
+      [],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22598,
+      [
+        "SELECT division, team_name, wins, losses FROM nfl.main.all_current_standings() WHERE division_rank = 1 ORDER BY division"
+      ],
+      null,
+      [
+        "football",
+        "standings"
+      ]
+    ],
+    [
+      "nfl",
+      "22592",
+      "main",
+      "all_current_week",
+      null,
+      "table",
+      "Current NFL season, phase, and week from Sleeper (scan behind current_week)",
+      null,
+      {
+        "provider": "nfl",
+        "source": "Sleeper public API",
+        "vgi.category": "calendar",
+        "vgi.doc_llm": "The scan behind current_week. Prefer the table.",
+        "vgi.doc_md": "Returns Sleeper's NFL state; selecting `current_week` is clearer.",
+        "vgi.example_queries": "[{\"description\": \"Current season and week through the backing scan.\", \"sql\": \"SELECT season, phase, week FROM nfl.main.all_current_week()\"}]",
+        "vgi.result_columns_schema": "[{\"name\":\"season\",\"type\":\"INTEGER\",\"description\":\"Current NFL season year according to Sleeper\"},{\"name\":\"phase\",\"type\":\"VARCHAR\",\"description\":\"Sleeper season phase: pre, regular, post, or off\"},{\"name\":\"week\",\"type\":\"INTEGER\",\"description\":\"Ordinal current week, which advances early in the week\"},{\"name\":\"display_week\",\"type\":\"INTEGER\",\"description\":\"Ordinal week Sleeper displays, normally the last week played\"},{\"name\":\"previous_season\",\"type\":\"INTEGER\",\"description\":\"Previous NFL season year\"},{\"name\":\"season_start_date\",\"type\":\"DATE\",\"description\":\"Date the regular season starts\"}]"
+      },
+      null,
+      [],
+      [],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22599,
+      [
+        "SELECT season, phase, week FROM nfl.main.all_current_week()"
+      ],
+      null,
+      [
+        "football",
+        "calendar"
+      ]
+    ],
+    [
+      "nfl",
+      "22592",
+      "main",
+      "all_players",
+      null,
+      "table",
+      "Every NFL player nflverse knows with cross-ids (scan behind players)",
+      null,
+      {
+        "provider": "nfl",
+        "source": "nflverse-data (CC-BY 4.0)",
+        "vgi.category": "players",
+        "vgi.doc_llm": "The scan behind the players table. Prefer selecting from the players table itself.",
+        "vgi.doc_md": "Returns the nflverse player directory; selecting `players` is normally clearer.",
+        "vgi.example_queries": "[{\"description\": \"Find a player's ids through the backing scan.\", \"sql\": \"SELECT gsis_id, espn_id, display_name FROM nfl.main.all_players() WHERE display_name = 'Patrick Mahomes'\"}]",
+        "vgi.result_columns_schema": "[{\"name\":\"gsis_id\",\"type\":\"VARCHAR\",\"description\":\"NFL GSIS player id, for example 00-0033873; joins nflverse tables\"},{\"name\":\"display_name\",\"type\":\"VARCHAR\",\"description\":\"Full player name\"},{\"name\":\"first_name\",\"type\":\"VARCHAR\",\"description\":\"Legal first name\"},{\"name\":\"last_name\",\"type\":\"VARCHAR\",\"description\":\"Family name\"},{\"name\":\"position\",\"type\":\"VARCHAR\",\"description\":\"Primary position code, for example QB or CB\"},{\"name\":\"position_group\",\"type\":\"VARCHAR\",\"description\":\"Position group, for example QB, WR, OL, or DB\"},{\"name\":\"birth_date\",\"type\":\"DATE\",\"description\":\"Date of birth\"},{\"name\":\"height_inches\",\"type\":\"INTEGER\",\"description\":\"Height in inches\"},{\"name\":\"weight_lbs\",\"type\":\"INTEGER\",\"description\":\"Weight in pounds\"},{\"name\":\"college\",\"type\":\"VARCHAR\",\"description\":\"School attended before the NFL\"},{\"name\":\"jersey_number\",\"type\":\"VARCHAR\",\"description\":\"Most recent uniform number\"},{\"name\":\"rookie_season\",\"type\":\"INTEGER\",\"description\":\"Year of the first NFL season played\"},{\"name\":\"last_season\",\"type\":\"INTEGER\",\"description\":\"Year of the most recent NFL season played\"},{\"name\":\"latest_team\",\"type\":\"VARCHAR\",\"description\":\"Most recent team (nflverse abbreviation)\"},{\"name\":\"status\",\"type\":\"VARCHAR\",\"description\":\"Roster status, for example ACT, RES, CUT, or RET\"},{\"name\":\"years_of_experience\",\"type\":\"INTEGER\",\"description\":\"Count of accrued NFL seasons\"},{\"name\":\"draft_year\",\"type\":\"INTEGER\",\"description\":\"Draft year; NULL if undrafted\"},{\"name\":\"draft_round\",\"type\":\"INTEGER\",\"description\":\"Ordinal round (1-7) the player was selected in\"},{\"name\":\"draft_pick\",\"type\":\"INTEGER\",\"description\":\"Ordinal overall selection number in the draft\"},{\"name\":\"draft_team\",\"type\":\"VARCHAR\",\"description\":\"Drafting team\"},{\"name\":\"espn_id\",\"type\":\"INTEGER\",\"description\":\"ESPN athlete id (integer code); joins athlete_id, feeds player_game_log()\"},{\"name\":\"pfr_id\",\"type\":\"VARCHAR\",\"description\":\"Pro Football Reference id\"},{\"name\":\"pff_id\",\"type\":\"VARCHAR\",\"description\":\"Pro Football Focus player identifier\"},{\"name\":\"nfl_id\",\"type\":\"VARCHAR\",\"description\":\"NFL.com id\"},{\"name\":\"esb_id\",\"type\":\"VARCHAR\",\"description\":\"NFL Elias (ESB) id\"},{\"name\":\"otc_id\",\"type\":\"VARCHAR\",\"description\":\"OverTheCap id\"}]"
+      },
+      null,
+      [],
+      [],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22600,
+      [
+        "SELECT gsis_id, espn_id, display_name FROM nfl.main.all_players() WHERE display_name = 'Patrick Mahomes'"
+      ],
+      null,
+      [
+        "football",
+        "players"
+      ]
+    ],
+    [
+      "nfl",
+      "22592",
+      "main",
+      "all_teams",
+      null,
+      "table",
+      "The 32 NFL franchises with ESPN ids and abbreviations (scan behind teams)",
+      null,
+      {
+        "provider": "nfl",
+        "source": "ESPN site/core/common API (undocumented; ESPN terms apply)",
+        "vgi.category": "teams",
+        "vgi.doc_llm": "The scan behind the teams table. Prefer the table.",
+        "vgi.doc_md": "Returns ESPN's NFL team list; selecting `teams` is clearer.",
+        "vgi.example_queries": "[{\"description\": \"Team ids through the backing scan.\", \"sql\": \"SELECT team_id, team_abbreviation, team_name FROM nfl.main.all_teams() ORDER BY team_name\"}]",
+        "vgi.result_columns_schema": "[{\"name\":\"team_id\",\"type\":\"INTEGER\",\"description\":\"Stable ESPN team identifier (integer code, not a count); joins teams.team_id\"},{\"name\":\"team_abbreviation\",\"type\":\"VARCHAR\",\"description\":\"ESPN team abbreviation, for example KC or WSH\"},{\"name\":\"team_name\",\"type\":\"VARCHAR\",\"description\":\"Full team name, for example Kansas City Chiefs\"},{\"name\":\"short_name\",\"type\":\"VARCHAR\",\"description\":\"Short display name, normally the nickname\"},{\"name\":\"location\",\"type\":\"VARCHAR\",\"description\":\"Team location or city name\"},{\"name\":\"nickname\",\"type\":\"VARCHAR\",\"description\":\"Team nickname\"},{\"name\":\"slug\",\"type\":\"VARCHAR\",\"description\":\"ESPN URL slug for the team\"},{\"name\":\"color\",\"type\":\"VARCHAR\",\"description\":\"Primary team color as a hex RGB string without '#'\"},{\"name\":\"alternate_color\",\"type\":\"VARCHAR\",\"description\":\"Alternate team color as a hex RGB string without '#'\"},{\"name\":\"is_active\",\"type\":\"BOOLEAN\",\"description\":\"Whether ESPN marks the franchise as active\"}]"
+      },
+      null,
+      [],
+      [],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22601,
+      [
+        "SELECT team_id, team_abbreviation, team_name FROM nfl.main.all_teams() ORDER BY team_name"
+      ],
+      null,
+      [
+        "football",
+        "teams"
+      ]
+    ],
+    [
+      "nfl",
+      "22592",
+      "main",
+      "box_score_player",
+      null,
+      "table",
+      "Player box score for one NFL game, one row per player (ESPN)",
+      null,
+      {
+        "provider": "nfl",
+        "source": "ESPN site/core/common API (undocumented; ESPN terms apply)",
+        "vgi.category": "game-detail",
+        "vgi.doc_llm": "One row per player who recorded a stat, merging ESPN's passing, rushing, receiving, fumbles, defense, interception, return, kicking, and punting tables. Columns for categories a player did not record are NULL. The single positional argument is ESPN's game id as text (from scoreboard(), team_schedule(), or schedule().espn_game_id). Works for live and completed games.",
+        "vgi.doc_md": "Player box score for one NFL game, one row per player (ESPN). Backed by one cached ESPN game-summary request.",
+        "vgi.example_queries": "[{\"description\": \"Leading rushers in the 2025 season opener.\", \"sql\": \"SELECT athlete_name, team_abbreviation, rush_attempts, rush_yards, rush_touchdowns FROM nfl.main.box_score_player('401772510') WHERE rush_attempts > 0 ORDER BY rush_yards DESC\"}]",
+        "vgi.result_columns_schema": "[{\"name\":\"game_id\",\"type\":\"VARCHAR\",\"description\":\"ESPN event id\"},{\"name\":\"team_id\",\"type\":\"INTEGER\",\"description\":\"ESPN team id\"},{\"name\":\"team_abbreviation\",\"type\":\"VARCHAR\",\"description\":\"Team abbreviation\"},{\"name\":\"athlete_id\",\"type\":\"INTEGER\",\"description\":\"ESPN athlete id\"},{\"name\":\"athlete_name\",\"type\":\"VARCHAR\",\"description\":\"Player name\"},{\"name\":\"jersey\",\"type\":\"VARCHAR\",\"description\":\"Uniform number\"},{\"name\":\"pass_completions\",\"type\":\"INTEGER\",\"description\":\"Completions\"},{\"name\":\"pass_attempts\",\"type\":\"INTEGER\",\"description\":\"Pass attempts\"},{\"name\":\"pass_yards\",\"type\":\"INTEGER\",\"description\":\"Passing yards\"},{\"name\":\"pass_touchdowns\",\"type\":\"INTEGER\",\"description\":\"Passing TDs\"},{\"name\":\"interceptions_thrown\",\"type\":\"INTEGER\",\"description\":\"Interceptions thrown\"},{\"name\":\"sacks_taken\",\"type\":\"INTEGER\",\"description\":\"Times sacked\"},{\"name\":\"sack_yards_lost\",\"type\":\"INTEGER\",\"description\":\"Sack yards lost\"},{\"name\":\"passer_rating\",\"type\":\"DECIMAL(6,1)\",\"description\":\"NFL passer rating\"},{\"name\":\"qbr\",\"type\":\"DECIMAL(6,1)\",\"description\":\"ESPN adjusted QBR\"},{\"name\":\"rush_attempts\",\"type\":\"INTEGER\",\"description\":\"Carries\"},{\"name\":\"rush_yards\",\"type\":\"INTEGER\",\"description\":\"Rushing yards\"},{\"name\":\"rush_touchdowns\",\"type\":\"INTEGER\",\"description\":\"Rushing TDs\"},{\"name\":\"rush_long\",\"type\":\"INTEGER\",\"description\":\"Longest rush\"},{\"name\":\"receptions\",\"type\":\"INTEGER\",\"description\":\"Receptions\"},{\"name\":\"targets\",\"type\":\"INTEGER\",\"description\":\"Targets\"},{\"name\":\"receiving_yards\",\"type\":\"INTEGER\",\"description\":\"Receiving yards\"},{\"name\":\"receiving_touchdowns\",\"type\":\"INTEGER\",\"description\":\"Receiving TDs\"},{\"name\":\"receiving_long\",\"type\":\"INTEGER\",\"description\":\"Longest reception\"},{\"name\":\"fumbles\",\"type\":\"INTEGER\",\"description\":\"Fumbles\"},{\"name\":\"fumbles_lost\",\"type\":\"INTEGER\",\"description\":\"Fumbles lost\"},{\"name\":\"tackles\",\"type\":\"INTEGER\",\"description\":\"Total tackles\"},{\"name\":\"solo_tackles\",\"type\":\"INTEGER\",\"description\":\"Solo tackles\"},{\"name\":\"sacks\",\"type\":\"DECIMAL(6,1)\",\"description\":\"Sacks; half sacks allowed\"},{\"name\":\"tackles_for_loss\",\"type\":\"INTEGER\",\"description\":\"Tackles for loss\"},{\"name\":\"passes_defended\",\"type\":\"INTEGER\",\"description\":\"Passes defended\"},{\"name\":\"qb_hits\",\"type\":\"INTEGER\",\"description\":\"QB hits\"},{\"name\":\"defensive_touchdowns\",\"type\":\"INTEGER\",\"description\":\"Defensive TDs\"},{\"name\":\"interceptions\",\"type\":\"INTEGER\",\"description\":\"Interceptions made\"},{\"name\":\"interception_yards\",\"type\":\"INTEGER\",\"description\":\"Interception return yards\"},{\"name\":\"kick_returns\",\"type\":\"INTEGER\",\"description\":\"Kick returns\"},{\"name\":\"kick_return_yards\",\"type\":\"INTEGER\",\"description\":\"Kick return yards\"},{\"name\":\"kick_return_touchdowns\",\"type\":\"INTEGER\",\"description\":\"Kick return TDs\"},{\"name\":\"punt_returns\",\"type\":\"INTEGER\",\"description\":\"Punt returns\"},{\"name\":\"punt_return_yards\",\"type\":\"INTEGER\",\"description\":\"Punt return yards\"},{\"name\":\"punt_return_touchdowns\",\"type\":\"INTEGER\",\"description\":\"Punt return TDs\"},{\"name\":\"field_goals_made\",\"type\":\"INTEGER\",\"description\":\"Field goals made\"},{\"name\":\"field_goals_attempted\",\"type\":\"INTEGER\",\"description\":\"Field goals attempted\"},{\"name\":\"field_goal_long\",\"type\":\"INTEGER\",\"description\":\"Longest field goal\"},{\"name\":\"extra_points_made\",\"type\":\"INTEGER\",\"description\":\"Extra points made\"},{\"name\":\"extra_points_attempted\",\"type\":\"INTEGER\",\"description\":\"Extra points attempted\"},{\"name\":\"kicking_points\",\"type\":\"INTEGER\",\"description\":\"Kicking points\"},{\"name\":\"punts\",\"type\":\"INTEGER\",\"description\":\"Punts\"},{\"name\":\"punt_yards\",\"type\":\"INTEGER\",\"description\":\"Gross punt yards\"},{\"name\":\"punts_inside_20\",\"type\":\"INTEGER\",\"description\":\"Punts inside the 20\"}]"
+      },
+      null,
+      [
+        "game_id"
+      ],
+      [
+        "VARCHAR"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22602,
+      [
+        "SELECT athlete_name, team_abbreviation, rush_attempts, rush_yards, rush_touchdowns FROM nfl.main.box_score_player('401772510') WHERE rush_attempts > 0 ORDER BY rush_yards DESC"
+      ],
+      null,
+      [
+        "football",
+        "game-detail"
+      ]
+    ],
+    [
+      "nfl",
+      "22592",
+      "main",
+      "box_score_team",
+      null,
+      "table",
+      "Team box score for one NFL game: yards, downs, turnovers, possession (ESPN)",
+      null,
+      {
+        "provider": "nfl",
+        "source": "ESPN site/core/common API (undocumented; ESPN terms apply)",
+        "vgi.category": "game-detail",
+        "vgi.doc_llm": "Two rows, one per team: first downs, third/fourth-down conversions, total yards, passing and rushing splits, red zone, penalties, turnovers, and time of possession. The single positional argument is ESPN's game id as text (from scoreboard(), team_schedule(), or schedule().espn_game_id). Works for live and completed games.",
+        "vgi.doc_md": "Team box score for one NFL game: yards, downs, turnovers, possession (ESPN). Backed by one cached ESPN game-summary request.",
+        "vgi.example_queries": "[{\"description\": \"Team totals from the 2025 season opener.\", \"sql\": \"SELECT team_abbreviation, total_yards, passing_yards, rushing_yards, turnovers, possession_seconds FROM nfl.main.box_score_team('401772510')\"}]",
+        "vgi.result_columns_schema": "[{\"name\":\"game_id\",\"type\":\"VARCHAR\",\"description\":\"ESPN event identifier\"},{\"name\":\"team_id\",\"type\":\"INTEGER\",\"description\":\"ESPN team identifier\"},{\"name\":\"team_abbreviation\",\"type\":\"VARCHAR\",\"description\":\"Team abbreviation\"},{\"name\":\"team_name\",\"type\":\"VARCHAR\",\"description\":\"Team name\"},{\"name\":\"home_away\",\"type\":\"VARCHAR\",\"description\":\"home or away\"},{\"name\":\"first_downs\",\"type\":\"INTEGER\",\"description\":\"First downs\"},{\"name\":\"first_downs_passing\",\"type\":\"INTEGER\",\"description\":\"First downs by pass\"},{\"name\":\"first_downs_rushing\",\"type\":\"INTEGER\",\"description\":\"First downs by rush\"},{\"name\":\"first_downs_penalty\",\"type\":\"INTEGER\",\"description\":\"First downs by penalty\"},{\"name\":\"third_down_conversions\",\"type\":\"INTEGER\",\"description\":\"Third downs converted\"},{\"name\":\"third_down_attempts\",\"type\":\"INTEGER\",\"description\":\"Third downs attempted\"},{\"name\":\"fourth_down_conversions\",\"type\":\"INTEGER\",\"description\":\"Fourth downs converted\"},{\"name\":\"fourth_down_attempts\",\"type\":\"INTEGER\",\"description\":\"Fourth downs attempted\"},{\"name\":\"total_plays\",\"type\":\"INTEGER\",\"description\":\"Offensive plays\"},{\"name\":\"total_yards\",\"type\":\"INTEGER\",\"description\":\"Total net yards\"},{\"name\":\"yards_per_play\",\"type\":\"DECIMAL(6,1)\",\"description\":\"Net yards per offensive play\"},{\"name\":\"total_drives\",\"type\":\"INTEGER\",\"description\":\"Offensive drives\"},{\"name\":\"passing_yards\",\"type\":\"INTEGER\",\"description\":\"Net passing yards (after sack yardage)\"},{\"name\":\"pass_completions\",\"type\":\"INTEGER\",\"description\":\"Completed passes\"},{\"name\":\"pass_attempts\",\"type\":\"INTEGER\",\"description\":\"Pass attempts\"},{\"name\":\"yards_per_pass\",\"type\":\"DECIMAL(6,1)\",\"description\":\"Net yards per pass play\"},{\"name\":\"interceptions_thrown\",\"type\":\"INTEGER\",\"description\":\"Interceptions thrown\"},{\"name\":\"sacks_allowed\",\"type\":\"INTEGER\",\"description\":\"Times sacked\"},{\"name\":\"sack_yards_lost\",\"type\":\"INTEGER\",\"description\":\"Yards lost to sacks\"},{\"name\":\"rushing_yards\",\"type\":\"INTEGER\",\"description\":\"Rushing yards\"},{\"name\":\"rushing_attempts\",\"type\":\"INTEGER\",\"description\":\"Rushing attempts\"},{\"name\":\"yards_per_rush\",\"type\":\"DECIMAL(6,1)\",\"description\":\"Yards per rushing attempt\"},{\"name\":\"red_zone_conversions\",\"type\":\"INTEGER\",\"description\":\"Red-zone trips ending in a touchdown\"},{\"name\":\"red_zone_attempts\",\"type\":\"INTEGER\",\"description\":\"Red-zone trips\"},{\"name\":\"penalties\",\"type\":\"INTEGER\",\"description\":\"Accepted penalties\"},{\"name\":\"penalty_yards\",\"type\":\"INTEGER\",\"description\":\"Penalty yards\"},{\"name\":\"turnovers\",\"type\":\"INTEGER\",\"description\":\"Turnovers committed\"},{\"name\":\"fumbles_lost\",\"type\":\"INTEGER\",\"description\":\"Fumbles lost\"},{\"name\":\"defensive_touchdowns\",\"type\":\"INTEGER\",\"description\":\"Defensive and return touchdowns\"},{\"name\":\"possession_seconds\",\"type\":\"INTEGER\",\"description\":\"Time of possession in seconds\"}]"
+      },
+      null,
+      [
+        "game_id"
+      ],
+      [
+        "VARCHAR"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22603,
+      [
+        "SELECT team_abbreviation, total_yards, passing_yards, rushing_yards, turnovers, possession_seconds FROM nfl.main.box_score_team('401772510')"
+      ],
+      null,
+      [
+        "football",
+        "game-detail"
+      ]
+    ],
+    [
+      "nfl",
+      "22592",
+      "main",
+      "combine",
+      null,
+      "table",
+      "NFL Scouting Combine measurements and drills since 2000 (nflverse)",
+      null,
+      {
+        "provider": "nfl",
+        "source": "nflverse-data (CC-BY 4.0)",
+        "vgi.category": "draft",
+        "vgi.doc_llm": "One row per Scouting Combine invitee since 2000 from nflverse: height, weight, 40-yard dash, bench press, vertical, broad jump, 3-cone and shuttle, plus draft outcome. Filter by season (combine year).",
+        "vgi.doc_md": "nflverse combine results. Missing drills are NULL.",
+        "vgi.example_queries": "[{\"description\": \"Fastest 40-yard dashes at the 2025 combine.\", \"sql\": \"SELECT player_name, position, school, forty FROM nfl.main.combine(season := 2025) WHERE forty IS NOT NULL ORDER BY forty LIMIT 10\"}]",
+        "vgi.result_columns_schema": "[{\"name\":\"season\",\"type\":\"INTEGER\",\"description\":\"Combine year\"},{\"name\":\"player_name\",\"type\":\"VARCHAR\",\"description\":\"Player name\"},{\"name\":\"position\",\"type\":\"VARCHAR\",\"description\":\"Position\"},{\"name\":\"school\",\"type\":\"VARCHAR\",\"description\":\"College\"},{\"name\":\"height\",\"type\":\"VARCHAR\",\"description\":\"Height as feet-inches, for example 6-3\"},{\"name\":\"weight_lbs\",\"type\":\"INTEGER\",\"description\":\"Weight in pounds\"},{\"name\":\"forty\",\"type\":\"DOUBLE\",\"description\":\"40-yard dash in seconds\"},{\"name\":\"bench\",\"type\":\"INTEGER\",\"description\":\"225-lb bench press repetitions\"},{\"name\":\"vertical\",\"type\":\"DOUBLE\",\"description\":\"Vertical jump in inches\"},{\"name\":\"broad_jump\",\"type\":\"INTEGER\",\"description\":\"Broad jump in inches\"},{\"name\":\"cone\",\"type\":\"DOUBLE\",\"description\":\"3-cone drill in seconds\"},{\"name\":\"shuttle\",\"type\":\"DOUBLE\",\"description\":\"20-yard shuttle in seconds\"},{\"name\":\"draft_year\",\"type\":\"INTEGER\",\"description\":\"Draft year, if drafted\"},{\"name\":\"draft_team\",\"type\":\"VARCHAR\",\"description\":\"Drafting team, if drafted\"},{\"name\":\"draft_round\",\"type\":\"INTEGER\",\"description\":\"Draft round, if drafted\"},{\"name\":\"draft_pick\",\"type\":\"INTEGER\",\"description\":\"Overall pick, if drafted\"},{\"name\":\"pfr_id\",\"type\":\"VARCHAR\",\"description\":\"Pro Football Reference player id\"},{\"name\":\"cfb_id\",\"type\":\"VARCHAR\",\"description\":\"Sports Reference college football id\"}]"
+      },
+      null,
+      [
+        "season"
+      ],
+      [
+        "INTEGER"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22604,
+      [
+        "SELECT player_name, position, school, forty FROM nfl.main.combine(season := 2025) WHERE forty IS NOT NULL ORDER BY forty LIMIT 10"
+      ],
+      null,
+      [
+        "football",
+        "draft"
+      ]
+    ],
+    [
+      "nfl",
+      "22592",
+      "main",
+      "depth_chart",
+      null,
+      "table",
+      "One NFL team's current depth chart by formation and slot (ESPN)",
+      null,
+      {
+        "provider": "nfl",
+        "source": "ESPN site/core/common API (undocumented; ESPN terms apply)",
+        "vgi.category": "rosters",
+        "vgi.doc_llm": "One row per player per depth-chart slot for a team's current offense, defense, and special-teams formations from ESPN. depth = 1 is the starter. Names come from the team's current roster.",
+        "vgi.doc_md": "ESPN current depth chart; `depth` 1 is the starter in each slot.",
+        "vgi.example_queries": "[{\"description\": \"Kansas City's offensive starters.\", \"sql\": \"SELECT position, athlete_name FROM nfl.main.depth_chart('KC') WHERE depth = 1 AND formation NOT IN ('Special Teams') ORDER BY formation, position\"}]",
+        "vgi.result_columns_schema": "[{\"name\":\"team_id\",\"type\":\"INTEGER\",\"description\":\"ESPN team identifier\"},{\"name\":\"team_abbreviation\",\"type\":\"VARCHAR\",\"description\":\"Team abbreviation\"},{\"name\":\"season\",\"type\":\"INTEGER\",\"description\":\"Season of the depth chart\"},{\"name\":\"formation\",\"type\":\"VARCHAR\",\"description\":\"Formation name, for example 3WR 1TE, Base 4-3 D, or Special Teams\"},{\"name\":\"position_key\",\"type\":\"VARCHAR\",\"description\":\"ESPN depth-chart slot key, for example qb, lt, or lcb\"},{\"name\":\"position\",\"type\":\"VARCHAR\",\"description\":\"Position abbreviation for the slot\"},{\"name\":\"position_name\",\"type\":\"VARCHAR\",\"description\":\"Position name for the slot\"},{\"name\":\"depth\",\"type\":\"INTEGER\",\"description\":\"Depth order within the slot: 1 is the starter\"},{\"name\":\"athlete_id\",\"type\":\"INTEGER\",\"description\":\"ESPN athlete identifier\"},{\"name\":\"athlete_name\",\"type\":\"VARCHAR\",\"description\":\"Player name from the current team roster; NULL if not listed\"},{\"name\":\"jersey\",\"type\":\"VARCHAR\",\"description\":\"Uniform number from the current team roster\"}]"
+      },
+      null,
+      [
+        "team"
+      ],
+      [
+        "VARCHAR"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22605,
+      [
+        "SELECT position, athlete_name FROM nfl.main.depth_chart('KC') WHERE depth = 1 AND formation NOT IN ('Special Teams') ORDER BY formation, position"
+      ],
+      null,
+      [
+        "football",
+        "rosters"
+      ]
+    ],
+    [
+      "nfl",
+      "22592",
+      "main",
+      "draft",
+      null,
+      "table",
+      "NFL draft picks since 1980 with career value and honors (nflverse)",
+      null,
+      {
+        "provider": "nfl",
+        "source": "nflverse-data (CC-BY 4.0)",
+        "vgi.category": "draft",
+        "vgi.doc_llm": "One row per NFL draft pick since 1980 from nflverse: round, overall pick, team, position, college, and career outcomes (games, Pro Bowls, All-Pro, Hall of Fame, approximate value, and career box-score totals). Filter by season (draft year) and team.",
+        "vgi.doc_md": "nflverse draft picks with Pro Football Reference career outcomes.",
+        "vgi.example_queries": "[{\"description\": \"First round of the 2025 draft.\", \"sql\": \"SELECT pick, team, player_name, position, college FROM nfl.main.draft(season := 2025) WHERE draft_round = 1 ORDER BY pick\"}]",
+        "vgi.result_columns_schema": "[{\"name\":\"season\",\"type\":\"INTEGER\",\"description\":\"Draft year\"},{\"name\":\"draft_round\",\"type\":\"INTEGER\",\"description\":\"Round\"},{\"name\":\"pick\",\"type\":\"INTEGER\",\"description\":\"Overall pick number\"},{\"name\":\"team\",\"type\":\"VARCHAR\",\"description\":\"Drafting team (nflverse abbreviation; older picks keep era codes like OAK)\"},{\"name\":\"gsis_id\",\"type\":\"VARCHAR\",\"description\":\"GSIS id once the player reached the NFL\"},{\"name\":\"pfr_player_id\",\"type\":\"VARCHAR\",\"description\":\"Pro Football Reference player id\"},{\"name\":\"player_name\",\"type\":\"VARCHAR\",\"description\":\"Player name\"},{\"name\":\"position\",\"type\":\"VARCHAR\",\"description\":\"Position\"},{\"name\":\"category\",\"type\":\"VARCHAR\",\"description\":\"Position category, for example OL or DB\"},{\"name\":\"side\",\"type\":\"VARCHAR\",\"description\":\"O, D, or S (special teams)\"},{\"name\":\"college\",\"type\":\"VARCHAR\",\"description\":\"College\"},{\"name\":\"age\",\"type\":\"INTEGER\",\"description\":\"Age at the draft\"},{\"name\":\"last_season\",\"type\":\"INTEGER\",\"description\":\"Last season played\"},{\"name\":\"hall_of_fame\",\"type\":\"BOOLEAN\",\"description\":\"Hall of Fame inductee\"},{\"name\":\"all_pro\",\"type\":\"INTEGER\",\"description\":\"First-team All-Pro selections\"},{\"name\":\"pro_bowls\",\"type\":\"INTEGER\",\"description\":\"Pro Bowl selections\"},{\"name\":\"seasons_started\",\"type\":\"INTEGER\",\"description\":\"Seasons as a primary starter\"},{\"name\":\"weighted_av\",\"type\":\"INTEGER\",\"description\":\"PFR weighted career approximate value\"},{\"name\":\"drafting_team_av\",\"type\":\"INTEGER\",\"description\":\"Approximate value for the drafting team\"},{\"name\":\"games\",\"type\":\"INTEGER\",\"description\":\"Career games\"},{\"name\":\"pass_yards\",\"type\":\"INTEGER\",\"description\":\"Career passing yards\"},{\"name\":\"pass_tds\",\"type\":\"INTEGER\",\"description\":\"Career passing TDs\"},{\"name\":\"rush_yards\",\"type\":\"INTEGER\",\"description\":\"Career rushing yards\"},{\"name\":\"rush_tds\",\"type\":\"INTEGER\",\"description\":\"Career rushing TDs\"},{\"name\":\"receptions\",\"type\":\"INTEGER\",\"description\":\"Career receptions\"},{\"name\":\"rec_yards\",\"type\":\"INTEGER\",\"description\":\"Career receiving yards\"},{\"name\":\"rec_tds\",\"type\":\"INTEGER\",\"description\":\"Career receiving TDs\"},{\"name\":\"def_solo_tackles\",\"type\":\"INTEGER\",\"description\":\"Career solo tackles\"},{\"name\":\"def_ints\",\"type\":\"INTEGER\",\"description\":\"Career interceptions\"},{\"name\":\"def_sacks\",\"type\":\"DOUBLE\",\"description\":\"Career sacks\"}]"
+      },
+      null,
+      [
+        "team",
+        "season"
+      ],
+      [
+        "VARCHAR",
+        "INTEGER"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22606,
+      [
+        "SELECT pick, team, player_name, position, college FROM nfl.main.draft(season := 2025) WHERE draft_round = 1 ORDER BY pick"
+      ],
+      null,
+      [
+        "football",
+        "draft"
+      ]
+    ],
+    [
+      "nfl",
+      "22592",
+      "main",
+      "drives",
+      null,
+      "table",
+      "Drive chart for one NFL game: start, end, plays, yards, result (ESPN)",
+      null,
+      {
+        "provider": "nfl",
+        "source": "ESPN site/core/common API (undocumented; ESPN terms apply)",
+        "vgi.category": "game-detail",
+        "vgi.doc_llm": "One row per drive with the offense, field position, plays, yards, duration, and result. The single positional argument is ESPN's game id as text (from scoreboard(), team_schedule(), or schedule().espn_game_id). Works for live and completed games.",
+        "vgi.doc_md": "Drive chart for one NFL game: start, end, plays, yards, result (ESPN). Backed by one cached ESPN game-summary request.",
+        "vgi.example_queries": "[{\"description\": \"Scoring drives in the 2025 season opener.\", \"sql\": \"SELECT drive_number, team_abbreviation, plays, yards, result FROM nfl.main.drives('401772510') WHERE is_score ORDER BY drive_number\"}]",
+        "vgi.result_columns_schema": "[{\"name\":\"game_id\",\"type\":\"VARCHAR\",\"description\":\"ESPN event identifier\"},{\"name\":\"drive_number\",\"type\":\"INTEGER\",\"description\":\"Drive order within the game, starting at 1\"},{\"name\":\"drive_id\",\"type\":\"VARCHAR\",\"description\":\"ESPN drive identifier\"},{\"name\":\"team_id\",\"type\":\"INTEGER\",\"description\":\"ESPN identifier of the offense\"},{\"name\":\"team_abbreviation\",\"type\":\"VARCHAR\",\"description\":\"Abbreviation of the offense\"},{\"name\":\"start_period\",\"type\":\"INTEGER\",\"description\":\"Quarter the drive started in\"},{\"name\":\"start_clock\",\"type\":\"VARCHAR\",\"description\":\"Game clock when the drive started\"},{\"name\":\"start_field_position\",\"type\":\"VARCHAR\",\"description\":\"Starting field position, for example DAL 25\"},{\"name\":\"end_period\",\"type\":\"INTEGER\",\"description\":\"Quarter the drive ended in\"},{\"name\":\"end_clock\",\"type\":\"VARCHAR\",\"description\":\"Game clock when the drive ended\"},{\"name\":\"end_field_position\",\"type\":\"VARCHAR\",\"description\":\"Ending field position\"},{\"name\":\"plays\",\"type\":\"INTEGER\",\"description\":\"Offensive plays in the drive\"},{\"name\":\"yards\",\"type\":\"INTEGER\",\"description\":\"Net yards gained\"},{\"name\":\"duration_seconds\",\"type\":\"INTEGER\",\"description\":\"Time of possession for the drive in seconds\"},{\"name\":\"result\",\"type\":\"VARCHAR\",\"description\":\"Drive result, for example Touchdown, Punt, or Field Goal\"},{\"name\":\"is_score\",\"type\":\"BOOLEAN\",\"description\":\"Whether the drive produced points\"},{\"name\":\"description\",\"type\":\"VARCHAR\",\"description\":\"ESPN summary, for example 6 plays, 53 yards, 3:11\"}]"
+      },
+      null,
+      [
+        "game_id"
+      ],
+      [
+        "VARCHAR"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22607,
+      [
+        "SELECT drive_number, team_abbreviation, plays, yards, result FROM nfl.main.drives('401772510') WHERE is_score ORDER BY drive_number"
+      ],
+      null,
+      [
+        "football",
+        "game-detail"
+      ]
+    ],
+    [
+      "nfl",
+      "22592",
+      "main",
+      "game_summary",
+      null,
+      "table",
+      "One NFL game's status, score by quarter, venue, and referee (ESPN)",
+      null,
+      {
+        "provider": "nfl",
+        "source": "ESPN site/core/common API (undocumented; ESPN terms apply)",
+        "vgi.category": "game-detail",
+        "vgi.doc_llm": "One row describing a game: teams, status, final score, quarter-by-quarter points. The single positional argument is ESPN's game id as text (from scoreboard(), team_schedule(), or schedule().espn_game_id). Works for live and completed games.",
+        "vgi.doc_md": "One NFL game's status, score by quarter, venue, and referee (ESPN). Backed by one cached ESPN game-summary request.",
+        "vgi.example_queries": "[{\"description\": \"Score by quarter of the 2025 season opener.\", \"sql\": \"SELECT away_team_abbreviation, away_q1, away_q2, away_q3, away_q4, away_score, home_team_abbreviation, home_q1, home_q2, home_q3, home_q4, home_score FROM nfl.main.game_summary('401772510')\"}]",
+        "vgi.result_columns_schema": "[{\"name\":\"game_id\",\"type\":\"VARCHAR\",\"description\":\"ESPN event identifier; pass it to game_summary() and box scores\"},{\"name\":\"season\",\"type\":\"INTEGER\",\"description\":\"NFL season year (the year the season starts)\"},{\"name\":\"season_type\",\"type\":\"INTEGER\",\"description\":\"ESPN season-type code (not a count): 1 preseason, 2 regular season, 3 postseason\"},{\"name\":\"week\",\"type\":\"INTEGER\",\"description\":\"Ordinal week number (1-18 regular season) within the season type\"},{\"name\":\"game_time\",\"type\":\"TIMESTAMP WITH TIME ZONE\",\"description\":\"Scheduled kickoff time in UTC\"},{\"name\":\"name\",\"type\":\"VARCHAR\",\"description\":\"Matchup name, for example Dallas Cowboys at Philadelphia Eagles\"},{\"name\":\"short_name\",\"type\":\"VARCHAR\",\"description\":\"Short matchup name, for example DAL @ PHI\"},{\"name\":\"status\",\"type\":\"VARCHAR\",\"description\":\"ESPN status code, for example STATUS_SCHEDULED or STATUS_FINAL\"},{\"name\":\"status_state\",\"type\":\"VARCHAR\",\"description\":\"Game state: pre, in, or post\"},{\"name\":\"status_detail\",\"type\":\"VARCHAR\",\"description\":\"Human-readable status, for example Final/OT or 2nd 4:12\"},{\"name\":\"completed\",\"type\":\"BOOLEAN\",\"description\":\"Whether the game is complete\"},{\"name\":\"period\",\"type\":\"INTEGER\",\"description\":\"Quarter number, current or final; 5 or more means overtime\"},{\"name\":\"clock\",\"type\":\"VARCHAR\",\"description\":\"Game clock display for live games\"},{\"name\":\"home_team_id\",\"type\":\"INTEGER\",\"description\":\"ESPN team identifier (integer code) of the home club\"},{\"name\":\"home_team_abbreviation\",\"type\":\"VARCHAR\",\"description\":\"ESPN code of the home club, for example PHI\"},{\"name\":\"home_team_name\",\"type\":\"VARCHAR\",\"description\":\"Display name of the home club\"},{\"name\":\"home_score\",\"type\":\"INTEGER\",\"description\":\"Home club's score, in points; NULL before kickoff\"},{\"name\":\"away_team_id\",\"type\":\"INTEGER\",\"description\":\"ESPN team identifier (integer code) of the away club\"},{\"name\":\"away_team_abbreviation\",\"type\":\"VARCHAR\",\"description\":\"ESPN code of the visiting club, for example DAL\"},{\"name\":\"away_team_name\",\"type\":\"VARCHAR\",\"description\":\"Display name of the visiting club\"},{\"name\":\"away_score\",\"type\":\"INTEGER\",\"description\":\"Visiting club's score, in points; NULL before kickoff\"},{\"name\":\"winner_abbreviation\",\"type\":\"VARCHAR\",\"description\":\"Winning team abbreviation; NULL until decided or for a tie\"},{\"name\":\"venue\",\"type\":\"VARCHAR\",\"description\":\"Stadium name\"},{\"name\":\"venue_city\",\"type\":\"VARCHAR\",\"description\":\"Stadium city\"},{\"name\":\"venue_state\",\"type\":\"VARCHAR\",\"description\":\"Stadium state or province, when applicable\"},{\"name\":\"neutral_site\",\"type\":\"BOOLEAN\",\"description\":\"Whether the game is played at a neutral site\"},{\"name\":\"attendance\",\"type\":\"INTEGER\",\"description\":\"Reported crowd, in people; NULL or 0 before the game\"},{\"name\":\"home_q1\",\"type\":\"INTEGER\",\"description\":\"Home points in the first quarter\"},{\"name\":\"home_q2\",\"type\":\"INTEGER\",\"description\":\"Home points in the second quarter\"},{\"name\":\"home_q3\",\"type\":\"INTEGER\",\"description\":\"Home points in the third quarter\"},{\"name\":\"home_q4\",\"type\":\"INTEGER\",\"description\":\"Home points in the fourth quarter\"},{\"name\":\"home_ot\",\"type\":\"INTEGER\",\"description\":\"Home points in overtime; NULL when the game had no overtime\"},{\"name\":\"away_q1\",\"type\":\"INTEGER\",\"description\":\"Away points in the first quarter\"},{\"name\":\"away_q2\",\"type\":\"INTEGER\",\"description\":\"Away points in the second quarter\"},{\"name\":\"away_q3\",\"type\":\"INTEGER\",\"description\":\"Away points in the third quarter\"},{\"name\":\"away_q4\",\"type\":\"INTEGER\",\"description\":\"Away points in the fourth quarter\"},{\"name\":\"away_ot\",\"type\":\"INTEGER\",\"description\":\"Away points in overtime; NULL when the game had no overtime\"},{\"name\":\"grass\",\"type\":\"BOOLEAN\",\"description\":\"Whether ESPN lists a natural-grass surface\"},{\"name\":\"referee\",\"type\":\"VARCHAR\",\"description\":\"Name of the referee (crew chief)\"}]"
+      },
+      null,
+      [
+        "game_id"
+      ],
+      [
+        "VARCHAR"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22608,
+      [
+        "SELECT away_team_abbreviation, away_q1, away_q2, away_q3, away_q4, away_score, home_team_abbreviation, home_q1, home_q2, home_q3, home_q4, home_score FROM nfl.main.game_summary('401772510')"
+      ],
+      null,
+      [
+        "football",
+        "game-detail"
+      ]
+    ],
+    [
+      "nfl",
+      "22592",
+      "main",
+      "ngs_passing",
+      null,
+      "table",
+      "NFL Next Gen Stats passing metrics by week and season since 2016 (nflverse)",
+      null,
+      {
+        "provider": "nfl",
+        "source": "nflverse-data (CC-BY 4.0)",
+        "vgi.category": "next-gen-stats",
+        "vgi.doc_llm": "NFL Next Gen Stats passing tracking metrics from nflverse, one row per qualifying player per week since 2016. Includes time to throw, air yards, aggressiveness, and completion percentage above expectation. Week 0 rows are full-season aggregates, so filter week := 0 for season leaderboards. Filter by season, week, and team.",
+        "vgi.doc_md": "Next Gen Stats passing data. Only qualifying players appear each week.",
+        "vgi.example_queries": "[{\"description\": \"2025 season leaders in completion percentage above expectation.\", \"sql\": \"SELECT player_display_name, team, attempts, completion_percentage_above_expectation FROM nfl.main.ngs_passing(season := 2025, week := 0) WHERE season_type = 'REG' ORDER BY completion_percentage_above_expectation DESC LIMIT 10\"}]",
+        "vgi.result_columns_schema": "[{\"name\":\"season\",\"type\":\"INTEGER\",\"description\":\"Season\"},{\"name\":\"season_type\",\"type\":\"VARCHAR\",\"description\":\"REG or POST\"},{\"name\":\"week\",\"type\":\"INTEGER\",\"description\":\"Week; 0 is the full-season aggregate row\"},{\"name\":\"player_gsis_id\",\"type\":\"VARCHAR\",\"description\":\"NFL GSIS player id, for example 00-0033873; joins nflverse tables\"},{\"name\":\"player_display_name\",\"type\":\"VARCHAR\",\"description\":\"Player name\"},{\"name\":\"player_position\",\"type\":\"VARCHAR\",\"description\":\"Position\"},{\"name\":\"team\",\"type\":\"VARCHAR\",\"description\":\"nflverse team abbreviation (NGS's LAR is normalized to LA)\"},{\"name\":\"attempts\",\"type\":\"INTEGER\",\"description\":\"Pass attempts\"},{\"name\":\"completions\",\"type\":\"INTEGER\",\"description\":\"Completions\"},{\"name\":\"pass_yards\",\"type\":\"INTEGER\",\"description\":\"Passing yards\"},{\"name\":\"pass_touchdowns\",\"type\":\"INTEGER\",\"description\":\"Passing TDs\"},{\"name\":\"interceptions\",\"type\":\"INTEGER\",\"description\":\"Interceptions\"},{\"name\":\"passer_rating\",\"type\":\"DOUBLE\",\"description\":\"Passer rating\"},{\"name\":\"completion_percentage\",\"type\":\"DOUBLE\",\"description\":\"Completion %\"},{\"name\":\"expected_completion_percentage\",\"type\":\"DOUBLE\",\"description\":\"Expected completion %\"},{\"name\":\"completion_percentage_above_expectation\",\"type\":\"DOUBLE\",\"description\":\"CPOE\"},{\"name\":\"avg_time_to_throw\",\"type\":\"DOUBLE\",\"description\":\"Average seconds from snap to throw\"},{\"name\":\"avg_completed_air_yards\",\"type\":\"DOUBLE\",\"description\":\"Average air yards on completions\"},{\"name\":\"avg_intended_air_yards\",\"type\":\"DOUBLE\",\"description\":\"Average air yards on attempts\"},{\"name\":\"avg_air_yards_differential\",\"type\":\"DOUBLE\",\"description\":\"Completed minus intended air yards\"},{\"name\":\"avg_air_yards_to_sticks\",\"type\":\"DOUBLE\",\"description\":\"Average air yards past the first-down marker\"},{\"name\":\"aggressiveness\",\"type\":\"DOUBLE\",\"description\":\"% of attempts into tight coverage\"},{\"name\":\"max_completed_air_distance\",\"type\":\"DOUBLE\",\"description\":\"Longest completed air distance\"}]"
+      },
+      null,
+      [
+        "week",
+        "team",
+        "season"
+      ],
+      [
+        "INTEGER",
+        "VARCHAR",
+        "INTEGER"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22609,
+      [
+        "SELECT player_display_name, team, attempts, completion_percentage_above_expectation FROM nfl.main.ngs_passing(season := 2025, week := 0) WHERE season_type = 'REG' ORDER BY completion_percentage_above_expectation DESC LIMIT 10"
+      ],
+      null,
+      [
+        "football",
+        "next-gen-stats"
+      ]
+    ],
+    [
+      "nfl",
+      "22592",
+      "main",
+      "ngs_receiving",
+      null,
+      "table",
+      "NFL Next Gen Stats receiving metrics by week and season since 2016 (nflverse)",
+      null,
+      {
+        "provider": "nfl",
+        "source": "nflverse-data (CC-BY 4.0)",
+        "vgi.category": "next-gen-stats",
+        "vgi.doc_llm": "NFL Next Gen Stats receiving tracking metrics from nflverse, one row per qualifying player per week since 2016. Includes cushion, separation, intended air yards, and yards after catch over expected. Week 0 rows are full-season aggregates, so filter week := 0 for season leaderboards. Filter by season, week, and team.",
+        "vgi.doc_md": "Next Gen Stats receiving data. Only qualifying players appear each week.",
+        "vgi.example_queries": "[{\"description\": \"2025 receivers with the most average separation.\", \"sql\": \"SELECT player_display_name, team, targets, avg_separation FROM nfl.main.ngs_receiving(season := 2025, week := 0) WHERE season_type = 'REG' ORDER BY avg_separation DESC LIMIT 10\"}]",
+        "vgi.result_columns_schema": "[{\"name\":\"season\",\"type\":\"INTEGER\",\"description\":\"Season\"},{\"name\":\"season_type\",\"type\":\"VARCHAR\",\"description\":\"REG or POST\"},{\"name\":\"week\",\"type\":\"INTEGER\",\"description\":\"Week; 0 is the full-season aggregate row\"},{\"name\":\"player_gsis_id\",\"type\":\"VARCHAR\",\"description\":\"NFL GSIS player id, for example 00-0033873; joins nflverse tables\"},{\"name\":\"player_display_name\",\"type\":\"VARCHAR\",\"description\":\"Player name\"},{\"name\":\"player_position\",\"type\":\"VARCHAR\",\"description\":\"Position\"},{\"name\":\"team\",\"type\":\"VARCHAR\",\"description\":\"nflverse team abbreviation (NGS's LAR is normalized to LA)\"},{\"name\":\"targets\",\"type\":\"INTEGER\",\"description\":\"Targets\"},{\"name\":\"receptions\",\"type\":\"INTEGER\",\"description\":\"Receptions\"},{\"name\":\"yards\",\"type\":\"INTEGER\",\"description\":\"Receiving yards\"},{\"name\":\"rec_touchdowns\",\"type\":\"INTEGER\",\"description\":\"Receiving TDs\"},{\"name\":\"catch_percentage\",\"type\":\"DOUBLE\",\"description\":\"Catch %\"},{\"name\":\"avg_cushion\",\"type\":\"DOUBLE\",\"description\":\"Average yards of cushion at the snap\"},{\"name\":\"avg_separation\",\"type\":\"DOUBLE\",\"description\":\"Average yards of separation at the catch or incompletion\"},{\"name\":\"avg_intended_air_yards\",\"type\":\"DOUBLE\",\"description\":\"Average air yards per target\"},{\"name\":\"percent_share_of_intended_air_yards\",\"type\":\"DOUBLE\",\"description\":\"% share of team intended air yards\"},{\"name\":\"avg_yac\",\"type\":\"DOUBLE\",\"description\":\"Average yards after catch\"},{\"name\":\"avg_expected_yac\",\"type\":\"DOUBLE\",\"description\":\"Average expected yards after catch\"},{\"name\":\"avg_yac_above_expectation\",\"type\":\"DOUBLE\",\"description\":\"YAC over expected per reception\"}]"
+      },
+      null,
+      [
+        "week",
+        "team",
+        "season"
+      ],
+      [
+        "INTEGER",
+        "VARCHAR",
+        "INTEGER"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22610,
+      [
+        "SELECT player_display_name, team, targets, avg_separation FROM nfl.main.ngs_receiving(season := 2025, week := 0) WHERE season_type = 'REG' ORDER BY avg_separation DESC LIMIT 10"
+      ],
+      null,
+      [
+        "football",
+        "next-gen-stats"
+      ]
+    ],
+    [
+      "nfl",
+      "22592",
+      "main",
+      "ngs_rushing",
+      null,
+      "table",
+      "NFL Next Gen Stats rushing metrics by week and season since 2016 (nflverse)",
+      null,
+      {
+        "provider": "nfl",
+        "source": "nflverse-data (CC-BY 4.0)",
+        "vgi.category": "next-gen-stats",
+        "vgi.doc_llm": "NFL Next Gen Stats rushing tracking metrics from nflverse, one row per qualifying player per week since 2016. Includes rush yards over expected, box counts, efficiency, and time behind the line. Week 0 rows are full-season aggregates, so filter week := 0 for season leaderboards. Filter by season, week, and team.",
+        "vgi.doc_md": "Next Gen Stats rushing data. Only qualifying players appear each week.",
+        "vgi.example_queries": "[{\"description\": \"2025 rush yards over expected per carry leaders.\", \"sql\": \"SELECT player_display_name, team, rush_attempts, rush_yards_over_expected_per_att FROM nfl.main.ngs_rushing(season := 2025, week := 0) WHERE season_type = 'REG' ORDER BY rush_yards_over_expected_per_att DESC LIMIT 10\"}]",
+        "vgi.result_columns_schema": "[{\"name\":\"season\",\"type\":\"INTEGER\",\"description\":\"Season\"},{\"name\":\"season_type\",\"type\":\"VARCHAR\",\"description\":\"REG or POST\"},{\"name\":\"week\",\"type\":\"INTEGER\",\"description\":\"Week; 0 is the full-season aggregate row\"},{\"name\":\"player_gsis_id\",\"type\":\"VARCHAR\",\"description\":\"NFL GSIS player id, for example 00-0033873; joins nflverse tables\"},{\"name\":\"player_display_name\",\"type\":\"VARCHAR\",\"description\":\"Player name\"},{\"name\":\"player_position\",\"type\":\"VARCHAR\",\"description\":\"Position\"},{\"name\":\"team\",\"type\":\"VARCHAR\",\"description\":\"nflverse team abbreviation (NGS's LAR is normalized to LA)\"},{\"name\":\"rush_attempts\",\"type\":\"INTEGER\",\"description\":\"Rush attempts\"},{\"name\":\"rush_yards\",\"type\":\"INTEGER\",\"description\":\"Rushing yards\"},{\"name\":\"rush_touchdowns\",\"type\":\"INTEGER\",\"description\":\"Rushing TDs\"},{\"name\":\"avg_rush_yards\",\"type\":\"DOUBLE\",\"description\":\"Yards per carry\"},{\"name\":\"efficiency\",\"type\":\"DOUBLE\",\"description\":\"Distance travelled per rushing yard gained\"},{\"name\":\"percent_attempts_gte_eight_defenders\",\"type\":\"DOUBLE\",\"description\":\"% of carries against 8+ box defenders\"},{\"name\":\"avg_time_to_los\",\"type\":\"DOUBLE\",\"description\":\"Average seconds behind the line of scrimmage\"},{\"name\":\"expected_rush_yards\",\"type\":\"DOUBLE\",\"description\":\"Expected rushing yards\"},{\"name\":\"rush_yards_over_expected\",\"type\":\"DOUBLE\",\"description\":\"Rushing yards over expected\"},{\"name\":\"rush_yards_over_expected_per_att\",\"type\":\"DOUBLE\",\"description\":\"RYOE per carry\"},{\"name\":\"rush_pct_over_expected\",\"type\":\"DOUBLE\",\"description\":\"% of carries beating expectation\"}]"
+      },
+      null,
+      [
+        "week",
+        "team",
+        "season"
+      ],
+      [
+        "INTEGER",
+        "VARCHAR",
+        "INTEGER"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22611,
+      [
+        "SELECT player_display_name, team, rush_attempts, rush_yards_over_expected_per_att FROM nfl.main.ngs_rushing(season := 2025, week := 0) WHERE season_type = 'REG' ORDER BY rush_yards_over_expected_per_att DESC LIMIT 10"
+      ],
+      null,
+      [
+        "football",
+        "next-gen-stats"
+      ]
+    ],
+    [
+      "nfl",
+      "22592",
+      "main",
+      "play_by_play",
+      null,
+      "table",
+      "Season play-by-play with EPA, win probability, and player ids (nflverse)",
+      null,
+      {
+        "provider": "nfl",
+        "source": "nflverse-data (CC-BY 4.0)",
+        "vgi.category": "play-by-play",
+        "vgi.doc_llm": "One row per play for an NFL season from nflverse (1999 onward), including expected points (ep, epa), win probability (wp, wpa), completion probability over expected (cpoe), success, down and distance, formation flags, and passer/rusher/receiver GSIS ids and names. Always pass season; add week and team (either side of the game) to limit the download-backed scan. Use play_by_play_game() for a live ESPN feed.",
+        "vgi.doc_md": "Curated nflverse play-by-play. The season file is downloaded once and cached in memory; filters apply before rows reach SQL. `posteam` is the offense. Join players to `players` on GSIS id.",
+        "vgi.example_queries": "[{\"description\": \"Passing EPA per dropback leaders for 2025 week 1.\", \"sql\": \"SELECT passer_player_name, count(*) AS dropbacks, round(avg(epa), 3) AS epa_per_play FROM nfl.main.play_by_play(season := 2025, week := 1) WHERE qb_dropback AND passer_player_name IS NOT NULL GROUP BY passer_player_name HAVING count(*) >= 20 ORDER BY epa_per_play DESC\"}, {\"description\": \"Fourth-down attempts by Philadelphia in 2025.\", \"sql\": \"SELECT week, quarter, yards_to_go, play_type, first_down FROM nfl.main.play_by_play(season := 2025, team := 'PHI') WHERE down = 4 AND posteam = 'PHI' AND play_type IN ('run', 'pass') ORDER BY week\"}]",
+        "vgi.result_columns_schema": "[{\"name\":\"game_id\",\"type\":\"VARCHAR\",\"description\":\"nflverse game id\"},{\"name\":\"play_id\",\"type\":\"BIGINT\",\"description\":\"Play id, unique within a game\"},{\"name\":\"season\",\"type\":\"INTEGER\",\"description\":\"Season\"},{\"name\":\"week\",\"type\":\"INTEGER\",\"description\":\"Week\"},{\"name\":\"season_type\",\"type\":\"VARCHAR\",\"description\":\"REG or POST\"},{\"name\":\"game_date\",\"type\":\"DATE\",\"description\":\"Game date\"},{\"name\":\"home_team\",\"type\":\"VARCHAR\",\"description\":\"Home team\"},{\"name\":\"away_team\",\"type\":\"VARCHAR\",\"description\":\"Away team\"},{\"name\":\"posteam\",\"type\":\"VARCHAR\",\"description\":\"Offense (team in possession)\"},{\"name\":\"defteam\",\"type\":\"VARCHAR\",\"description\":\"Defense\"},{\"name\":\"quarter\",\"type\":\"INTEGER\",\"description\":\"Quarter; 5 is overtime\"},{\"name\":\"down\",\"type\":\"INTEGER\",\"description\":\"Down; NULL on kicks\"},{\"name\":\"yards_to_go\",\"type\":\"INTEGER\",\"description\":\"Yards to a first down\"},{\"name\":\"yardline_100\",\"type\":\"INTEGER\",\"description\":\"Yards from the opponent's end zone\"},{\"name\":\"game_seconds_remaining\",\"type\":\"INTEGER\",\"description\":\"Seconds left in regulation\"},{\"name\":\"drive\",\"type\":\"INTEGER\",\"description\":\"Drive number\"},{\"name\":\"play_type\",\"type\":\"VARCHAR\",\"description\":\"run, pass, punt, field_goal, kickoff, extra_point, no_play, ..\"},{\"name\":\"description\",\"type\":\"VARCHAR\",\"description\":\"Play text\"},{\"name\":\"yards_gained\",\"type\":\"INTEGER\",\"description\":\"Yards gained\"},{\"name\":\"shotgun\",\"type\":\"BOOLEAN\",\"description\":\"Shotgun formation\"},{\"name\":\"no_huddle\",\"type\":\"BOOLEAN\",\"description\":\"No-huddle\"},{\"name\":\"qb_dropback\",\"type\":\"BOOLEAN\",\"description\":\"QB dropped back\"},{\"name\":\"qb_scramble\",\"type\":\"BOOLEAN\",\"description\":\"QB scrambled\"},{\"name\":\"pass_length\",\"type\":\"VARCHAR\",\"description\":\"short or deep\"},{\"name\":\"pass_location\",\"type\":\"VARCHAR\",\"description\":\"left, middle, or right\"},{\"name\":\"air_yards\",\"type\":\"INTEGER\",\"description\":\"Air yards of the pass\"},{\"name\":\"yards_after_catch\",\"type\":\"INTEGER\",\"description\":\"Yards after catch\"},{\"name\":\"run_location\",\"type\":\"VARCHAR\",\"description\":\"left, middle, or right\"},{\"name\":\"run_gap\",\"type\":\"VARCHAR\",\"description\":\"end, tackle, or guard\"},{\"name\":\"passer_player_id\",\"type\":\"VARCHAR\",\"description\":\"Passer GSIS id\"},{\"name\":\"passer_player_name\",\"type\":\"VARCHAR\",\"description\":\"Passer\"},{\"name\":\"receiver_player_id\",\"type\":\"VARCHAR\",\"description\":\"Targeted receiver GSIS id\"},{\"name\":\"receiver_player_name\",\"type\":\"VARCHAR\",\"description\":\"Targeted receiver\"},{\"name\":\"rusher_player_id\",\"type\":\"VARCHAR\",\"description\":\"Rusher GSIS id\"},{\"name\":\"rusher_player_name\",\"type\":\"VARCHAR\",\"description\":\"Rusher\"},{\"name\":\"complete_pass\",\"type\":\"BOOLEAN\",\"description\":\"Completed pass\"},{\"name\":\"interception\",\"type\":\"BOOLEAN\",\"description\":\"Interception\"},{\"name\":\"sack\",\"type\":\"BOOLEAN\",\"description\":\"Sack\"},{\"name\":\"touchdown\",\"type\":\"BOOLEAN\",\"description\":\"Touchdown scored\"},{\"name\":\"first_down\",\"type\":\"BOOLEAN\",\"description\":\"First down gained\"},{\"name\":\"penalty\",\"type\":\"BOOLEAN\",\"description\":\"Penalty on the play\"},{\"name\":\"fumble_lost\",\"type\":\"BOOLEAN\",\"description\":\"Fumble lost\"},{\"name\":\"field_goal_result\",\"type\":\"VARCHAR\",\"description\":\"made, missed, or blocked\"},{\"name\":\"kick_distance\",\"type\":\"INTEGER\",\"description\":\"Kick distance\"},{\"name\":\"ep\",\"type\":\"DOUBLE\",\"description\":\"Expected points before the play\"},{\"name\":\"epa\",\"type\":\"DOUBLE\",\"description\":\"Expected points added\"},{\"name\":\"wp\",\"type\":\"DOUBLE\",\"description\":\"Offense win probability before the play\"},{\"name\":\"wpa\",\"type\":\"DOUBLE\",\"description\":\"Win probability added\"},{\"name\":\"cpoe\",\"type\":\"DOUBLE\",\"description\":\"Completion % over expected\"},{\"name\":\"success\",\"type\":\"BOOLEAN\",\"description\":\"EPA > 0\"},{\"name\":\"home_score\",\"type\":\"INTEGER\",\"description\":\"Home score after the play\"},{\"name\":\"away_score\",\"type\":\"INTEGER\",\"description\":\"Away score after the play\"}]"
+      },
+      null,
+      [
+        "week",
+        "team",
+        "season"
+      ],
+      [
+        "INTEGER",
+        "VARCHAR",
+        "INTEGER"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22612,
+      [
+        "SELECT passer_player_name, count(*) AS dropbacks, round(avg(epa), 3) AS epa_per_play FROM nfl.main.play_by_play(season := 2025, week := 1) WHERE qb_dropback AND passer_player_name IS NOT NULL GROUP BY passer_player_name HAVING count(*) >= 20 ORDER BY epa_per_play DESC",
+        "SELECT week, quarter, yards_to_go, play_type, first_down FROM nfl.main.play_by_play(season := 2025, team := 'PHI') WHERE down = 4 AND posteam = 'PHI' AND play_type IN ('run', 'pass') ORDER BY week"
+      ],
+      null,
+      [
+        "football",
+        "play-by-play"
+      ]
+    ],
+    [
+      "nfl",
+      "22592",
+      "main",
+      "play_by_play_game",
+      null,
+      "table",
+      "Play-by-play for one NFL game, live or final (ESPN)",
+      null,
+      {
+        "provider": "nfl",
+        "source": "ESPN site/core/common API (undocumented; ESPN terms apply)",
+        "vgi.category": "play-by-play",
+        "vgi.doc_llm": "One row per play in ESPN's drive chart: offense, quarter, clock, down and distance, play type, text, yards, scoring/penalty/turnover flags, and the running score. Updates during live games; use play_by_play() for nflverse EPA and win probability. The single positional argument is ESPN's game id as text (from scoreboard(), team_schedule(), or schedule().espn_game_id). Works for live and completed games.",
+        "vgi.doc_md": "Play-by-play for one NFL game, live or final (ESPN). Backed by one cached ESPN game-summary request.",
+        "vgi.example_queries": "[{\"description\": \"Fourth-quarter plays of the 2025 season opener.\", \"sql\": \"SELECT clock, offense_abbreviation, down_distance_text, play_type, yards FROM nfl.main.play_by_play_game('401772510') WHERE period = 4 ORDER BY sequence\"}]",
+        "vgi.result_columns_schema": "[{\"name\":\"game_id\",\"type\":\"VARCHAR\",\"description\":\"ESPN event identifier\"},{\"name\":\"play_id\",\"type\":\"VARCHAR\",\"description\":\"ESPN play identifier\"},{\"name\":\"sequence\",\"type\":\"BIGINT\",\"description\":\"ESPN sequence number; orders plays within the game\"},{\"name\":\"drive_number\",\"type\":\"INTEGER\",\"description\":\"Drive order within the game, starting at 1\"},{\"name\":\"offense_team_id\",\"type\":\"INTEGER\",\"description\":\"ESPN team id of the offense at the snap\"},{\"name\":\"offense_abbreviation\",\"type\":\"VARCHAR\",\"description\":\"Abbreviation of the offense at the snap\"},{\"name\":\"period\",\"type\":\"INTEGER\",\"description\":\"Quarter; 5 or more is overtime\"},{\"name\":\"clock\",\"type\":\"VARCHAR\",\"description\":\"Game clock at the snap\"},{\"name\":\"play_type\",\"type\":\"VARCHAR\",\"description\":\"Play type, for example Rush, Pass Reception, or Punt\"},{\"name\":\"description\",\"type\":\"VARCHAR\",\"description\":\"Play-by-play text\"},{\"name\":\"down\",\"type\":\"INTEGER\",\"description\":\"Down before the play; NULL or 0 on kicks\"},{\"name\":\"distance\",\"type\":\"INTEGER\",\"description\":\"Yards to go before the play\"},{\"name\":\"yards_to_endzone\",\"type\":\"INTEGER\",\"description\":\"Yards from the line of scrimmage to the opponent's end zone\"},{\"name\":\"down_distance_text\",\"type\":\"VARCHAR\",\"description\":\"Situation text, for example 3rd & 4 at KC 31\"},{\"name\":\"yards\",\"type\":\"INTEGER\",\"description\":\"Yards gained on the play as ESPN credits it\"},{\"name\":\"scoring_play\",\"type\":\"BOOLEAN\",\"description\":\"Whether the play scored\"},{\"name\":\"penalty\",\"type\":\"BOOLEAN\",\"description\":\"Whether a penalty was called on the play\"},{\"name\":\"turnover\",\"type\":\"BOOLEAN\",\"description\":\"Whether the play was a turnover\"},{\"name\":\"away_score\",\"type\":\"INTEGER\",\"description\":\"Away team score after the play\"},{\"name\":\"home_score\",\"type\":\"INTEGER\",\"description\":\"Home team score after the play\"},{\"name\":\"wallclock\",\"type\":\"TIMESTAMP WITH TIME ZONE\",\"description\":\"Real-world UTC time of the play, when recorded\"}]"
+      },
+      null,
+      [
+        "game_id"
+      ],
+      [
+        "VARCHAR"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22613,
+      [
+        "SELECT clock, offense_abbreviation, down_distance_text, play_type, yards FROM nfl.main.play_by_play_game('401772510') WHERE period = 4 ORDER BY sequence"
+      ],
+      null,
+      [
+        "football",
+        "play-by-play"
+      ]
+    ],
+    [
+      "nfl",
+      "22592",
+      "main",
+      "player_game_log",
+      null,
+      "table",
+      "One NFL player's per-game statistics for a season, one row per game and stat (ESPN)",
+      null,
+      {
+        "provider": "nfl",
+        "source": "ESPN site/core/common API (undocumented; ESPN terms apply)",
+        "vgi.category": "player-stats",
+        "vgi.doc_llm": "Long-format game log from ESPN: one row per game per stat for an athlete and season, with week, opponent, home/away, result, category (passing, rushing, receiving, defensive, ...), stat key such as passingYards, and exact numeric value. Pivot or filter on stat. The athlete id is ESPN's (roster().athlete_id or players.espn_id).",
+        "vgi.doc_md": "ESPN athlete game log. Stats offered depend on the player's position.",
+        "vgi.example_queries": "[{\"description\": \"Patrick Mahomes's 2025 passing yards by week.\", \"sql\": \"SELECT week, opponent_abbreviation, result, value AS passing_yards FROM nfl.main.player_game_log(3139477, season := 2025) WHERE stat = 'passingYards' ORDER BY week\"}]",
+        "vgi.result_columns_schema": "[{\"name\":\"athlete_id\",\"type\":\"INTEGER\",\"description\":\"ESPN athlete identifier\"},{\"name\":\"season\",\"type\":\"INTEGER\",\"description\":\"Season of the game log\"},{\"name\":\"season_label\",\"type\":\"VARCHAR\",\"description\":\"ESPN season label, for example 2025 Regular Season\"},{\"name\":\"game_id\",\"type\":\"VARCHAR\",\"description\":\"ESPN event identifier\"},{\"name\":\"game_time\",\"type\":\"TIMESTAMP WITH TIME ZONE\",\"description\":\"Kickoff time in UTC\"},{\"name\":\"week\",\"type\":\"INTEGER\",\"description\":\"Week number\"},{\"name\":\"team_abbreviation\",\"type\":\"VARCHAR\",\"description\":\"The player's team in this game\"},{\"name\":\"opponent_abbreviation\",\"type\":\"VARCHAR\",\"description\":\"Opponent abbreviation\"},{\"name\":\"home_away\",\"type\":\"VARCHAR\",\"description\":\"home or away from the player's perspective\"},{\"name\":\"result\",\"type\":\"VARCHAR\",\"description\":\"W, L, or T from the player's perspective\"},{\"name\":\"score\",\"type\":\"VARCHAR\",\"description\":\"Final score display, winner first, for example 23-20 OT\"},{\"name\":\"category\",\"type\":\"VARCHAR\",\"description\":\"Stat category, for example passing, rushing, or receiving\"},{\"name\":\"stat\",\"type\":\"VARCHAR\",\"description\":\"ESPN stat key, for example passingYards\"},{\"name\":\"label\",\"type\":\"VARCHAR\",\"description\":\"Short stat label, for example YDS\"},{\"name\":\"value\",\"type\":\"DECIMAL(12,3)\",\"description\":\"Numeric value of the stat; NULL when ESPN shows a marker\"},{\"name\":\"display_value\",\"type\":\"VARCHAR\",\"description\":\"ESPN's original display value\"}]"
+      },
+      null,
+      [
+        "athlete_id",
+        "season"
+      ],
+      [
+        "INTEGER",
+        "INTEGER"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22614,
+      [
+        "SELECT week, opponent_abbreviation, result, value AS passing_yards FROM nfl.main.player_game_log(3139477, season := 2025) WHERE stat = 'passingYards' ORDER BY week"
+      ],
+      null,
+      [
+        "football",
+        "player-stats"
+      ]
+    ],
+    [
+      "nfl",
+      "22592",
+      "main",
+      "player_stats_season",
+      null,
+      "table",
+      "Season player totals: passing, rushing, receiving, defense, kicking, EPA (nflverse)",
+      null,
+      {
+        "provider": "nfl",
+        "source": "nflverse-data (CC-BY 4.0)",
+        "vgi.category": "player-stats",
+        "vgi.doc_llm": "One row per player for a season from nflverse stats_player: games, passing, rushing, receiving, EPA, target share, defensive, kicking, and fantasy points. season_type selects REG (default), POST, or REGPOST. Use it for season leaderboards, for example passing yards or sacks leaders. recent_team is the player's most recent team.",
+        "vgi.doc_md": "Season nflverse player statistics, keyed by GSIS `player_id`.",
+        "vgi.example_queries": "[{\"description\": \"2025 regular-season passing yards leaders.\", \"sql\": \"SELECT player_display_name, recent_team, passing_yards, passing_tds, interceptions FROM nfl.main.player_stats_season(season := 2025) ORDER BY passing_yards DESC LIMIT 10\"}, {\"description\": \"2025 sack leaders.\", \"sql\": \"SELECT player_display_name, recent_team, def_sacks FROM nfl.main.player_stats_season(season := 2025) ORDER BY def_sacks DESC NULLS LAST LIMIT 10\"}]",
+        "vgi.result_columns_schema": "[{\"name\":\"player_id\",\"type\":\"VARCHAR\",\"description\":\"NFL GSIS player id, for example 00-0033873; joins nflverse tables\"},{\"name\":\"player_name\",\"type\":\"VARCHAR\",\"description\":\"Short player name, for example P.Mahomes\"},{\"name\":\"player_display_name\",\"type\":\"VARCHAR\",\"description\":\"Full player name\"},{\"name\":\"position\",\"type\":\"VARCHAR\",\"description\":\"Position\"},{\"name\":\"position_group\",\"type\":\"VARCHAR\",\"description\":\"Position group\"},{\"name\":\"season\",\"type\":\"INTEGER\",\"description\":\"Season\"},{\"name\":\"season_type\",\"type\":\"VARCHAR\",\"description\":\"REG, POST, or REG+POST\"},{\"name\":\"recent_team\",\"type\":\"VARCHAR\",\"description\":\"Most recent team in the season\"},{\"name\":\"games\",\"type\":\"INTEGER\",\"description\":\"Games played\"},{\"name\":\"completions\",\"type\":\"INTEGER\",\"description\":\"Completions\"},{\"name\":\"attempts\",\"type\":\"INTEGER\",\"description\":\"Pass attempts\"},{\"name\":\"passing_yards\",\"type\":\"INTEGER\",\"description\":\"Passing yards\"},{\"name\":\"passing_tds\",\"type\":\"INTEGER\",\"description\":\"Passing TDs\"},{\"name\":\"interceptions\",\"type\":\"INTEGER\",\"description\":\"Interceptions thrown\"},{\"name\":\"sacks_suffered\",\"type\":\"INTEGER\",\"description\":\"Times sacked\"},{\"name\":\"sack_yards_lost\",\"type\":\"INTEGER\",\"description\":\"Sack yards lost\"},{\"name\":\"passing_air_yards\",\"type\":\"INTEGER\",\"description\":\"Air yards on attempts\"},{\"name\":\"passing_epa\",\"type\":\"DOUBLE\",\"description\":\"EPA on dropbacks\"},{\"name\":\"passing_cpoe\",\"type\":\"DOUBLE\",\"description\":\"Completion % over expected\"},{\"name\":\"carries\",\"type\":\"INTEGER\",\"description\":\"Carries\"},{\"name\":\"rushing_yards\",\"type\":\"INTEGER\",\"description\":\"Rushing yards\"},{\"name\":\"rushing_tds\",\"type\":\"INTEGER\",\"description\":\"Rushing TDs\"},{\"name\":\"rushing_epa\",\"type\":\"DOUBLE\",\"description\":\"EPA on carries\"},{\"name\":\"receptions\",\"type\":\"INTEGER\",\"description\":\"Receptions\"},{\"name\":\"targets\",\"type\":\"INTEGER\",\"description\":\"Targets\"},{\"name\":\"receiving_yards\",\"type\":\"INTEGER\",\"description\":\"Receiving yards\"},{\"name\":\"receiving_tds\",\"type\":\"INTEGER\",\"description\":\"Receiving TDs\"},{\"name\":\"receiving_air_yards\",\"type\":\"INTEGER\",\"description\":\"Air yards on targets\"},{\"name\":\"receiving_yards_after_catch\",\"type\":\"INTEGER\",\"description\":\"Yards after catch\"},{\"name\":\"receiving_epa\",\"type\":\"DOUBLE\",\"description\":\"EPA on targets\"},{\"name\":\"target_share\",\"type\":\"DOUBLE\",\"description\":\"Share of team targets\"},{\"name\":\"air_yards_share\",\"type\":\"DOUBLE\",\"description\":\"Share of team air yards\"},{\"name\":\"wopr\",\"type\":\"DOUBLE\",\"description\":\"Weighted opportunity rating\"},{\"name\":\"fumbles_lost\",\"type\":\"INTEGER\",\"description\":\"Fumbles lost\"},{\"name\":\"tackles_solo\",\"type\":\"INTEGER\",\"description\":\"Solo tackles\"},{\"name\":\"tackle_assists\",\"type\":\"INTEGER\",\"description\":\"Tackle assists\"},{\"name\":\"tackles_for_loss\",\"type\":\"INTEGER\",\"description\":\"Tackles for loss\"},{\"name\":\"def_sacks\",\"type\":\"DOUBLE\",\"description\":\"Sacks (half sacks allowed)\"},{\"name\":\"def_qb_hits\",\"type\":\"INTEGER\",\"description\":\"QB hits\"},{\"name\":\"def_interceptions\",\"type\":\"INTEGER\",\"description\":\"Interceptions made\"},{\"name\":\"def_pass_defended\",\"type\":\"INTEGER\",\"description\":\"Passes defended\"},{\"name\":\"def_tds\",\"type\":\"INTEGER\",\"description\":\"Defensive TDs\"},{\"name\":\"fg_made\",\"type\":\"INTEGER\",\"description\":\"Field goals made\"},{\"name\":\"fg_att\",\"type\":\"INTEGER\",\"description\":\"Field goals attempted\"},{\"name\":\"fg_long\",\"type\":\"INTEGER\",\"description\":\"Longest field goal\"},{\"name\":\"pat_made\",\"type\":\"INTEGER\",\"description\":\"Extra points made\"},{\"name\":\"pat_att\",\"type\":\"INTEGER\",\"description\":\"Extra points attempted\"},{\"name\":\"fantasy_points\",\"type\":\"DOUBLE\",\"description\":\"Standard fantasy points\"},{\"name\":\"fantasy_points_ppr\",\"type\":\"DOUBLE\",\"description\":\"PPR fantasy points\"}]"
+      },
+      null,
+      [
+        "team",
+        "season_type",
+        "season"
+      ],
+      [
+        "VARCHAR",
+        "VARCHAR",
+        "INTEGER"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22615,
+      [
+        "SELECT player_display_name, recent_team, passing_yards, passing_tds, interceptions FROM nfl.main.player_stats_season(season := 2025) ORDER BY passing_yards DESC LIMIT 10",
+        "SELECT player_display_name, recent_team, def_sacks FROM nfl.main.player_stats_season(season := 2025) ORDER BY def_sacks DESC NULLS LAST LIMIT 10"
+      ],
+      null,
+      [
+        "football",
+        "player-stats"
+      ]
+    ],
+    [
+      "nfl",
+      "22592",
+      "main",
+      "player_stats_week",
+      null,
+      "table",
+      "Per-game player passing, rushing, receiving, defense, kicking, and EPA (nflverse)",
+      null,
+      {
+        "provider": "nfl",
+        "source": "nflverse-data (CC-BY 4.0)",
+        "vgi.category": "player-stats",
+        "vgi.doc_llm": "One row per player per game for a season (regular and postseason) from nflverse stats_player: passing, rushing, receiving, EPA, target share, WOPR, defensive, kicking, and fantasy points, keyed by GSIS player_id and nflverse game_id. Filter with season, week, and team. Use player_stats_season() for season totals.",
+        "vgi.doc_md": "Weekly nflverse player statistics. `season_type` is REG or POST.",
+        "vgi.example_queries": "[{\"description\": \"Top rushing games of 2025 week 1.\", \"sql\": \"SELECT player_display_name, team, opponent_team, carries, rushing_yards, rushing_tds FROM nfl.main.player_stats_week(season := 2025, week := 1) ORDER BY rushing_yards DESC LIMIT 10\"}]",
+        "vgi.result_columns_schema": "[{\"name\":\"player_id\",\"type\":\"VARCHAR\",\"description\":\"NFL GSIS player id, for example 00-0033873; joins nflverse tables\"},{\"name\":\"player_name\",\"type\":\"VARCHAR\",\"description\":\"Short player name, for example P.Mahomes\"},{\"name\":\"player_display_name\",\"type\":\"VARCHAR\",\"description\":\"Full player name\"},{\"name\":\"position\",\"type\":\"VARCHAR\",\"description\":\"Position\"},{\"name\":\"position_group\",\"type\":\"VARCHAR\",\"description\":\"Position group\"},{\"name\":\"season\",\"type\":\"INTEGER\",\"description\":\"Season\"},{\"name\":\"season_type\",\"type\":\"VARCHAR\",\"description\":\"REG, POST, or REG+POST\"},{\"name\":\"week\",\"type\":\"INTEGER\",\"description\":\"Week\"},{\"name\":\"game_id\",\"type\":\"VARCHAR\",\"description\":\"nflverse game id\"},{\"name\":\"team\",\"type\":\"VARCHAR\",\"description\":\"Player's team\"},{\"name\":\"opponent_team\",\"type\":\"VARCHAR\",\"description\":\"Opponent\"},{\"name\":\"completions\",\"type\":\"INTEGER\",\"description\":\"Completions\"},{\"name\":\"attempts\",\"type\":\"INTEGER\",\"description\":\"Pass attempts\"},{\"name\":\"passing_yards\",\"type\":\"INTEGER\",\"description\":\"Passing yards\"},{\"name\":\"passing_tds\",\"type\":\"INTEGER\",\"description\":\"Passing TDs\"},{\"name\":\"interceptions\",\"type\":\"INTEGER\",\"description\":\"Interceptions thrown\"},{\"name\":\"sacks_suffered\",\"type\":\"INTEGER\",\"description\":\"Times sacked\"},{\"name\":\"sack_yards_lost\",\"type\":\"INTEGER\",\"description\":\"Sack yards lost\"},{\"name\":\"passing_air_yards\",\"type\":\"INTEGER\",\"description\":\"Air yards on attempts\"},{\"name\":\"passing_epa\",\"type\":\"DOUBLE\",\"description\":\"EPA on dropbacks\"},{\"name\":\"passing_cpoe\",\"type\":\"DOUBLE\",\"description\":\"Completion % over expected\"},{\"name\":\"carries\",\"type\":\"INTEGER\",\"description\":\"Carries\"},{\"name\":\"rushing_yards\",\"type\":\"INTEGER\",\"description\":\"Rushing yards\"},{\"name\":\"rushing_tds\",\"type\":\"INTEGER\",\"description\":\"Rushing TDs\"},{\"name\":\"rushing_epa\",\"type\":\"DOUBLE\",\"description\":\"EPA on carries\"},{\"name\":\"receptions\",\"type\":\"INTEGER\",\"description\":\"Receptions\"},{\"name\":\"targets\",\"type\":\"INTEGER\",\"description\":\"Targets\"},{\"name\":\"receiving_yards\",\"type\":\"INTEGER\",\"description\":\"Receiving yards\"},{\"name\":\"receiving_tds\",\"type\":\"INTEGER\",\"description\":\"Receiving TDs\"},{\"name\":\"receiving_air_yards\",\"type\":\"INTEGER\",\"description\":\"Air yards on targets\"},{\"name\":\"receiving_yards_after_catch\",\"type\":\"INTEGER\",\"description\":\"Yards after catch\"},{\"name\":\"receiving_epa\",\"type\":\"DOUBLE\",\"description\":\"EPA on targets\"},{\"name\":\"target_share\",\"type\":\"DOUBLE\",\"description\":\"Share of team targets\"},{\"name\":\"air_yards_share\",\"type\":\"DOUBLE\",\"description\":\"Share of team air yards\"},{\"name\":\"wopr\",\"type\":\"DOUBLE\",\"description\":\"Weighted opportunity rating\"},{\"name\":\"fumbles_lost\",\"type\":\"INTEGER\",\"description\":\"Fumbles lost\"},{\"name\":\"tackles_solo\",\"type\":\"INTEGER\",\"description\":\"Solo tackles\"},{\"name\":\"tackle_assists\",\"type\":\"INTEGER\",\"description\":\"Tackle assists\"},{\"name\":\"tackles_for_loss\",\"type\":\"INTEGER\",\"description\":\"Tackles for loss\"},{\"name\":\"def_sacks\",\"type\":\"DOUBLE\",\"description\":\"Sacks (half sacks allowed)\"},{\"name\":\"def_qb_hits\",\"type\":\"INTEGER\",\"description\":\"QB hits\"},{\"name\":\"def_interceptions\",\"type\":\"INTEGER\",\"description\":\"Interceptions made\"},{\"name\":\"def_pass_defended\",\"type\":\"INTEGER\",\"description\":\"Passes defended\"},{\"name\":\"def_tds\",\"type\":\"INTEGER\",\"description\":\"Defensive TDs\"},{\"name\":\"fg_made\",\"type\":\"INTEGER\",\"description\":\"Field goals made\"},{\"name\":\"fg_att\",\"type\":\"INTEGER\",\"description\":\"Field goals attempted\"},{\"name\":\"fg_long\",\"type\":\"INTEGER\",\"description\":\"Longest field goal\"},{\"name\":\"pat_made\",\"type\":\"INTEGER\",\"description\":\"Extra points made\"},{\"name\":\"pat_att\",\"type\":\"INTEGER\",\"description\":\"Extra points attempted\"},{\"name\":\"fantasy_points\",\"type\":\"DOUBLE\",\"description\":\"Standard fantasy points\"},{\"name\":\"fantasy_points_ppr\",\"type\":\"DOUBLE\",\"description\":\"PPR fantasy points\"}]"
+      },
+      null,
+      [
+        "week",
+        "team",
+        "season"
+      ],
+      [
+        "INTEGER",
+        "VARCHAR",
+        "INTEGER"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22616,
+      [
+        "SELECT player_display_name, team, opponent_team, carries, rushing_yards, rushing_tds FROM nfl.main.player_stats_week(season := 2025, week := 1) ORDER BY rushing_yards DESC LIMIT 10"
+      ],
+      null,
+      [
+        "football",
+        "player-stats"
+      ]
+    ],
+    [
+      "nfl",
+      "22592",
+      "main",
+      "roster",
+      null,
+      "table",
+      "One NFL team's current roster with positions, bio, and status (ESPN)",
+      null,
+      {
+        "provider": "nfl",
+        "source": "ESPN site/core/common API (undocumented; ESPN terms apply)",
+        "vgi.category": "rosters",
+        "vgi.doc_llm": "One row per player currently on a team's roster from ESPN, grouped as offense, defense, specialTeam, injuredReserveOrOut, suspended, or practiceSquad, with jersey, position, age, height, weight, experience, and college. athlete_id feeds player_game_log(). ESPN serves only the current roster; use players for history.",
+        "vgi.doc_md": "ESPN current team roster.",
+        "vgi.example_queries": "[{\"description\": \"Kansas City's quarterbacks.\", \"sql\": \"SELECT athlete_name, jersey, age, experience_years FROM nfl.main.roster('KC') WHERE position = 'QB'\"}]",
+        "vgi.result_columns_schema": "[{\"name\":\"team_id\",\"type\":\"INTEGER\",\"description\":\"ESPN team identifier\"},{\"name\":\"team_abbreviation\",\"type\":\"VARCHAR\",\"description\":\"Team abbreviation\"},{\"name\":\"season\",\"type\":\"INTEGER\",\"description\":\"Season the roster belongs to\"},{\"name\":\"roster_group\",\"type\":\"VARCHAR\",\"description\":\"ESPN group: offense, defense, specialTeam, injuredReserveOrOut, suspended, or practiceSquad\"},{\"name\":\"athlete_id\",\"type\":\"INTEGER\",\"description\":\"ESPN athlete identifier\"},{\"name\":\"athlete_name\",\"type\":\"VARCHAR\",\"description\":\"Player's full name\"},{\"name\":\"first_name\",\"type\":\"VARCHAR\",\"description\":\"First name\"},{\"name\":\"last_name\",\"type\":\"VARCHAR\",\"description\":\"Last name\"},{\"name\":\"jersey\",\"type\":\"VARCHAR\",\"description\":\"Uniform number\"},{\"name\":\"position\",\"type\":\"VARCHAR\",\"description\":\"Position abbreviation, for example QB or WR\"},{\"name\":\"position_name\",\"type\":\"VARCHAR\",\"description\":\"Position name\"},{\"name\":\"age\",\"type\":\"INTEGER\",\"description\":\"Age in years\"},{\"name\":\"birth_date\",\"type\":\"DATE\",\"description\":\"Date of birth\"},{\"name\":\"height_inches\",\"type\":\"INTEGER\",\"description\":\"Height in inches\"},{\"name\":\"weight_lbs\",\"type\":\"INTEGER\",\"description\":\"Weight in pounds\"},{\"name\":\"experience_years\",\"type\":\"INTEGER\",\"description\":\"Completed NFL seasons; 0 for rookies\"},{\"name\":\"college\",\"type\":\"VARCHAR\",\"description\":\"College attended\"},{\"name\":\"birth_place\",\"type\":\"VARCHAR\",\"description\":\"Birthplace as city, state or country\"},{\"name\":\"status\",\"type\":\"VARCHAR\",\"description\":\"ESPN player status, for example Active\"}]"
+      },
+      null,
+      [
+        "team"
+      ],
+      [
+        "VARCHAR"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22617,
+      [
+        "SELECT athlete_name, jersey, age, experience_years FROM nfl.main.roster('KC') WHERE position = 'QB'"
+      ],
+      null,
+      [
+        "football",
+        "rosters"
+      ]
+    ],
+    [
+      "nfl",
+      "22592",
+      "main",
+      "schedule",
+      null,
+      "table",
+      "NFL schedule and results since 1999 with lines, roof, surface, weather (nflverse)",
+      null,
+      {
+        "provider": "nfl",
+        "source": "nflverse-data (CC-BY 4.0)",
+        "vgi.category": "scores",
+        "vgi.doc_llm": "One row per NFL game from nflverse's games file, 1999 to the current season, including unplayed games. Columns cover final scores, home margin (result), overtime, rest days, closing spread_line and total_line, roof, surface, temperature, wind, starting QBs, coaches, referee, and the espn_game_id that joins to game_summary() and box scores. Filter with season, week, and team (nflverse abbreviations such as KC, LA, WAS).",
+        "vgi.doc_md": "The nflverse schedule. `game_type` is REG, WC, DIV, CON, or SB; postseason weeks continue numbering after the regular season. `spread_line` is from the home team's perspective (positive means the home team was favored).",
+        "vgi.example_queries": "[{\"description\": \"Kansas City's 2025 results with the closing spread.\", \"sql\": \"SELECT week, away_team, away_score, home_team, home_score, spread_line FROM nfl.main.schedule(season := 2025, team := 'KC') ORDER BY week\"}, {\"description\": \"Super Bowl results since 2015.\", \"sql\": \"SELECT season, away_team, away_score, home_team, home_score, stadium FROM nfl.main.schedule() WHERE game_type = 'SB' AND season >= 2015 ORDER BY season\"}]",
+        "vgi.result_columns_schema": "[{\"name\":\"game_id\",\"type\":\"VARCHAR\",\"description\":\"nflverse game id, for example 2025_01_DAL_PHI\"},{\"name\":\"season\",\"type\":\"INTEGER\",\"description\":\"NFL season year\"},{\"name\":\"game_type\",\"type\":\"VARCHAR\",\"description\":\"nflverse game type: REG, WC, DIV, CON, or SB\"},{\"name\":\"week\",\"type\":\"INTEGER\",\"description\":\"Week number; postseason weeks continue after the regular season\"},{\"name\":\"game_date\",\"type\":\"DATE\",\"description\":\"Local game date\"},{\"name\":\"weekday\",\"type\":\"VARCHAR\",\"description\":\"Day of the week\"},{\"name\":\"kickoff_et\",\"type\":\"VARCHAR\",\"description\":\"Scheduled kickoff in US Eastern time as HH:MM\"},{\"name\":\"away_team\",\"type\":\"VARCHAR\",\"description\":\"Away team nflverse abbreviation\"},{\"name\":\"away_score\",\"type\":\"INTEGER\",\"description\":\"Away points; NULL until played\"},{\"name\":\"home_team\",\"type\":\"VARCHAR\",\"description\":\"Home team nflverse abbreviation\"},{\"name\":\"home_score\",\"type\":\"INTEGER\",\"description\":\"Home points; NULL until played\"},{\"name\":\"location\",\"type\":\"VARCHAR\",\"description\":\"Home or Neutral\"},{\"name\":\"result\",\"type\":\"INTEGER\",\"description\":\"Home score minus away score\"},{\"name\":\"total\",\"type\":\"INTEGER\",\"description\":\"Combined points\"},{\"name\":\"overtime\",\"type\":\"BOOLEAN\",\"description\":\"Whether the game went to overtime\"},{\"name\":\"espn_game_id\",\"type\":\"VARCHAR\",\"description\":\"ESPN event id; pass it to game_summary()\"},{\"name\":\"away_rest\",\"type\":\"INTEGER\",\"description\":\"Away team's days of rest\"},{\"name\":\"home_rest\",\"type\":\"INTEGER\",\"description\":\"Home team's days of rest\"},{\"name\":\"spread_line\",\"type\":\"DOUBLE\",\"description\":\"Closing point spread from the home team's view (positive = favored)\"},{\"name\":\"total_line\",\"type\":\"DOUBLE\",\"description\":\"Closing over/under total\"},{\"name\":\"division_game\",\"type\":\"BOOLEAN\",\"description\":\"Whether both teams share a division\"},{\"name\":\"roof\",\"type\":\"VARCHAR\",\"description\":\"Roof type: outdoors, dome, closed, or open\"},{\"name\":\"surface\",\"type\":\"VARCHAR\",\"description\":\"Playing surface, for example grass or fieldturf\"},{\"name\":\"temperature_f\",\"type\":\"INTEGER\",\"description\":\"Kickoff temperature in Fahrenheit for outdoor games\"},{\"name\":\"wind_mph\",\"type\":\"INTEGER\",\"description\":\"Wind speed in mph for outdoor games\"},{\"name\":\"away_qb_id\",\"type\":\"VARCHAR\",\"description\":\"Away starting QB GSIS id\"},{\"name\":\"away_qb_name\",\"type\":\"VARCHAR\",\"description\":\"Away starting quarterback\"},{\"name\":\"home_qb_id\",\"type\":\"VARCHAR\",\"description\":\"Home starting QB GSIS id\"},{\"name\":\"home_qb_name\",\"type\":\"VARCHAR\",\"description\":\"Home starting quarterback\"},{\"name\":\"away_coach\",\"type\":\"VARCHAR\",\"description\":\"Away head coach\"},{\"name\":\"home_coach\",\"type\":\"VARCHAR\",\"description\":\"Home head coach\"},{\"name\":\"referee\",\"type\":\"VARCHAR\",\"description\":\"Referee\"},{\"name\":\"stadium\",\"type\":\"VARCHAR\",\"description\":\"Stadium name\"}]"
+      },
+      null,
+      [
+        "week",
+        "team",
+        "season"
+      ],
+      [
+        "INTEGER",
+        "VARCHAR",
+        "INTEGER"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22618,
+      [
+        "SELECT week, away_team, away_score, home_team, home_score, spread_line FROM nfl.main.schedule(season := 2025, team := 'KC') ORDER BY week",
+        "SELECT season, away_team, away_score, home_team, home_score, stadium FROM nfl.main.schedule() WHERE game_type = 'SB' AND season >= 2015 ORDER BY season"
+      ],
+      null,
+      [
+        "football",
+        "scores"
+      ]
+    ],
+    [
+      "nfl",
+      "22592",
+      "main",
+      "scoreboard",
+      null,
+      "table",
+      "NFL games and scores for a season, week, and season type (ESPN)",
+      null,
+      {
+        "provider": "nfl",
+        "source": "ESPN site/core/common API (undocumented; ESPN terms apply)",
+        "vgi.category": "scores",
+        "vgi.doc_llm": "One row per game for a given season and week from ESPN's scoreboard: kickoff time, status, home/away teams, scores, records, winner, venue, attendance, and broadcast. season and week are positional; season_type => 'postseason' selects playoff weeks (1 wild card, 2 divisional, 3 conference, 5 Super Bowl). game_id feeds game_summary().",
+        "vgi.doc_md": "ESPN scoreboard for one week. Scores are NULL before kickoff. Use `current_scoreboard` for this week.",
+        "vgi.example_queries": "[{\"description\": \"2025 week 1 results.\", \"sql\": \"SELECT short_name, away_score, home_score, winner_abbreviation FROM nfl.main.scoreboard(2025, 1) ORDER BY game_time\"}, {\"description\": \"The Super Bowl that ended the 2025 season.\", \"sql\": \"SELECT name, away_score, home_score, venue FROM nfl.main.scoreboard(2025, 5, season_type := 'postseason')\"}]",
+        "vgi.result_columns_schema": "[{\"name\":\"game_id\",\"type\":\"VARCHAR\",\"description\":\"ESPN event identifier; pass it to game_summary() and box scores\"},{\"name\":\"season\",\"type\":\"INTEGER\",\"description\":\"NFL season year (the year the season starts)\"},{\"name\":\"season_type\",\"type\":\"INTEGER\",\"description\":\"ESPN season-type code (not a count): 1 preseason, 2 regular season, 3 postseason\"},{\"name\":\"week\",\"type\":\"INTEGER\",\"description\":\"Ordinal week number (1-18 regular season) within the season type\"},{\"name\":\"game_time\",\"type\":\"TIMESTAMP WITH TIME ZONE\",\"description\":\"Scheduled kickoff time in UTC\"},{\"name\":\"name\",\"type\":\"VARCHAR\",\"description\":\"Matchup name, for example Dallas Cowboys at Philadelphia Eagles\"},{\"name\":\"short_name\",\"type\":\"VARCHAR\",\"description\":\"Short matchup name, for example DAL @ PHI\"},{\"name\":\"status\",\"type\":\"VARCHAR\",\"description\":\"ESPN status code, for example STATUS_SCHEDULED or STATUS_FINAL\"},{\"name\":\"status_state\",\"type\":\"VARCHAR\",\"description\":\"Game state: pre, in, or post\"},{\"name\":\"status_detail\",\"type\":\"VARCHAR\",\"description\":\"Human-readable status, for example Final/OT or 2nd 4:12\"},{\"name\":\"completed\",\"type\":\"BOOLEAN\",\"description\":\"Whether the game is complete\"},{\"name\":\"period\",\"type\":\"INTEGER\",\"description\":\"Quarter number, current or final; 5 or more means overtime\"},{\"name\":\"clock\",\"type\":\"VARCHAR\",\"description\":\"Game clock display for live games\"},{\"name\":\"home_team_id\",\"type\":\"INTEGER\",\"description\":\"ESPN team identifier (integer code) of the home club\"},{\"name\":\"home_team_abbreviation\",\"type\":\"VARCHAR\",\"description\":\"ESPN code of the home club, for example PHI\"},{\"name\":\"home_team_name\",\"type\":\"VARCHAR\",\"description\":\"Display name of the home club\"},{\"name\":\"home_score\",\"type\":\"INTEGER\",\"description\":\"Home club's score, in points; NULL before kickoff\"},{\"name\":\"home_record\",\"type\":\"VARCHAR\",\"description\":\"Home team's overall record after this game, as ESPN reports it\"},{\"name\":\"away_team_id\",\"type\":\"INTEGER\",\"description\":\"ESPN team identifier (integer code) of the away club\"},{\"name\":\"away_team_abbreviation\",\"type\":\"VARCHAR\",\"description\":\"ESPN code of the visiting club, for example DAL\"},{\"name\":\"away_team_name\",\"type\":\"VARCHAR\",\"description\":\"Display name of the visiting club\"},{\"name\":\"away_score\",\"type\":\"INTEGER\",\"description\":\"Visiting club's score, in points; NULL before kickoff\"},{\"name\":\"away_record\",\"type\":\"VARCHAR\",\"description\":\"Away team's overall record after this game, as ESPN reports it\"},{\"name\":\"winner_abbreviation\",\"type\":\"VARCHAR\",\"description\":\"Winning team abbreviation; NULL until decided or for a tie\"},{\"name\":\"venue\",\"type\":\"VARCHAR\",\"description\":\"Stadium name\"},{\"name\":\"venue_city\",\"type\":\"VARCHAR\",\"description\":\"Stadium city\"},{\"name\":\"venue_state\",\"type\":\"VARCHAR\",\"description\":\"Stadium state or province, when applicable\"},{\"name\":\"neutral_site\",\"type\":\"BOOLEAN\",\"description\":\"Whether the game is played at a neutral site\"},{\"name\":\"attendance\",\"type\":\"INTEGER\",\"description\":\"Reported crowd, in people; NULL or 0 before the game\"},{\"name\":\"broadcast\",\"type\":\"VARCHAR\",\"description\":\"National broadcast network(s), when listed\"}]"
+      },
+      null,
+      [
+        "season",
+        "week",
+        "season_type"
+      ],
+      [
+        "INTEGER",
+        "INTEGER",
+        "VARCHAR"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22619,
+      [
+        "SELECT short_name, away_score, home_score, winner_abbreviation FROM nfl.main.scoreboard(2025, 1) ORDER BY game_time",
+        "SELECT name, away_score, home_score, venue FROM nfl.main.scoreboard(2025, 5, season_type := 'postseason')"
+      ],
+      null,
+      [
+        "football",
+        "scores"
+      ]
+    ],
+    [
+      "nfl",
+      "22592",
+      "main",
+      "scoring_plays",
+      null,
+      "table",
+      "Scoring summary for one NFL game with the running score (ESPN)",
+      null,
+      {
+        "provider": "nfl",
+        "source": "ESPN site/core/common API (undocumented; ESPN terms apply)",
+        "vgi.category": "game-detail",
+        "vgi.doc_llm": "One row per score with quarter, clock, team, scoring type, description, and score after. The single positional argument is ESPN's game id as text (from scoreboard(), team_schedule(), or schedule().espn_game_id). Works for live and completed games.",
+        "vgi.doc_md": "Scoring summary for one NFL game with the running score (ESPN). Backed by one cached ESPN game-summary request.",
+        "vgi.example_queries": "[{\"description\": \"Scoring summary of the 2025 season opener.\", \"sql\": \"SELECT period, clock, team_abbreviation, description, away_score, home_score FROM nfl.main.scoring_plays('401772510')\"}]",
+        "vgi.result_columns_schema": "[{\"name\":\"game_id\",\"type\":\"VARCHAR\",\"description\":\"ESPN event identifier\"},{\"name\":\"play_id\",\"type\":\"VARCHAR\",\"description\":\"ESPN play identifier\"},{\"name\":\"period\",\"type\":\"INTEGER\",\"description\":\"Quarter of the score; 5 or more is overtime\"},{\"name\":\"clock\",\"type\":\"VARCHAR\",\"description\":\"Game clock at the score\"},{\"name\":\"team_id\",\"type\":\"INTEGER\",\"description\":\"ESPN identifier of the scoring team\"},{\"name\":\"team_abbreviation\",\"type\":\"VARCHAR\",\"description\":\"Abbreviation of the scoring team\"},{\"name\":\"scoring_type\",\"type\":\"VARCHAR\",\"description\":\"Scoring type, for example Touchdown, Field Goal, or Safety\"},{\"name\":\"play_type\",\"type\":\"VARCHAR\",\"description\":\"Play type, for example Passing Touchdown\"},{\"name\":\"description\",\"type\":\"VARCHAR\",\"description\":\"Play description including the try\"},{\"name\":\"away_score\",\"type\":\"INTEGER\",\"description\":\"Away team score after the play\"},{\"name\":\"home_score\",\"type\":\"INTEGER\",\"description\":\"Home team score after the play\"}]"
+      },
+      null,
+      [
+        "game_id"
+      ],
+      [
+        "VARCHAR"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22620,
+      [
+        "SELECT period, clock, team_abbreviation, description, away_score, home_score FROM nfl.main.scoring_plays('401772510')"
+      ],
+      null,
+      [
+        "football",
+        "game-detail"
+      ]
+    ],
+    [
+      "nfl",
+      "22592",
+      "main",
+      "snap_counts",
+      null,
+      "table",
+      "Per-game player snap counts and snap shares since 2012 (nflverse)",
+      null,
+      {
+        "provider": "nfl",
+        "source": "nflverse-data (CC-BY 4.0)",
+        "vgi.category": "player-stats",
+        "vgi.doc_llm": "One row per player per game since 2012 from nflverse (sourced from Pro Football Reference): offensive, defensive, and special-teams snaps with share of team snaps (0-1). Filter by season, week, and team.",
+        "vgi.doc_md": "nflverse snap counts. Percentages are fractions between 0 and 1.",
+        "vgi.example_queries": "[{\"description\": \"Kansas City's offensive snap shares in 2025 week 1.\", \"sql\": \"SELECT player, position, offense_snaps, offense_pct FROM nfl.main.snap_counts(season := 2025, week := 1, team := 'KC') WHERE offense_snaps > 0 ORDER BY offense_snaps DESC\"}]",
+        "vgi.result_columns_schema": "[{\"name\":\"game_id\",\"type\":\"VARCHAR\",\"description\":\"nflverse game id\"},{\"name\":\"season\",\"type\":\"INTEGER\",\"description\":\"Season\"},{\"name\":\"game_type\",\"type\":\"VARCHAR\",\"description\":\"nflverse game type: REG, WC, DIV, CON, or SB\"},{\"name\":\"week\",\"type\":\"INTEGER\",\"description\":\"Week\"},{\"name\":\"player\",\"type\":\"VARCHAR\",\"description\":\"Player name\"},{\"name\":\"pfr_player_id\",\"type\":\"VARCHAR\",\"description\":\"Pro Football Reference player id\"},{\"name\":\"position\",\"type\":\"VARCHAR\",\"description\":\"Position\"},{\"name\":\"team\",\"type\":\"VARCHAR\",\"description\":\"Team\"},{\"name\":\"opponent\",\"type\":\"VARCHAR\",\"description\":\"Opponent\"},{\"name\":\"offense_snaps\",\"type\":\"INTEGER\",\"description\":\"Offensive snaps played\"},{\"name\":\"offense_pct\",\"type\":\"DOUBLE\",\"description\":\"Share of team offensive snaps (0-1)\"},{\"name\":\"defense_snaps\",\"type\":\"INTEGER\",\"description\":\"Defensive snaps played\"},{\"name\":\"defense_pct\",\"type\":\"DOUBLE\",\"description\":\"Share of team defensive snaps (0-1)\"},{\"name\":\"st_snaps\",\"type\":\"INTEGER\",\"description\":\"Special-teams snaps played\"},{\"name\":\"st_pct\",\"type\":\"DOUBLE\",\"description\":\"Share of team special-teams snaps (0-1)\"}]"
+      },
+      null,
+      [
+        "week",
+        "team",
+        "season"
+      ],
+      [
+        "INTEGER",
+        "VARCHAR",
+        "INTEGER"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22621,
+      [
+        "SELECT player, position, offense_snaps, offense_pct FROM nfl.main.snap_counts(season := 2025, week := 1, team := 'KC') WHERE offense_snaps > 0 ORDER BY offense_snaps DESC"
+      ],
+      null,
+      [
+        "football",
+        "player-stats"
+      ]
+    ],
+    [
+      "nfl",
+      "22592",
+      "main",
+      "standings",
+      null,
+      "table",
+      "NFL division standings for a season with seeds, streaks, and splits (ESPN)",
+      null,
+      {
+        "provider": "nfl",
+        "source": "ESPN site/core/common API (undocumented; ESPN terms apply)",
+        "vgi.category": "standings",
+        "vgi.doc_llm": "One row per team with conference, division, division_rank, playoff_seed, W-L-T, win percentage, games back, points for/against, streak, home/road/division/conference records, and clinch marker for a regular season. Pass season for history (2002 onward); with no arguments it returns the current season.",
+        "vgi.doc_md": "ESPN regular-season standings. `playoff_seed` 1-7 make the playoffs; `division_rank` is derived from ESPN's tiebreak-aware seed order.",
+        "vgi.example_queries": "[{\"description\": \"Final 2025 AFC standings by seed.\", \"sql\": \"SELECT playoff_seed, team_name, wins, losses, ties, clincher FROM nfl.main.standings(season := 2025) WHERE conference = 'AFC' ORDER BY playoff_seed\"}]",
+        "vgi.result_columns_schema": "[{\"name\":\"season\",\"type\":\"INTEGER\",\"description\":\"NFL season year (the year the season starts)\"},{\"name\":\"season_type\",\"type\":\"INTEGER\",\"description\":\"ESPN season-type code (not a count): 1 preseason, 2 regular season, 3 postseason\"},{\"name\":\"conference\",\"type\":\"VARCHAR\",\"description\":\"Conference abbreviation, AFC or NFC\"},{\"name\":\"conference_name\",\"type\":\"VARCHAR\",\"description\":\"Full conference name\"},{\"name\":\"division\",\"type\":\"VARCHAR\",\"description\":\"Division name, for example AFC East\"},{\"name\":\"division_rank\",\"type\":\"INTEGER\",\"description\":\"Position number 1-4 within the division (1 = leader), from ESPN's tiebreak seed order\"},{\"name\":\"playoff_seed\",\"type\":\"INTEGER\",\"description\":\"Conference seed 1-16 in ESPN's tiebreak order; 1-7 qualify\"},{\"name\":\"team_id\",\"type\":\"INTEGER\",\"description\":\"Stable ESPN team identifier (integer code, not a count); joins teams.team_id\"},{\"name\":\"team_abbreviation\",\"type\":\"VARCHAR\",\"description\":\"ESPN code for the club, for example KC or WSH\"},{\"name\":\"team_name\",\"type\":\"VARCHAR\",\"description\":\"Club display name, for example Kansas City Chiefs\"},{\"name\":\"wins\",\"type\":\"INTEGER\",\"description\":\"Count of games won this season\"},{\"name\":\"losses\",\"type\":\"INTEGER\",\"description\":\"Count of games lost this season\"},{\"name\":\"ties\",\"type\":\"INTEGER\",\"description\":\"Count of games tied after overtime this season\"},{\"name\":\"win_percentage\",\"type\":\"DECIMAL(4,3)\",\"description\":\"Fraction of games won (0-1), ties counted as half a win\"},{\"name\":\"games_back\",\"type\":\"DECIMAL(4,1)\",\"description\":\"Games behind the division leader, in games; the leader is 0.0\"},{\"name\":\"points_for\",\"type\":\"INTEGER\",\"description\":\"Count of points scored this season\"},{\"name\":\"points_against\",\"type\":\"INTEGER\",\"description\":\"Count of points allowed this season\"},{\"name\":\"point_differential\",\"type\":\"INTEGER\",\"description\":\"Points scored minus points allowed, in points\"},{\"name\":\"streak\",\"type\":\"VARCHAR\",\"description\":\"Current streak label, for example W3 or L1\"},{\"name\":\"streak_length\",\"type\":\"INTEGER\",\"description\":\"Signed streak length in games: positive for wins, negative for losses\"},{\"name\":\"home_record\",\"type\":\"VARCHAR\",\"description\":\"Home record as W-L or W-L-T\"},{\"name\":\"road_record\",\"type\":\"VARCHAR\",\"description\":\"Road record as W-L or W-L-T\"},{\"name\":\"division_record\",\"type\":\"VARCHAR\",\"description\":\"Record against division opponents\"},{\"name\":\"conference_record\",\"type\":\"VARCHAR\",\"description\":\"Record against conference opponents\"},{\"name\":\"clincher\",\"type\":\"VARCHAR\",\"description\":\"ESPN clinch marker: * top seed and bye, z division, y wild card, x playoff berth, e eliminated\"}]"
+      },
+      null,
+      [
+        "season"
+      ],
+      [
+        "INTEGER"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22622,
+      [
+        "SELECT playoff_seed, team_name, wins, losses, ties, clincher FROM nfl.main.standings(season := 2025) WHERE conference = 'AFC' ORDER BY playoff_seed"
+      ],
+      null,
+      [
+        "football",
+        "standings"
+      ]
+    ],
+    [
+      "nfl",
+      "22592",
+      "main",
+      "team_schedule",
+      null,
+      "table",
+      "One NFL team's games and results for a season and season type (ESPN)",
+      null,
+      {
+        "provider": "nfl",
+        "source": "ESPN site/core/common API (undocumented; ESPN terms apply)",
+        "vgi.category": "scores",
+        "vgi.doc_llm": "One row per game on a team's schedule from ESPN, with scores and status. The team is positional (KC, PHI, ...); season defaults to ESPN's current season and season_type to regular. Use schedule() for every team at once with betting lines and weather.",
+        "vgi.doc_md": "ESPN team schedule. Bye weeks have no row.",
+        "vgi.example_queries": "[{\"description\": \"Kansas City's 2025 regular season.\", \"sql\": \"SELECT week, short_name, away_score, home_score, winner_abbreviation FROM nfl.main.team_schedule('KC', season := 2025) ORDER BY week\"}]",
+        "vgi.result_columns_schema": "[{\"name\":\"game_id\",\"type\":\"VARCHAR\",\"description\":\"ESPN event identifier; pass it to game_summary() and box scores\"},{\"name\":\"season\",\"type\":\"INTEGER\",\"description\":\"NFL season year (the year the season starts)\"},{\"name\":\"season_type\",\"type\":\"INTEGER\",\"description\":\"ESPN season-type code (not a count): 1 preseason, 2 regular season, 3 postseason\"},{\"name\":\"week\",\"type\":\"INTEGER\",\"description\":\"Ordinal week number (1-18 regular season) within the season type\"},{\"name\":\"game_time\",\"type\":\"TIMESTAMP WITH TIME ZONE\",\"description\":\"Scheduled kickoff time in UTC\"},{\"name\":\"name\",\"type\":\"VARCHAR\",\"description\":\"Matchup name, for example Dallas Cowboys at Philadelphia Eagles\"},{\"name\":\"short_name\",\"type\":\"VARCHAR\",\"description\":\"Short matchup name, for example DAL @ PHI\"},{\"name\":\"status\",\"type\":\"VARCHAR\",\"description\":\"ESPN status code, for example STATUS_SCHEDULED or STATUS_FINAL\"},{\"name\":\"status_state\",\"type\":\"VARCHAR\",\"description\":\"Game state: pre, in, or post\"},{\"name\":\"status_detail\",\"type\":\"VARCHAR\",\"description\":\"Human-readable status, for example Final/OT or 2nd 4:12\"},{\"name\":\"completed\",\"type\":\"BOOLEAN\",\"description\":\"Whether the game is complete\"},{\"name\":\"period\",\"type\":\"INTEGER\",\"description\":\"Quarter number, current or final; 5 or more means overtime\"},{\"name\":\"clock\",\"type\":\"VARCHAR\",\"description\":\"Game clock display for live games\"},{\"name\":\"home_team_id\",\"type\":\"INTEGER\",\"description\":\"ESPN team identifier (integer code) of the home club\"},{\"name\":\"home_team_abbreviation\",\"type\":\"VARCHAR\",\"description\":\"ESPN code of the home club, for example PHI\"},{\"name\":\"home_team_name\",\"type\":\"VARCHAR\",\"description\":\"Display name of the home club\"},{\"name\":\"home_score\",\"type\":\"INTEGER\",\"description\":\"Home club's score, in points; NULL before kickoff\"},{\"name\":\"home_record\",\"type\":\"VARCHAR\",\"description\":\"Home team's overall record after this game, as ESPN reports it\"},{\"name\":\"away_team_id\",\"type\":\"INTEGER\",\"description\":\"ESPN team identifier (integer code) of the away club\"},{\"name\":\"away_team_abbreviation\",\"type\":\"VARCHAR\",\"description\":\"ESPN code of the visiting club, for example DAL\"},{\"name\":\"away_team_name\",\"type\":\"VARCHAR\",\"description\":\"Display name of the visiting club\"},{\"name\":\"away_score\",\"type\":\"INTEGER\",\"description\":\"Visiting club's score, in points; NULL before kickoff\"},{\"name\":\"away_record\",\"type\":\"VARCHAR\",\"description\":\"Away team's overall record after this game, as ESPN reports it\"},{\"name\":\"winner_abbreviation\",\"type\":\"VARCHAR\",\"description\":\"Winning team abbreviation; NULL until decided or for a tie\"},{\"name\":\"venue\",\"type\":\"VARCHAR\",\"description\":\"Stadium name\"},{\"name\":\"venue_city\",\"type\":\"VARCHAR\",\"description\":\"Stadium city\"},{\"name\":\"venue_state\",\"type\":\"VARCHAR\",\"description\":\"Stadium state or province, when applicable\"},{\"name\":\"neutral_site\",\"type\":\"BOOLEAN\",\"description\":\"Whether the game is played at a neutral site\"},{\"name\":\"attendance\",\"type\":\"INTEGER\",\"description\":\"Reported crowd, in people; NULL or 0 before the game\"},{\"name\":\"broadcast\",\"type\":\"VARCHAR\",\"description\":\"National broadcast network(s), when listed\"}]"
+      },
+      null,
+      [
+        "team",
+        "season_type",
+        "season"
+      ],
+      [
+        "VARCHAR",
+        "VARCHAR",
+        "INTEGER"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22623,
+      [
+        "SELECT week, short_name, away_score, home_score, winner_abbreviation FROM nfl.main.team_schedule('KC', season := 2025) ORDER BY week"
+      ],
+      null,
+      [
+        "football",
+        "scores"
+      ]
+    ],
+    [
+      "nfl",
+      "22592",
+      "main",
+      "team_stats",
+      null,
+      "table",
+      "Season team offense, defense, special teams, and EPA totals (nflverse)",
+      null,
+      {
+        "provider": "nfl",
+        "source": "nflverse-data (CC-BY 4.0)",
+        "vgi.category": "team-stats",
+        "vgi.doc_llm": "One row per team for a season from nflverse stats_team: passing, rushing, EPA, first downs, turnovers, penalties, defensive sacks and interceptions, kicking and punting. season_type selects REG (default), POST, or REGPOST.",
+        "vgi.doc_md": "Season nflverse team statistics. Points are in `schedule()` and standings.",
+        "vgi.example_queries": "[{\"description\": \"2025 teams by rushing yards.\", \"sql\": \"SELECT team, carries, rushing_yards, rushing_tds FROM nfl.main.team_stats(season := 2025) ORDER BY rushing_yards DESC\"}]",
+        "vgi.result_columns_schema": "[{\"name\":\"season\",\"type\":\"INTEGER\",\"description\":\"Season\"},{\"name\":\"team\",\"type\":\"VARCHAR\",\"description\":\"nflverse team abbreviation\"},{\"name\":\"season_type\",\"type\":\"VARCHAR\",\"description\":\"REG, POST, or REG+POST\"},{\"name\":\"games\",\"type\":\"INTEGER\",\"description\":\"Games played\"},{\"name\":\"completions\",\"type\":\"INTEGER\",\"description\":\"Completions\"},{\"name\":\"attempts\",\"type\":\"INTEGER\",\"description\":\"Pass attempts\"},{\"name\":\"passing_yards\",\"type\":\"INTEGER\",\"description\":\"Gross passing yards\"},{\"name\":\"passing_tds\",\"type\":\"INTEGER\",\"description\":\"Passing TDs\"},{\"name\":\"interceptions\",\"type\":\"INTEGER\",\"description\":\"Interceptions thrown\"},{\"name\":\"sacks_suffered\",\"type\":\"INTEGER\",\"description\":\"Times sacked\"},{\"name\":\"sack_yards_lost\",\"type\":\"INTEGER\",\"description\":\"Sack yards lost\"},{\"name\":\"passing_epa\",\"type\":\"DOUBLE\",\"description\":\"Total EPA on dropbacks\"},{\"name\":\"passing_cpoe\",\"type\":\"DOUBLE\",\"description\":\"Completion % over expected\"},{\"name\":\"carries\",\"type\":\"INTEGER\",\"description\":\"Carries\"},{\"name\":\"rushing_yards\",\"type\":\"INTEGER\",\"description\":\"Rushing yards\"},{\"name\":\"rushing_tds\",\"type\":\"INTEGER\",\"description\":\"Rushing TDs\"},{\"name\":\"rushing_epa\",\"type\":\"DOUBLE\",\"description\":\"Total EPA on carries\"},{\"name\":\"receiving_yards_after_catch\",\"type\":\"INTEGER\",\"description\":\"Yards after catch\"},{\"name\":\"passing_first_downs\",\"type\":\"INTEGER\",\"description\":\"First downs by pass\"},{\"name\":\"rushing_first_downs\",\"type\":\"INTEGER\",\"description\":\"First downs by rush\"},{\"name\":\"fumbles_lost\",\"type\":\"INTEGER\",\"description\":\"Fumbles lost\"},{\"name\":\"penalties\",\"type\":\"INTEGER\",\"description\":\"Penalties\"},{\"name\":\"penalty_yards\",\"type\":\"INTEGER\",\"description\":\"Penalty yards\"},{\"name\":\"def_tackles_for_loss\",\"type\":\"INTEGER\",\"description\":\"Defensive tackles for loss\"},{\"name\":\"def_sacks\",\"type\":\"DOUBLE\",\"description\":\"Defensive sacks\"},{\"name\":\"def_qb_hits\",\"type\":\"INTEGER\",\"description\":\"Defensive QB hits\"},{\"name\":\"def_interceptions\",\"type\":\"INTEGER\",\"description\":\"Defensive interceptions\"},{\"name\":\"def_pass_defended\",\"type\":\"INTEGER\",\"description\":\"Passes defended\"},{\"name\":\"def_fumbles_forced\",\"type\":\"INTEGER\",\"description\":\"Fumbles forced\"},{\"name\":\"def_tds\",\"type\":\"INTEGER\",\"description\":\"Defensive TDs\"},{\"name\":\"def_safeties\",\"type\":\"INTEGER\",\"description\":\"Safeties\"},{\"name\":\"special_teams_tds\",\"type\":\"INTEGER\",\"description\":\"Special-teams TDs\"},{\"name\":\"fg_made\",\"type\":\"INTEGER\",\"description\":\"Field goals made\"},{\"name\":\"fg_att\",\"type\":\"INTEGER\",\"description\":\"Field goals attempted\"},{\"name\":\"pat_made\",\"type\":\"INTEGER\",\"description\":\"Extra points made\"},{\"name\":\"pat_att\",\"type\":\"INTEGER\",\"description\":\"Extra points attempted\"},{\"name\":\"punts\",\"type\":\"INTEGER\",\"description\":\"Punts\"},{\"name\":\"punt_net_yards\",\"type\":\"INTEGER\",\"description\":\"Net punt yards\"}]"
+      },
+      null,
+      [
+        "team",
+        "season_type",
+        "season"
+      ],
+      [
+        "VARCHAR",
+        "VARCHAR",
+        "INTEGER"
+      ],
+      null,
+      null,
+      null,
+      true,
+      null,
+      22624,
+      [
+        "SELECT team, carries, rushing_yards, rushing_tds FROM nfl.main.team_stats(season := 2025) ORDER BY rushing_yards DESC"
+      ],
+      null,
+      [
+        "football",
+        "team-stats"
+      ]
+    ]
+  ]
+}

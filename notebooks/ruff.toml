@@ -1,0 +1,7 @@
+line-length = 110
+target-version = "py311"
+include = ["*.py", "*.ipynb"]
+exclude = [".venv", "validation", "artifacts", ".vgi-examples"]
+[lint]
+select = ["E", "F"]
+ignore = ["E501", "F821"]

@@ -1,0 +1,378 @@
+{
+  "schema_version": 1,
+  "repository": "Query-farm/vgi-nfl",
+  "revision": "79985312aea37d49ceba1a874bf901589dc1546f",
+  "captured_at": "2026-11-15T01:50:15.227624+00:00",
+  "default_schema": "main",
+  "scope": "all_public_functions_and_tables",
+  "complete": true,
+  "evidence": [
+    {
+      "path": "coverage/current-functions.json",
+      "sha256": "c59fc5b6363f6936f3be60a640f309019e9af624492614e5e10b83ef52173026",
+      "description": "Complete worker-filtered functions export through actual published Haybarn"
+    },
+    {
+      "path": "coverage/current-tables.json",
+      "sha256": "5cbafb48d758b6f9cbd8b271206437b36b816764e9bdbe880725375771ce015e",
+      "description": "Complete worker-filtered tables export through actual published Haybarn"
+    },
+    {
+      "path": "coverage/current-views.json",
+      "sha256": "997be71ea4ab97494b57a2dd5e55827ee92cfafab980570cfddba0d907efc7eb",
+      "description": "Complete worker-filtered views export through actual published Haybarn"
+    }
+  ],
+  "objects": [
+    {
+      "schema": "main",
+      "name": "all_current_injuries",
+      "kind": "function",
+      "signatures": [
+        "all_current_injuries()"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "all_current_scoreboard",
+      "kind": "function",
+      "signatures": [
+        "all_current_scoreboard()"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "all_current_standings",
+      "kind": "function",
+      "signatures": [
+        "all_current_standings()"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "all_current_week",
+      "kind": "function",
+      "signatures": [
+        "all_current_week()"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "all_players",
+      "kind": "function",
+      "signatures": [
+        "all_players()"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "all_teams",
+      "kind": "function",
+      "signatures": [
+        "all_teams()"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "box_score_player",
+      "kind": "function",
+      "signatures": [
+        "box_score_player(VARCHAR)"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "box_score_team",
+      "kind": "function",
+      "signatures": [
+        "box_score_team(VARCHAR)"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "combine",
+      "kind": "function",
+      "signatures": [
+        "combine(INTEGER)"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "depth_chart",
+      "kind": "function",
+      "signatures": [
+        "depth_chart(VARCHAR)"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "draft",
+      "kind": "function",
+      "signatures": [
+        "draft(VARCHAR, INTEGER)"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "drives",
+      "kind": "function",
+      "signatures": [
+        "drives(VARCHAR)"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "game_summary",
+      "kind": "function",
+      "signatures": [
+        "game_summary(VARCHAR)"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "ngs_passing",
+      "kind": "function",
+      "signatures": [
+        "ngs_passing(INTEGER, VARCHAR, INTEGER)"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "ngs_receiving",
+      "kind": "function",
+      "signatures": [
+        "ngs_receiving(INTEGER, VARCHAR, INTEGER)"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "ngs_rushing",
+      "kind": "function",
+      "signatures": [
+        "ngs_rushing(INTEGER, VARCHAR, INTEGER)"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "play_by_play",
+      "kind": "function",
+      "signatures": [
+        "play_by_play(INTEGER, VARCHAR, INTEGER)"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "play_by_play_game",
+      "kind": "function",
+      "signatures": [
+        "play_by_play_game(VARCHAR)"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "player_game_log",
+      "kind": "function",
+      "signatures": [
+        "player_game_log(INTEGER, INTEGER)"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "player_stats_season",
+      "kind": "function",
+      "signatures": [
+        "player_stats_season(VARCHAR, VARCHAR, INTEGER)"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "player_stats_week",
+      "kind": "function",
+      "signatures": [
+        "player_stats_week(INTEGER, VARCHAR, INTEGER)"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "roster",
+      "kind": "function",
+      "signatures": [
+        "roster(VARCHAR)"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "schedule",
+      "kind": "function",
+      "signatures": [
+        "schedule(INTEGER, VARCHAR, INTEGER)"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "scoreboard",
+      "kind": "function",
+      "signatures": [
+        "scoreboard(INTEGER, INTEGER, VARCHAR)"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "scoring_plays",
+      "kind": "function",
+      "signatures": [
+        "scoring_plays(VARCHAR)"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "snap_counts",
+      "kind": "function",
+      "signatures": [
+        "snap_counts(INTEGER, VARCHAR, INTEGER)"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "standings",
+      "kind": "function",
+      "signatures": [
+        "standings(INTEGER)"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "team_schedule",
+      "kind": "function",
+      "signatures": [
+        "team_schedule(VARCHAR, VARCHAR, INTEGER)"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "team_stats",
+      "kind": "function",
+      "signatures": [
+        "team_stats(VARCHAR, VARCHAR, INTEGER)"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "current_injuries",
+      "kind": "table",
+      "signatures": [
+        "TABLE"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "current_scoreboard",
+      "kind": "table",
+      "signatures": [
+        "TABLE"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "current_standings",
+      "kind": "table",
+      "signatures": [
+        "TABLE"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "current_week",
+      "kind": "table",
+      "signatures": [
+        "TABLE"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "players",
+      "kind": "table",
+      "signatures": [
+        "TABLE"
+      ],
+      "authentication": "none",
+      "access": "read"
+    },
+    {
+      "schema": "main",
+      "name": "teams",
+      "kind": "table",
+      "signatures": [
+        "TABLE"
+      ],
+      "authentication": "none",
+      "access": "read"
+    }
+  ]
+}

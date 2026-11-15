@@ -1,0 +1,675 @@
+{
+  "schema_version": 1,
+  "catalogs": {
+    "released": {
+      "path": "coverage/catalog-released.json",
+      "sha256": "e2cfe328c3ea0059102da2b41ee3bb6053a961c7a6bad4293257a8a5cb15f23f",
+      "review": {
+        "status": "approved",
+        "reviewer": "/root/notebooks_sympy",
+        "reviewed_at": "2026-11-15T02:05:20.027666+00:00",
+        "catalog_sha256": "e2cfe328c3ea0059102da2b41ee3bb6053a961c7a6bad4293257a8a5cb15f23f",
+        "notes": "Complete actual functions/tables/views exports reconcile to35 distinct(schema,name) surfaces. Same-name aliases merge; six separately named all_* backing scans remain in the denominator. No access exclusions. Analytical runs use this release."
+      }
+    },
+    "current": {
+      "path": "coverage/catalog-current.json",
+      "sha256": "002d3265104e7344176c7fb6a188999155e287fd1d0107253ad0a6db959484b5",
+      "review": {
+        "status": "approved",
+        "reviewer": "/root/notebooks_sympy",
+        "reviewed_at": "2026-11-15T02:05:20.027666+00:00",
+        "catalog_sha256": "002d3265104e7344176c7fb6a188999155e287fd1d0107253ad0a6db959484b5",
+        "notes": "Complete actual functions/tables/views exports reconcile to35 distinct(schema,name) surfaces. Same-name aliases merge; six separately named all_* backing scans remain in the denominator. No access exclusions. Current public catalog executed through remote79985312. Changes from release are metadata/composed examples; analytical runs use releasev0.2.0, not exact-current source."
+      }
+    }
+  },
+  "notebooks": [
+    {
+      "path": "01_snap_shares_have_different_denominators.ipynb",
+      "sha256": "1652372379b2f5d75b8add67efe0184a6b0c4473420614c2377c39d4a1437048",
+      "execution": {
+        "path": "coverage/run-01.json",
+        "sha256": "c7a53aa7d1997a99cbd4fac719bf80c2382820feb5baf8e732ceaeca28402413"
+      }
+    },
+    {
+      "path": "02_reconcile_players_before_assigning_teams.ipynb",
+      "sha256": "5a54ca95bf5e9386983433643665790c73ef168cd69b5e8bcea30596ee762184",
+      "execution": {
+        "path": "coverage/run-02.json",
+        "sha256": "92b06934b530659a5a3fe9122e91b3f3b1dbf3cbe3b9c080db214c7de216aecc"
+      }
+    },
+    {
+      "path": "03_expected_differences_need_named_units.ipynb",
+      "sha256": "c7787e05baece611756e040cedc69fac03f39b46c697ea7b6d9c19951317af2f",
+      "execution": {
+        "path": "coverage/run-03.json",
+        "sha256": "031222969ecf9cb607a751a2085f9c77a7e010e439fe5d226424d8a49b829ce1"
+      }
+    },
+    {
+      "path": "04_follow_one_game_across_statistical_ledgers.ipynb",
+      "sha256": "7a45b8e2409e5ed138f2baea2109d5e0c68c257b6a6ae57e3fe62dc205d852d6",
+      "execution": {
+        "path": "coverage/run-04.json",
+        "sha256": "4360c9443e1440d31722a9a3f3a029173ee015d450acdc57a8033cea2858a4a5"
+      }
+    }
+  ],
+  "examples": [
+    {
+      "object": {
+        "schema": "main",
+        "name": "snap_counts"
+      },
+      "notebook": "01_snap_shares_have_different_denominators.ipynb",
+      "sql": [
+        {
+          "cell": "ec4b5883",
+          "reference": "nfl.main.snap_counts"
+        }
+      ],
+      "narrative_cells": [
+        "41d9851b"
+      ],
+      "result_cells": [
+        "7c4391ca"
+      ],
+      "interpretation_cells": [
+        "7c4391ca"
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "/root/notebooks_sympy",
+        "reviewed_at": "2026-11-15T02:05:20.027666+00:00",
+        "notebook_sha256": "1652372379b2f5d75b8add67efe0184a6b0c4473420614c2377c39d4a1437048",
+        "catalog_sha256": [
+          "e2cfe328c3ea0059102da2b41ee3bb6053a961c7a6bad4293257a8a5cb15f23f",
+          "002d3265104e7344176c7fb6a188999155e287fd1d0107253ad0a6db959484b5"
+        ],
+        "purpose": "Keep unit-specific participation denominators separate, then classify exact player memberships.",
+        "finding": "47 KC players in one 2025 game retain offense/defense/special-teams fractions; their cross-unit sum is not a whole-game rate. Threshold0.5\u21920.8 changes memberships while raw rows and examples stay fixed; missing shares are explicitly unavailable."
+      }
+    },
+    {
+      "object": {
+        "schema": "main",
+        "name": "player_stats_week"
+      },
+      "notebook": "02_reconcile_players_before_assigning_teams.ipynb",
+      "sql": [
+        {
+          "cell": "fetch-sql",
+          "reference": "nfl.main.player_stats_week"
+        }
+      ],
+      "narrative_cells": [
+        "source-question"
+      ],
+      "result_cells": [
+        "team-plot"
+      ],
+      "interpretation_cells": [
+        "team-plot"
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "/root/notebooks_sympy",
+        "reviewed_at": "2026-11-15T02:05:20.027666+00:00",
+        "notebook_sha256": "5a54ca95bf5e9386983433643665790c73ef168cd69b5e8bcea30596ee762184",
+        "catalog_sha256": [
+          "e2cfe328c3ea0059102da2b41ee3bb6053a961c7a6bad4293257a8a5cb15f23f",
+          "002d3265104e7344176c7fb6a188999155e287fd1d0107253ad0a6db959484b5"
+        ],
+        "purpose": "Allocate historical yards to the team in each game, and reconcile player totals.",
+        "finding": "18 REG missing-ID source rows are audited separately; all2,019 identified players reconcile six additive counts to season rows. Weekly team allocation agrees with team totals."
+      }
+    },
+    {
+      "object": {
+        "schema": "main",
+        "name": "player_stats_season"
+      },
+      "notebook": "02_reconcile_players_before_assigning_teams.ipynb",
+      "sql": [
+        {
+          "cell": "fetch-sql",
+          "reference": "nfl.main.player_stats_season"
+        }
+      ],
+      "narrative_cells": [
+        "source-question"
+      ],
+      "result_cells": [
+        "team-plot"
+      ],
+      "interpretation_cells": [
+        "team-plot"
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "/root/notebooks_sympy",
+        "reviewed_at": "2026-11-15T02:05:20.027666+00:00",
+        "notebook_sha256": "5a54ca95bf5e9386983433643665790c73ef168cd69b5e8bcea30596ee762184",
+        "catalog_sha256": [
+          "e2cfe328c3ea0059102da2b41ee3bb6053a961c7a6bad4293257a8a5cb15f23f",
+          "002d3265104e7344176c7fb6a188999155e287fd1d0107253ad0a6db959484b5"
+        ],
+        "purpose": "Distinguish additive player totals from the recent-team context label.",
+        "finding": "Player-season counts reconcile, but assigning whole seasons to recent_team moves yardage among clubs. NO loses39.3yd/game in the naive calculation; the league total stays conserved."
+      }
+    },
+    {
+      "object": {
+        "schema": "main",
+        "name": "team_stats"
+      },
+      "notebook": "02_reconcile_players_before_assigning_teams.ipynb",
+      "sql": [
+        {
+          "cell": "fetch-sql",
+          "reference": "nfl.main.team_stats"
+        }
+      ],
+      "narrative_cells": [
+        "source-question"
+      ],
+      "result_cells": [
+        "team-plot"
+      ],
+      "interpretation_cells": [
+        "team-plot"
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "/root/notebooks_sympy",
+        "reviewed_at": "2026-11-15T02:05:20.027666+00:00",
+        "notebook_sha256": "5a54ca95bf5e9386983433643665790c73ef168cd69b5e8bcea30596ee762184",
+        "catalog_sha256": [
+          "e2cfe328c3ea0059102da2b41ee3bb6053a961c7a6bad4293257a8a5cb15f23f",
+          "002d3265104e7344176c7fb6a188999155e287fd1d0107253ad0a6db959484b5"
+        ],
+        "purpose": "Independently reconcile weekly allocation to team-season count totals.",
+        "finding": "All32teams agree on passing/rushing yards and carries; gross scrimmage equals rushing plus gross passing/receiving, without counting both passing and receiving twice."
+      }
+    },
+    {
+      "object": {
+        "schema": "main",
+        "name": "schedule"
+      },
+      "notebook": "02_reconcile_players_before_assigning_teams.ipynb",
+      "sql": [
+        {
+          "cell": "fetch-sql",
+          "reference": "nfl.main.schedule"
+        }
+      ],
+      "narrative_cells": [
+        "source-question"
+      ],
+      "result_cells": [
+        "team-plot"
+      ],
+      "interpretation_cells": [
+        "team-plot"
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "/root/notebooks_sympy",
+        "reviewed_at": "2026-11-15T02:05:20.027666+00:00",
+        "notebook_sha256": "5a54ca95bf5e9386983433643665790c73ef168cd69b5e8bcea30596ee762184",
+        "catalog_sha256": [
+          "e2cfe328c3ea0059102da2b41ee3bb6053a961c7a6bad4293257a8a5cb15f23f",
+          "002d3265104e7344176c7fb6a188999155e287fd1d0107253ad0a6db959484b5"
+        ],
+        "purpose": "Derive the completed historical regular-season game denominator.",
+        "finding": "285 selected-season games include postseason. Filtering completedREG yields17games per team, matching the team report; this denominator supports yardage-per-game attribution comparisons."
+      }
+    },
+    {
+      "object": {
+        "schema": "main",
+        "name": "players"
+      },
+      "notebook": "02_reconcile_players_before_assigning_teams.ipynb",
+      "sql": [
+        {
+          "cell": "fetch-sql",
+          "reference": "nfl.main.players"
+        }
+      ],
+      "narrative_cells": [
+        "source-question"
+      ],
+      "result_cells": [
+        "cohort-plot"
+      ],
+      "interpretation_cells": [
+        "cohort-plot"
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "/root/notebooks_sympy",
+        "reviewed_at": "2026-11-15T02:05:20.027666+00:00",
+        "notebook_sha256": "5a54ca95bf5e9386983433643665790c73ef168cd69b5e8bcea30596ee762184",
+        "catalog_sha256": [
+          "e2cfe328c3ea0059102da2b41ee3bb6053a961c7a6bad4293257a8a5cb15f23f",
+          "002d3265104e7344176c7fb6a188999155e287fd1d0107253ad0a6db959484b5"
+        ],
+        "purpose": "Use stable IDs and rookie year to make an explicit cohort choice.",
+        "finding": "The24,869-row directory has uniqueGSISkeys; all2,019 identified season rows join without multiplication. Rookie-year filtering changes leaders while historical team attribution stays fixed; latest_team is not substituted for historical teams."
+      }
+    },
+    {
+      "object": {
+        "schema": "main",
+        "name": "ngs_passing"
+      },
+      "notebook": "03_expected_differences_need_named_units.ipynb",
+      "sql": [
+        {
+          "cell": "fetch-sql",
+          "reference": "nfl.main.ngs_passing"
+        }
+      ],
+      "narrative_cells": [
+        "source-question"
+      ],
+      "result_cells": [
+        "leaders-plot"
+      ],
+      "interpretation_cells": [
+        "leaders-plot"
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "/root/notebooks_sympy",
+        "reviewed_at": "2026-11-15T02:05:20.027666+00:00",
+        "notebook_sha256": "c7787e05baece611756e040cedc69fac03f39b46c697ea7b6d9c19951317af2f",
+        "catalog_sha256": [
+          "e2cfe328c3ea0059102da2b41ee3bb6053a961c7a6bad4293257a8a5cb15f23f",
+          "002d3265104e7344176c7fb6a188999155e287fd1d0107253ad0a6db959484b5"
+        ],
+        "purpose": "Verify completion percentage-point difference and select within a passing metric.",
+        "finding": "42full-seasonREG/week0 rows; completions/attempts reconstruct observedpercentage, and observed\u2212expected equalsCPOE. Exposure200\u2192400 changes selection36\u219221 with values fixed."
+      }
+    },
+    {
+      "object": {
+        "schema": "main",
+        "name": "ngs_receiving"
+      },
+      "notebook": "03_expected_differences_need_named_units.ipynb",
+      "sql": [
+        {
+          "cell": "fetch-sql",
+          "reference": "nfl.main.ngs_receiving"
+        }
+      ],
+      "narrative_cells": [
+        "source-question"
+      ],
+      "result_cells": [
+        "leaders-plot"
+      ],
+      "interpretation_cells": [
+        "leaders-plot"
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "/root/notebooks_sympy",
+        "reviewed_at": "2026-11-15T02:05:20.027666+00:00",
+        "notebook_sha256": "c7787e05baece611756e040cedc69fac03f39b46c697ea7b6d9c19951317af2f",
+        "catalog_sha256": [
+          "e2cfe328c3ea0059102da2b41ee3bb6053a961c7a6bad4293257a8a5cb15f23f",
+          "002d3265104e7344176c7fb6a188999155e287fd1d0107253ad0a6db959484b5"
+        ],
+        "purpose": "Separate a target selection threshold from a yards-per-reception metric.",
+        "finding": "120full-season rows; observedYAC\u2212expectedYAC equalsreportedYACoverexpected. Targets50\u2192100 selects107\u219236; this unit is not comparable to passingpercentagepoints."
+      }
+    },
+    {
+      "object": {
+        "schema": "main",
+        "name": "ngs_rushing"
+      },
+      "notebook": "03_expected_differences_need_named_units.ipynb",
+      "sql": [
+        {
+          "cell": "fetch-sql",
+          "reference": "nfl.main.ngs_rushing"
+        }
+      ],
+      "narrative_cells": [
+        "rushing-question"
+      ],
+      "result_cells": [
+        "rushing-plot"
+      ],
+      "interpretation_cells": [
+        "rushing-plot"
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "/root/notebooks_sympy",
+        "reviewed_at": "2026-11-15T02:05:20.027666+00:00",
+        "notebook_sha256": "c7787e05baece611756e040cedc69fac03f39b46c697ea7b6d9c19951317af2f",
+        "catalog_sha256": [
+          "e2cfe328c3ea0059102da2b41ee3bb6053a961c7a6bad4293257a8a5cb15f23f",
+          "002d3265104e7344176c7fb6a188999155e287fd1d0107253ad0a6db959484b5"
+        ],
+        "purpose": "Use the reported rushing metric while exposing an unjustified naive reconstruction.",
+        "finding": "51full-season rows; all-yards\u2212expected\u2212reportedRYOE can differ by70yards, and reported per-attemptRYOE differs from totalRYOE/allattempts. Eligibility details are not exposed, so no guessed repair is applied. Attempts100\u2192200 selects49\u219221; fixed mismatch audit retained."
+      }
+    },
+    {
+      "object": {
+        "schema": "main",
+        "name": "scoreboard"
+      },
+      "notebook": "04_follow_one_game_across_statistical_ledgers.ipynb",
+      "sql": [
+        {
+          "cell": "fetch-sql",
+          "reference": "nfl.main.scoreboard"
+        }
+      ],
+      "narrative_cells": [
+        "source-question"
+      ],
+      "result_cells": [
+        "timeline-plot"
+      ],
+      "interpretation_cells": [
+        "timeline-plot"
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "/root/notebooks_sympy",
+        "reviewed_at": "2026-11-15T02:05:20.027666+00:00",
+        "notebook_sha256": "7a45b8e2409e5ed138f2baea2109d5e0c68c257b6a6ae57e3fe62dc205d852d6",
+        "catalog_sha256": [
+          "e2cfe328c3ea0059102da2b41ee3bb6053a961c7a6bad4293257a8a5cb15f23f",
+          "002d3265104e7344176c7fb6a188999155e287fd1d0107253ad0a6db959484b5"
+        ],
+        "purpose": "Locate the historical game within the league-week population.",
+        "finding": "16week1games intersect the club schedule and single-game summary by eventID; final20\u201324 score agrees across three collections."
+      }
+    },
+    {
+      "object": {
+        "schema": "main",
+        "name": "team_schedule"
+      },
+      "notebook": "04_follow_one_game_across_statistical_ledgers.ipynb",
+      "sql": [
+        {
+          "cell": "fetch-sql",
+          "reference": "nfl.main.team_schedule"
+        }
+      ],
+      "narrative_cells": [
+        "source-question"
+      ],
+      "result_cells": [
+        "timeline-plot"
+      ],
+      "interpretation_cells": [
+        "timeline-plot"
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "/root/notebooks_sympy",
+        "reviewed_at": "2026-11-15T02:05:20.027666+00:00",
+        "notebook_sha256": "7a45b8e2409e5ed138f2baea2109d5e0c68c257b6a6ae57e3fe62dc205d852d6",
+        "catalog_sha256": [
+          "e2cfe328c3ea0059102da2b41ee3bb6053a961c7a6bad4293257a8a5cb15f23f",
+          "002d3265104e7344176c7fb6a188999155e287fd1d0107253ad0a6db959484b5"
+        ],
+        "purpose": "Keep a club-season schedule distinct from the league-week selection.",
+        "finding": "17Philadelphia regular-season games intersect16week games at the selected eventID; distinct population counts are displayed rather than implying equal coverage."
+      }
+    },
+    {
+      "object": {
+        "schema": "main",
+        "name": "teams"
+      },
+      "notebook": "04_follow_one_game_across_statistical_ledgers.ipynb",
+      "sql": [
+        {
+          "cell": "fetch-sql",
+          "reference": "nfl.main.teams"
+        }
+      ],
+      "narrative_cells": [
+        "source-question"
+      ],
+      "result_cells": [
+        "timeline-plot"
+      ],
+      "interpretation_cells": [
+        "timeline-plot"
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "/root/notebooks_sympy",
+        "reviewed_at": "2026-11-15T02:05:20.027666+00:00",
+        "notebook_sha256": "7a45b8e2409e5ed138f2baea2109d5e0c68c257b6a6ae57e3fe62dc205d852d6",
+        "catalog_sha256": [
+          "e2cfe328c3ea0059102da2b41ee3bb6053a961c7a6bad4293257a8a5cb15f23f",
+          "002d3265104e7344176c7fb6a188999155e287fd1d0107253ad0a6db959484b5"
+        ],
+        "purpose": "Resolve descriptive names from stable team IDs without joining text labels.",
+        "finding": "32unique current team IDs label the historical participants as DallasCowboys and PhiladelphiaEagles; current directory timing is disclosed and no roster inference follows."
+      }
+    },
+    {
+      "object": {
+        "schema": "main",
+        "name": "game_summary"
+      },
+      "notebook": "04_follow_one_game_across_statistical_ledgers.ipynb",
+      "sql": [
+        {
+          "cell": "fetch-sql",
+          "reference": "nfl.main.game_summary"
+        }
+      ],
+      "narrative_cells": [
+        "scoring-question"
+      ],
+      "result_cells": [
+        "timeline-plot"
+      ],
+      "interpretation_cells": [
+        "timeline-plot"
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "/root/notebooks_sympy",
+        "reviewed_at": "2026-11-15T02:05:20.027666+00:00",
+        "notebook_sha256": "7a45b8e2409e5ed138f2baea2109d5e0c68c257b6a6ae57e3fe62dc205d852d6",
+        "catalog_sha256": [
+          "e2cfe328c3ea0059102da2b41ee3bb6053a961c7a6bad4293257a8a5cb15f23f",
+          "002d3265104e7344176c7fb6a188999155e287fd1d0107253ad0a6db959484b5"
+        ],
+        "purpose": "Anchor the game identity, final score and quarter-total reconciliation.",
+        "finding": "One historical summary has four quarters whose points add to20and24; score path and both broader collections agree."
+      }
+    },
+    {
+      "object": {
+        "schema": "main",
+        "name": "drives"
+      },
+      "notebook": "04_follow_one_game_across_statistical_ledgers.ipynb",
+      "sql": [
+        {
+          "cell": "fetch-sql",
+          "reference": "nfl.main.drives"
+        }
+      ],
+      "narrative_cells": [
+        "scoring-question"
+      ],
+      "result_cells": [
+        "timeline-plot"
+      ],
+      "interpretation_cells": [
+        "timeline-plot"
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "/root/notebooks_sympy",
+        "reviewed_at": "2026-11-15T02:05:20.027666+00:00",
+        "notebook_sha256": "7a45b8e2409e5ed138f2baea2109d5e0c68c257b6a6ae57e3fe62dc205d852d6",
+        "catalog_sha256": [
+          "e2cfe328c3ea0059102da2b41ee3bb6053a961c7a6bad4293257a8a5cb15f23f",
+          "002d3265104e7344176c7fb6a188999155e287fd1d0107253ad0a6db959484b5"
+        ],
+        "purpose": "Reconcile drive identity and possession duration while retaining event-definition differences.",
+        "finding": "16drive rows link to eight scoring sequences; eight drives per team and possession1508/2092seconds agree with the team box. Driveplays58/63 differ from official56/62, so unlike counts are not substituted."
+      }
+    },
+    {
+      "object": {
+        "schema": "main",
+        "name": "scoring_plays"
+      },
+      "notebook": "04_follow_one_game_across_statistical_ledgers.ipynb",
+      "sql": [
+        {
+          "cell": "fetch-sql",
+          "reference": "nfl.main.scoring_plays"
+        }
+      ],
+      "narrative_cells": [
+        "scoring-question"
+      ],
+      "result_cells": [
+        "timeline-plot"
+      ],
+      "interpretation_cells": [
+        "timeline-plot"
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "/root/notebooks_sympy",
+        "reviewed_at": "2026-11-15T02:05:20.027666+00:00",
+        "notebook_sha256": "7a45b8e2409e5ed138f2baea2109d5e0c68c257b6a6ae57e3fe62dc205d852d6",
+        "catalog_sha256": [
+          "e2cfe328c3ea0059102da2b41ee3bb6053a961c7a6bad4293257a8a5cb15f23f",
+          "002d3265104e7344176c7fb6a188999155e287fd1d0107253ad0a6db959484b5"
+        ],
+        "purpose": "Build a chronologically keyed scoring ledger rather than adding scoring labels blindly.",
+        "finding": "Eight scoring sequences match play IDs and drive IDs; their cumulative scores already include completed sequences. A fixed elapsed-regulation-time step chart ends20\u201324."
+      }
+    },
+    {
+      "object": {
+        "schema": "main",
+        "name": "play_by_play_game"
+      },
+      "notebook": "04_follow_one_game_across_statistical_ledgers.ipynb",
+      "sql": [
+        {
+          "cell": "fetch-sql",
+          "reference": "nfl.main.play_by_play_game"
+        }
+      ],
+      "narrative_cells": [
+        "scoring-question"
+      ],
+      "result_cells": [
+        "timeline-plot"
+      ],
+      "interpretation_cells": [
+        "timeline-plot"
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "/root/notebooks_sympy",
+        "reviewed_at": "2026-11-15T02:05:20.027666+00:00",
+        "notebook_sha256": "7a45b8e2409e5ed138f2baea2109d5e0c68c257b6a6ae57e3fe62dc205d852d6",
+        "catalog_sha256": [
+          "e2cfe328c3ea0059102da2b41ee3bb6053a961c7a6bad4293257a8a5cb15f23f",
+          "002d3265104e7344176c7fb6a188999155e287fd1d0107253ad0a6db959484b5"
+        ],
+        "purpose": "Use event identity/order to validate scoring and distinguish event grain from offensive plays.",
+        "finding": "169events have uniqueplayIDs; eight flagged scoring events match the scoring ledger and final event scores match the summary. Event rows are not assumed to be official offensive plays."
+      }
+    },
+    {
+      "object": {
+        "schema": "main",
+        "name": "box_score_team"
+      },
+      "notebook": "04_follow_one_game_across_statistical_ledgers.ipynb",
+      "sql": [
+        {
+          "cell": "fetch-sql",
+          "reference": "nfl.main.box_score_team"
+        }
+      ],
+      "narrative_cells": [
+        "yardage-question"
+      ],
+      "result_cells": [
+        "players-plot"
+      ],
+      "interpretation_cells": [
+        "players-plot"
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "/root/notebooks_sympy",
+        "reviewed_at": "2026-11-15T02:05:20.027666+00:00",
+        "notebook_sha256": "7a45b8e2409e5ed138f2baea2109d5e0c68c257b6a6ae57e3fe62dc205d852d6",
+        "catalog_sha256": [
+          "e2cfe328c3ea0059102da2b41ee3bb6053a961c7a6bad4293257a8a5cb15f23f",
+          "002d3265104e7344176c7fb6a188999155e287fd1d0107253ad0a6db959484b5"
+        ],
+        "purpose": "Choose a gross denominator only after reconciling team net offense and sack losses.",
+        "finding": "DALgross/net307/307 and PHIgross/net310/302 differ by0and8sackyards. Official drives/possession also reconcile; unlike event/play totals remain distinct."
+      }
+    },
+    {
+      "object": {
+        "schema": "main",
+        "name": "box_score_player"
+      },
+      "notebook": "04_follow_one_game_across_statistical_ledgers.ipynb",
+      "sql": [
+        {
+          "cell": "fetch-sql",
+          "reference": "nfl.main.box_score_player"
+        }
+      ],
+      "narrative_cells": [
+        "yardage-question"
+      ],
+      "result_cells": [
+        "players-plot"
+      ],
+      "interpretation_cells": [
+        "players-plot"
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "/root/notebooks_sympy",
+        "reviewed_at": "2026-11-15T02:05:20.027666+00:00",
+        "notebook_sha256": "7a45b8e2409e5ed138f2baea2109d5e0c68c257b6a6ae57e3fe62dc205d852d6",
+        "catalog_sha256": [
+          "e2cfe328c3ea0059102da2b41ee3bb6053a961c7a6bad4293257a8a5cb15f23f",
+          "002d3265104e7344176c7fb6a188999155e287fd1d0107253ad0a6db959484b5"
+        ],
+        "purpose": "Sum player rushing plus receiving without double-counting quarterback passing.",
+        "finding": "58merged player rows reconcile passing/receiving/rushing/sacks; positive contributions use full-team gross denominators. Threshold25\u219275 reduces displayedplayers10\u21922 without changing shares,150is empty."
+      }
+    }
+  ]
+}

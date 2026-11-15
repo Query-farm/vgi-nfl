@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "notebook_sha256": "5a54ca95bf5e9386983433643665790c73ef168cd69b5e8bcea30596ee762184",
+  "catalog_sha256": "e2cfe328c3ea0059102da2b41ee3bb6053a961c7a6bad4293257a8a5cb15f23f",
+  "worker_revision": "d7d868c43ab7d22d1f46b72f3f7550ed4e6712ca",
+  "status": "success",
+  "executed_at": "2026-11-15T02:05:20.027666+00:00",
+  "engine": "Haybarn2.0.0rc11/community VGI; isolated Python3.13 NFLv0.2.0; sharedv0.3.54",
+  "command": "uv run --frozen vgi-notebooks 02_reconcile_players_before_assigning_teams.ipynb --timeout 600",
+  "catalog_aliases": [
+    "nfl"
+  ],
+  "cells": [
+    {
+      "id": "parameters",
+      "status": "success",
+      "execution_count": 1,
+      "source_sha256": "9c570c9e895da828c0c35bfca5e4f847c85ad736710bb2d82d68e6ad967123f2",
+      "outputs_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "id": "bootstrap",
+      "status": "success",
+      "execution_count": 2,
+      "source_sha256": "fcedc80029bb990a989e34f90a093050e2e06776bb63f70648a0237bdc77b7cd",
+      "outputs_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "id": "setup",
+      "status": "success",
+      "execution_count": 3,
+      "source_sha256": "b6be3292cc8b5438c10b6e2939af316bfbdee33e04cf71890c7c7ca748122a6a",
+      "outputs_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "id": "attach",
+      "status": "success",
+      "execution_count": 4,
+      "source_sha256": "53163e262d8b5230eb060fe758fe89918f11f8dbd0949af3da4f5d4176799374",
+      "outputs_sha256": "c17c19a5c176854762c97c96bafef62f247262c382ecc6533cf998819c105960"
+    },
+    {
+      "id": "fetch-sql",
+      "status": "success",
+      "execution_count": 5,
+      "source_sha256": "72cc3ea94a8394bcdd2b2005be51c3e8b6bf9944ab9192f7f9898cf98926a0b0",
+      "outputs_sha256": "23c8940505861b0952ea3eeab2c75a52fa17ba150448cdb4800ec9653ee5050b"
+    },
+    {
+      "id": "scope-sql",
+      "status": "success",
+      "execution_count": 6,
+      "source_sha256": "021abb4107661109b5982cdf57212e7d17f6d9d5cc5e5756e48e93f23d953622",
+      "outputs_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "id": "scope-result",
+      "status": "success",
+      "execution_count": 7,
+      "source_sha256": "2ead3e95d11f71151033e2fc404a5863c3fdddcdaf807a827808a78189b28394",
+      "outputs_sha256": "9aa3fc792a617ffa620bad4882df561e0a0cb83e35ef3d9aa2abe0a9517fe5e4"
+    },
+    {
+      "id": "reconcile-sql",
+      "status": "success",
+      "execution_count": 8,
+      "source_sha256": "334b82b01de665c7d195b5b54fb76bee5d70da876f3db462ca0da8654977ec67",
+      "outputs_sha256": "3aebf501f17c9480cd5b863e4e9f29e97ebdc9441bc67ae88e0185a4d9cea8ae"
+    },
+    {
+      "id": "team-audit-sql",
+      "status": "success",
+      "execution_count": 9,
+      "source_sha256": "c91717a2ae52c5f20e46956fcdcebe1f2005436845e07c16299725b0c6fbf641",
+      "outputs_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "id": "team-plot",
+      "status": "success",
+      "execution_count": 10,
+      "source_sha256": "9893e4cdce00f5f61781d2c018e76c3771ee6948d2c3c189002bd0489f18fa37",
+      "outputs_sha256": "62cb347545a5c1fafbcadee7bb0cdaf0c234681850b829ade6a1ab579b6d6d5a"
+    },
+    {
+      "id": "leaders-sql",
+      "status": "success",
+      "execution_count": 11,
+      "source_sha256": "34a7c2d4b5f32b1471d8a030af0d79caf6bd8ef15237b8b42895b196308abb3f",
+      "outputs_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "id": "cohort-sql",
+      "status": "success",
+      "execution_count": 12,
+      "source_sha256": "69a33869fae75346c7254120567044b1a8f999c3bbc1294d9526ca654693ad42",
+      "outputs_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "id": "cohort-plot",
+      "status": "success",
+      "execution_count": 13,
+      "source_sha256": "070146f894576f69af75d4ca6021e5f7012a0849e5c74cf11f1299a34c062945",
+      "outputs_sha256": "c8c66927924da21383e0ee9fe94ef0b42b16c83acd73de9557644bbc7d34c807"
+    },
+    {
+      "id": "checks-sql",
+      "status": "success",
+      "execution_count": 14,
+      "source_sha256": "aca233b8dc4df6fa9e9d30bc162af7462aeff29462a45069e75f40b9abc3cde1",
+      "outputs_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "id": "validation-result",
+      "status": "success",
+      "execution_count": 15,
+      "source_sha256": "8cbbc1b4c3cdb9995294dfa1521db5920c9e23dc8e09ec2b272f1f99b4ac3ecb",
+      "outputs_sha256": "e4feb6f5825e5361c3e334782a3e2f38bb7f01f47991e98865ba5aeacab96c71"
+    },
+    {
+      "id": "cleanup",
+      "status": "success",
+      "execution_count": 16,
+      "source_sha256": "0bf8ca21bff397dab13f7ad55891bec878a67cbd2cf547fa64952761bd499fb2",
+      "outputs_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    }
+  ]
+}
