@@ -1,0 +1,39 @@
+# name: test/sql/nfl.test
+# description: Hermetic end-to-end coverage: every table plus scoreboard, box score and
+#   schedule calls, served from tests/fixtures by test/mock_api/server.py (see ci/run-integration.sh).
+# group: [nfl]
+
+require vgi
+
+require-env VGI_NFL_WORKER
+
+require-env NFL_ESPN_SITE_URL
+
+statement ok
+ATTACH 'nfl' (TYPE vgi, LOCATION '{VGI_NFL_WORKER}');
+
+query IIIIIT
+SELECT
+  (SELECT count(*) FROM nfl.main.current_scoreboard),
+  (SELECT count(*) FROM nfl.main.current_standings),
+  (SELECT count(*) FROM nfl.main.current_injuries),
+  (SELECT count(*) FROM nfl.main.current_week),
+  (SELECT count(*) FROM nfl.main.teams),
+  (SELECT count(*) > 0 FROM nfl.main.players);
+----
+3	32	6	1	32	true
+
+query T
+SELECT winner_abbreviation FROM nfl.main.scoreboard(2025, 1) WHERE game_id = '401772510';
+----
+PHI
+
+query I
+SELECT max(rush_yards) FROM nfl.main.box_score_player('401772510');
+----
+62
+
+query T
+SELECT espn_game_id FROM nfl.main.schedule(season := 2025, week := 1) WHERE home_team = 'PHI';
+----
+401772510
